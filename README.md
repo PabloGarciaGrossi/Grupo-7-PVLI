@@ -1,6 +1,8 @@
-# Grupo-7-PVLI
-"Almas Oscuras" es un videojuego creado por Los Cachopos, equipo formado por Pablo García Grossi y Gonzalo Cidoncha Pérez.
-Nuestro juego, "Almas Oscuras", es una versión estilo retro del famoso Action RPG "Dark Souls". La premisa principal es traer los elementos más básicos del título original y transformarlos a una estética y unas mecánicas similares a la de los juegos de la consola NES.
+
+
+**Old Souls** es un videojuego creado por Los Cachopos, equipo formado por Pablo García Grossi y Gonzalo Cidoncha Pérez.
+
+Nuestro juego, **Old Souls**, es una versión estilo retro del famoso Action RPG "Dark Souls". La premisa principal es traer los elementos más básicos del título original y transformarlos a una estética y unas mecánicas similares a la de los juegos de la consola NES.
 
 En primera instancia, la estética y la vista cenital, ambas parecidas a títulos de la mencionada consola como el "The Legend of Zelda" o "Gremlins 2" para la NES. 
 
