@@ -1,4 +1,4 @@
-# Old Souls
+![Titulo](https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/TextoOldSouls.png)
 
 ### Introducción
 
@@ -8,7 +8,7 @@ Nuestro juego, **Old Souls**, es una versión estilo retro del famoso Action RPG 
 
 En primera instancia, la estética y la vista cenital, son ambas parecidas a las de títulos de la mencionada consola como el "The Legend of Zelda" o "Gremlins 2”
 
-![Imagen del juego](https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Old-Souls-Image.png) 
+![Imagen del juego](https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/Old-Souls-Image.png) 
 
 Además, la forma en la que se avanza por el mapa es similar, a modo de "dungeon" pasando por varias salas con enemigos. Sin embargo, cada una de estas salas tendrán estructuras diferentes y desafíos variados.
 
