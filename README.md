@@ -1,4 +1,4 @@
-![Titulo](https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/TextoOldSouls.png)
+<img src="https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/TextoOldSouls.png" width="500" height="600">
 
 ### Introduction
 
