@@ -1,17 +1,19 @@
-![Titulo](https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/TextoOldSouls.png)
+<img src="https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/TextoOldSouls.png" width="1000" height="600">
 
 ### Introduction
 
 **Old Souls** is a videogame created by Los Cachopos, a team comprised of Pablo García Grossi and Gonzalo Cidoncha Pérez.
-**Old Souls** is a retro versión of the famous Action RPG “Dark Souls”. The main idea is to take the most basic elements from the original game and adapt them into the old-school mechanics and aesthetics of the NES console.
-To start up, the game´s style and camera view will be inspired by classic NES titles such as “The Legend of Zelda” and “Gremlins 2”. 
 
-![Imagen del juego](https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/Old-Souls-Image.png)
+**Old Souls** is a retro version of the famous Action RPG *Dark Souls*. The main idea is to take the most basic elements from the original game and adapt them into the old-school mechanics and aesthetics of the NES console.
+To start up, the game´s style and camera view will be inspired by classic NES titles such as *The Legend of Zelda* and *Gremlins 2*. 
+
+<img src="https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/Old-Souls-Image.png" width="1000" height="600">
 
 Moreover, the way that the player moves around the map is similar to a dungeon crawler, with several rooms and enemies along the way. Every room has different displays and lots of challenges.
 ### Mechanics
 As for the game mechanics, there are three basic actions: attack, block and roll.
 The attack can be divided in three different moves, just like the original game:
+
 •	Quick attack: A swing of the weapon in direction the player is looking.
 
 •	Power attack: Stronger tan the quick attack, but slower to perform.
