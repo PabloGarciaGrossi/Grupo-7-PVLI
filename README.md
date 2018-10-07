@@ -10,7 +10,7 @@
 To start up, the game's style and camera view will be inspired by classic NES titles such as *The Legend of Zelda* and *Gremlins 2*. 
 
 <p align="center">
-	<img src="https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/Old-Souls-Image.png" width="1000" height="600">
+	<img src="https://github.com/PabloGarciaGrossi/Old-Souls/blob/master/Im%C3%A1genesGit/Old-Souls-Image.png" width="744" height="678">
 </p>
 	
 Moreover, the way that the player moves around the map is similar to a dungeon crawler, with several rooms and enemies along the way. Every room has different displays and lots of challenges.
