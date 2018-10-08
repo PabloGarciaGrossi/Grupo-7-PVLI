@@ -29,6 +29,37 @@ var PreloaderScene = {
     this.game.state.start('play');
   }
 };
+function Position(x,y)
+{
+  this.posx = x;
+  this.posy = y;
+}
+
+function LivingThing(graphic, position, speed, health, damage){
+this._graphic = graphic;
+this._position = position;
+this._speed = speed;
+this._health = health;
+this._damage = damage;
+};
+
+function Enemy (graphic, position, speed, health, damage)
+{
+  LivingThing.apply(this, [graphic, position, speed, health, damage]);
+}
+
+function Player (graphic, position, speed, health, damage, defense, magicDmg)
+{
+  LivingThing.apply(this, [graphic, position, speed, health, damage]);
+  this._estus = 3;
+  this._defense = defense;
+  this._magicDmg = magicDmg;
+  this._currenthealth = health;
+}
+Player.prototype.drink = function(){
+  this._estus -= 1;
+  this._currenthealth += 50;
+}
 
 
 window.onload = function () {
