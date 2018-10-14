@@ -22,13 +22,25 @@ var PreloaderScene = {
     this.load.setPreloadSprite(this.loadingBar);
 
     // TODO: load here the assets for the game
-    this.game.load.image('logo', 'images/phaser.png');
+    this.game.load.image('logo', 'images/Fondo.png');
+    this.game.load.image('titlesouls', 'images/TextoOldSouls.png')
   },
 
   create: function () {
     this.game.state.start('play');
   }
 };
+
+window.onload = function () {
+  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
+
+  game.state.add('boot', BootScene);
+  game.state.add('preloader', PreloaderScene);
+  game.state.add('play', PlayScene);
+
+  game.state.start('boot');
+};
+
 function Position(x,y)
 {
   this.posx = x;
@@ -60,14 +72,3 @@ Player.prototype.drink = function(){
   this._estus -= 1;
   this._currenthealth += 50;
 }
-
-
-window.onload = function () {
-  var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
-
-  game.state.add('boot', BootScene);
-  game.state.add('preloader', PreloaderScene);
-  game.state.add('play', PlayScene);
-
-  game.state.start('boot');
-};
