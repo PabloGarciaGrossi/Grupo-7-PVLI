@@ -9,8 +9,8 @@
     TextoSouls.anchor.setTo(0.5, 0.5);
     TextoSouls.scale.setTo(2.5,2.5);
   },
- /* update: function() {
+  update: function() {
     this.TextoSouls.angle += 0.5;
-  },*/
+  }
 };
 module.exports = PlayScene;
