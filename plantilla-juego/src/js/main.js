@@ -26,8 +26,8 @@ var PreloaderScene = {
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
     this.game.load.image('monedo', 'images/Monedas.png');
     this.game.load.spritesheet('player', 'images/SoldadoSouls.png',92, 114, 32);
-    this.load.tilemap('map', 'images/MapaPrueba.csv');
-    this.load.image('tileset', 'images/tileset.png');
+    this.game.load.tilemap('map', 'images/MapaPrueba.csv');
+    this.game.load.image('tileset', 'images/tileset.png');
   },
 
   create: function () {
