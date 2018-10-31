@@ -28,11 +28,11 @@
     }
     Player.prototype.moveY = function(speed)
     {
-      this.sprite.body.velocity.y += speed;
+      this.sprite.body.velocity.y = speed;
     }
     Player.prototype.moveX = function(speed)
     {
-      this.sprite.body.velocity.x += speed;
+      this.sprite.body.velocity.x = speed;
     }
     /*coso.prototype.moveY = function(speed)
     {
@@ -69,23 +69,27 @@
     //this.cosa.sprite.rotation += 0.01;
     if (this.cursors.left.isDown)
     {
-      this.playerino.moveX(-10);
+      this.playerino.moveX(-100);
       this.hero.animations.play('runleft');
     }
     else if (this.cursors.right.isDown)
     {
-      this.playerino.moveX(10);
+      this.playerino.moveX(100);
       this.hero.animations.play('runright');
     }
-    if (this.cursors.up.isDown)
+    else if (this.cursors.up.isDown)
     {
-      this.playerino.moveY(-10);
+      this.playerino.moveY(-100);
       this.hero.animations.play('runup');
     }
     else if (this.cursors.down.isDown)
     {
-      this.playerino.moveY(10);
+      this.playerino.moveY(100);
       this.hero.animations.play('rundown');
+    }
+    else{
+      this.playerino.sprite.body.velocity.x= 0;
+      this.playerino.sprite.body.velocity.y= 0;
     }
 
     console.log(this.TextoSouls);
