@@ -25,7 +25,7 @@ var PreloaderScene = {
     this.game.load.image('logo', 'images/Fondo.png');
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
     this.game.load.image('monedo', 'images/Monedas.png');
-    this.game.load.spritesheet('player', 'images/SoldadoSouls.png',92, 114, 32);
+    this.game.load.spritesheet('player', 'images/SoldadoSouls.png', 92, 114, 32);
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
     this.game.load.image('tileset', 'images/tileset.png');
   },
@@ -42,10 +42,10 @@ var config = {
   zoom: 2,
   pixelArt: true,
   physics: {
-      default: 'arcade',
-      arcade: {
-          gravity: { y: 0 }
-      }
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 0 }
+    }
   },
 };
 window.onload = function () {
@@ -58,39 +58,20 @@ window.onload = function () {
   game.state.start('boot');
 };
 
-function Position(x,y)
-{
-  this.posx = x;
-  this.posy = y;
-}
+// function Position(x, y) {
+//   this.posx = x;
+//   this.posy = y;
+// }
 
-function LivingThing(graphic, speed, health, damage){
-this._graphic = graphic;
-this._speed = speed;
-this._health = health;
-this._damage = damage;
+function LivingThing(graphic, speed, health, damage) {
+  this._graphic = graphic;
+  this._speed = speed;
+  this._health = health;
+  this._damage = damage;
 };
-LivingThing.prototype.moveX = function(){
+LivingThing.prototype.moveX = function () {
   this._graphic.x += this._speed;
 }
-LivingThing.prototype.moveY = function(){
+LivingThing.prototype.moveY = function () {
   this._graphic.y += this._speed;
-}
-
-function Enemy (graphic, speed, health, damage)
-{
-  LivingThing.apply(this, [graphic, speed, health, damage]);
-}
-
-function Player (graphic, speed, health, damage, defense, magicDmg)
-{
-  LivingThing.apply(this, [graphic, speed, health, damage]);
-  this._estus = 3;
-  this._defense = defense;
-  this._magicDmg = magicDmg;
-  this._currenthealth = health;
-}
-Player.prototype.drink = function(){
-  this._estus -= 1;
-  this._currenthealth += 50;
 }
