@@ -24,7 +24,7 @@ var PreloaderScene = {
     // TODO: load here the assets for the game
     this.game.load.image('logo', 'images/Fondo.png');
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
-    this.game.load.image('monedo', 'images/Monedas.png');
+    this.game.load.spritesheet('esqueleto', 'images/skeletons.png',16, 25, 8);
     this.game.load.spritesheet('player', 'images/SoldadoSouls.png', 92, 114, 32);
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
     this.game.load.image('tileset', 'images/tileset.png');

@@ -1,8 +1,6 @@
 'use strict';
-var map;
-var layer;
 var Player = require('./player.js');
-var jugador;
+//var Enemy = require('./Enemy.js');
   var PlayScene = {
   create: function () {
     this.game.stage.backgroundColor = '#787878';

@@ -20,4 +20,4 @@ function Character(game, speed, x, y, spritename)
       this.body.velocity.x = speed;
       this.body.velocity.y = 0;
     }
-module.exports = Character;
+    module.exports = Character;
