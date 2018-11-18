@@ -10,7 +10,7 @@ var MainMenu = {
         music = game.sound.play('musicmenu');
 
         
-        this.createButton(game, "Play", game.world.centerX, game.world.centerY + 150, 300, 100,
+        this.createButton(game, game.world.centerX, game.world.centerY + 150, 300, 100,
         function(){
             this.state.start('play');
         });
@@ -25,7 +25,7 @@ var MainMenu = {
 
     },
 
-    createButton : function(game, string, x, y, w, h, callback){
+    createButton : function(game, x, y, w, h, callback){
         var button1 = game.add.button(x,y,'button', callback, this, 2,1);
 
         button1.anchor.setTo(0.5,0.5);
