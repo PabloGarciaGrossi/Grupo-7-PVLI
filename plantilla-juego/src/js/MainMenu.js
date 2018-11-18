@@ -7,8 +7,7 @@ var MainMenu = {
         var titlescreen;
         var music;
 
-        music = game.add.audio('musicmenu');
-        music.play();
+        music = game.sound.play('musicmenu');
 
         
         this.createButton(game, "Play", game.world.centerX, game.world.centerY + 150, 300, 100,
@@ -19,7 +18,6 @@ var MainMenu = {
         titlescreen = game.add.sprite(game.world.centerX, game.world.centerY, 'menu');
         titlescreen.anchor.setTo(0.5,0.5);
         
-
     },
 
     update:function (game) {
@@ -34,13 +32,6 @@ var MainMenu = {
         button1.width = w;
         button1.height = h;
 
-        var text = game.add.text(button1.x, button1.y, string, {
-            font: "14px Arial", 
-            fill: "#fff",
-            align: "center"
-        });
-
-        text.anchor.setTo(0.5,0.5);
     }
 
 

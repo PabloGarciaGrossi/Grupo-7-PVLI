@@ -23,6 +23,8 @@ var PreloaderScene = {
     this.load.setPreloadSprite(this.loadingBar);
 
     // TODO: load here the assets for the game
+
+    //imagenes
     this.game.load.image('logo', 'images/Fondo.png');
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
     this.game.load.spritesheet('esqueleto', 'images/skeletons.png',16, 25, 8);
@@ -31,6 +33,7 @@ var PreloaderScene = {
     this.game.load.image('tileset', 'images/tileset.png');
     this.game.load.image('menu', 'images/Menu.png');
 
+    //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
 
   },
