@@ -1,6 +1,7 @@
 'use strict';
 
 var PlayScene = require('./play_scene.js');
+var MainMenu = require('./MainMenu.js');
 
 
 var BootScene = {
@@ -28,12 +29,17 @@ var PreloaderScene = {
     this.game.load.spritesheet('player', 'images/SoldadoSouls.png', 92, 114, 32);
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
     this.game.load.image('tileset', 'images/tileset.png');
+    this.game.load.image('menu', 'images/Menu.png');
+
+    this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
+
   },
 
   create: function () {
-    this.game.state.start('play');
+    this.game.state.start('mainmenu');
   }
 };
+
 var config = {
   type: Phaser.AUTO,
   parent: 'content',
@@ -48,30 +54,27 @@ var config = {
     }
   },
 };
+
 window.onload = function () {
   var game = new Phaser.Game(config);
 
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
   game.state.add('play', PlayScene);
+  game.state.add('mainmenu', MainMenu);
 
   game.state.start('boot');
 };
 
-// function Position(x, y) {
-//   this.posx = x;
-//   this.posy = y;
+// function LivingThing(graphic, speed, health, damage) {
+//   this._graphic = graphic;
+//   this._speed = speed;
+//   this._health = health;
+//   this._damage = damage;
+// };
+// LivingThing.prototype.moveX = function () {
+//   this._graphic.x += this._speed;
 // }
-
-function LivingThing(graphic, speed, health, damage) {
-  this._graphic = graphic;
-  this._speed = speed;
-  this._health = health;
-  this._damage = damage;
-};
-LivingThing.prototype.moveX = function () {
-  this._graphic.x += this._speed;
-}
-LivingThing.prototype.moveY = function () {
-  this._graphic.y += this._speed;
-}
+// LivingThing.prototype.moveY = function () {
+//   this._graphic.y += this._speed;
+// }

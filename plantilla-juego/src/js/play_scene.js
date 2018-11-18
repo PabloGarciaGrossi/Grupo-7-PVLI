@@ -25,7 +25,6 @@ var Player = require('./player.js');
     //this.cosa.sprite.rotation += 0.01;
     this.jugador.update();
 
-    console.log(this.TextoSouls);
   }
 };
 module.exports = PlayScene;
