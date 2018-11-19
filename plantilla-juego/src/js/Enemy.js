@@ -4,11 +4,12 @@ var Character = require('./Character.js');
 function Enemy(game, speed, x, y, spritename)
 {
     Character.call(this,game,speed,x,y,spritename);
+    this.game = game;
 }
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
 
-Enemy.prototype.create()
+Enemy.prototype.create = function()
 {
     this.game.add.existing(this);
     this.game.physics.arcade.enable(this);
@@ -28,6 +29,7 @@ Enemy.prototype.MoveTo = function(x, y){
    this.body.velocity.y = Math.sin(angle) * this.speed;
 
     return angle;
+
 }
 Enemy.prototype.distanceToXY = function (x, y) {
 
@@ -36,11 +38,31 @@ Enemy.prototype.distanceToXY = function (x, y) {
 
     return Math.sqrt(dx * dx + dy * dy);
 }
-Enemy.prototype.update = function(player)
-{
-    if (this.distanceToXY(player.x,player.y) < 50)
+Enemy.prototype.detectAnimation = function(x,y){
+    var cx = this.x -x;
+    var cy = this.y -y;
+    if (cx > 0)
     {
-        this.MoveTo(player.x,player.y);
+        this.animations.play('runleft');
+    }
+    else if (cx < 0)
+    {
+        this.animations.play('runright');
+    }
+}
+Enemy.prototype.update = function(playerx, playery)
+{
+    var dist = this.distanceToXY(playerx, playery);
+    if (dist < 200)
+    {
+    this.MoveTo(playerx, playery);
+    this.detectAnimation(playerx, playery);
+    }
+    else if (dist >= 200)
+    {
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+        this.animations.play('idle');
     }
 }
 module.exports = Enemy;
