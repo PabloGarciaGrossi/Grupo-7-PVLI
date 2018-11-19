@@ -1,7 +1,8 @@
 'use strict';
 var Player = require('./player.js');
 var Enemy = require('./Enemy.js');
-  var PlayScene = {
+var PlayScene = {
+
   create: function () {
     this.game.stage.backgroundColor = '#787878';
     this.map = this.game.add.tilemap('map',32,32);
@@ -25,10 +26,19 @@ var Enemy = require('./Enemy.js');
     this.physics.arcade.collide(this.jugador,this.layer);
     this.physics.arcade.collide(this.enemy, this.layer);
 
+    this.physics.arcade.overlap(this.jugador, this.enemy, this.collision, null, this);
+
     //this.cosa.sprite.rotation += 0.01;
     this.jugador.update();
     this.enemy.update(this.jugador.x, this.jugador.y);
 
+  },
+
+  collision : function (jugador, enemy) {
+
+    this.game.state.start(this.game.state.current);
+
   }
+
 };
 module.exports = PlayScene;

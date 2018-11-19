@@ -32,6 +32,7 @@ var PreloaderScene = {
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
     this.game.load.image('tileset', 'images/tileset.png');
     this.game.load.image('menu', 'images/Menu.png');
+    this.game.load.image('fireball', 'images/fireball.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
@@ -39,7 +40,7 @@ var PreloaderScene = {
   },
 
   create: function () {
-    this.game.state.start('play');
+    this.game.state.start('mainmenu');
   }
 };
 
