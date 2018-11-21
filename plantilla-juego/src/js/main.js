@@ -33,6 +33,7 @@ var PreloaderScene = {
     this.game.load.image('tileset', 'images/tileset.png');
     this.game.load.image('menu', 'images/Menu.png');
     this.game.load.image('fireball', 'images/fireball.png');
+    this.game.load.image('rock', 'images/Pedrolo.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');

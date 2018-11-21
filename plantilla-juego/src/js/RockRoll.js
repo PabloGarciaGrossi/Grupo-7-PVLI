@@ -22,11 +22,12 @@ RockRoll.prototype.create = function()
 }
 
 RockRoll.prototype.update = function(playerX, playerY){
-    if(this.direction == 0 || this.direction == 1)
-        activarX(playerX, this.distancia);
-    else activarY(playerY, this.distancia);
 
-    if (active){
+    if(this.direction == 0 || this.direction == 1)
+        this.activarX(playerX, this.distancia);
+    else this.activarY(playerY, this.distancia);
+
+    if (this.active == true){
         if (this.direction == 0) {
             this.moveX(speed);
         } else if (this.direction == 1) {
@@ -39,14 +40,19 @@ RockRoll.prototype.update = function(playerX, playerY){
     }
 }
 
-RockRoll.prototype.activarX(x, distx) {
+RockRoll.prototype.activarX = function(x, distx) {
 
-    if(x = this.x + distx) this.active = true;
-
-}
-
-RockRoll.prototype.activarY(y, disty) {
-
-    if(y = this.y + disty) this.active = true;
+    if (x == this.x + distx) {
+        this.active = true;
+    }
 
 }
+
+RockRoll.prototype.activarY  = function(y, disty) {
+
+    if (y == this.y + disty) {
+        this.active = true;
+    }
+
+}
+module.exports = RockRoll;

@@ -1,6 +1,8 @@
 'use strict';
 var Player = require('./player.js');
 var Enemy = require('./Enemy.js');
+var RockRoll = require('./RockRoll');
+
 var PlayScene = {
 
   create: function () {
@@ -16,8 +18,12 @@ var PlayScene = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.jugador = new Player(this.game,300,this.game.world.centerX,this.game.world.centerY,"player",this.cursors);
     this.enemy = new Enemy(this.game, 75, 150,150,"esqueleto");
+    this.rock = new RockRoll(this.game, 80, 500, 150, "rock", 0, 400);
+  
     this.jugador.create();
     this.enemy.create();
+    this.rock.create();
+    
     this.camera.follow(this.jugador);
 
   },
@@ -25,12 +31,14 @@ var PlayScene = {
   update: function() {
     this.physics.arcade.collide(this.jugador,this.layer);
     this.physics.arcade.collide(this.enemy, this.layer);
+    this.physics.arcade.collide(this.rock, this.layer);
 
     this.physics.arcade.overlap(this.jugador, this.enemy, this.collision, null, this);
 
     //this.cosa.sprite.rotation += 0.01;
     this.jugador.update();
     this.enemy.update(this.jugador.x, this.jugador.y);
+    this.rock.update(this.jugador.x, this.jugador.y);
 
   },
 
