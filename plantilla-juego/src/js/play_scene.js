@@ -10,7 +10,7 @@ var PlayScene = {
     this.map.setCollisionBetween(0,23);
     this.layer = this.map.createLayer(0);
     this.layer.resizeWorld();
-    this.layer.debug = true;
+    //this.layer.debug = true;
     
     
     this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -36,7 +36,23 @@ var PlayScene = {
 
   collision : function (jugador, enemy) {
 
-    this.game.state.start(this.game.state.current);
+    if (enemy.x > jugador.x)
+    {
+      jugador.x -= 20;
+    }
+    else{
+      jugador.x += 20;
+    }
+    if (enemy.y > jugador.y)
+    {
+      jugador.y += 20;
+    }
+    else
+    {
+      jugador.y -= 20;
+    }
+
+    //this.game.state.start(this.game.state.current);
 
   }
 
