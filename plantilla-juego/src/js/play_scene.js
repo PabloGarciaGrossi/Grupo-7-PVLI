@@ -5,12 +5,13 @@ var PlayScene = {
 
   create: function () {
     this.game.stage.backgroundColor = '#787878';
-    this.map = this.game.add.tilemap('map',32,32);
+    this.map = this.game.add.tilemap('map');
     this.map.addTilesetImage('tileset');
     this.map.setCollisionBetween(0,23);
     this.layer = this.map.createLayer(0);
+   // this.map.setCollisionBetween(1, 5000, true, 0);
     this.layer.resizeWorld();
-    //this.layer.debug = true;
+    this.layer.debug = true;
     
     
     this.cursors = this.game.input.keyboard.createCursorKeys();

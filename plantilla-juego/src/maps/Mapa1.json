@@ -57,10 +57,6 @@
  "tileheight":32,
  "tilesets":[
         {
-         "firstgid":1,
-         "source":"..\/..\/..\/..\/..\/..\/..\/Desktop\/Cosas de trabajo\/sheet.tsx"
-        }, 
-        {
          "firstgid":248,
          "source":"..\/..\/..\/..\/..\/..\/..\/Desktop\/Cosas de trabajo\/pokemon.tsx"
         }],
