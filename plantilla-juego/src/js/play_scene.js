@@ -14,6 +14,7 @@ var PlayScene = {
    // this.map.setCollisionBetween(1, 5000, true, 0);
     this.layer.resizeWorld();
     this.layer.debug = true;
+    this.distance = 40;
     
     
     this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -35,8 +36,6 @@ var PlayScene = {
     this.physics.arcade.collide(this.rock, this.layer);
 
     this.physics.arcade.overlap(this.jugador, this.enemy, this.collision, null, this);
-
-    //this.cosa.sprite.rotation += 0.01;
     this.jugador.update();
     this.enemy.update(this.jugador.x, this.jugador.y);
     this.rock.update(this.jugador.x, this.jugador.y);
@@ -48,6 +47,9 @@ var PlayScene = {
     if (enemy.x > jugador.x)
     {
       jugador.x -= 20;
+      /*jugador.body.velocity.x = -500;
+      jugador.knockback = true;
+      jugador.lastposition = jugador.x;*/
     }
     else{
       jugador.x += 20;

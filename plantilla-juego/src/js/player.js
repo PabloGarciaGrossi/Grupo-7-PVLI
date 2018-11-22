@@ -5,6 +5,9 @@ function Player(game,speed,x,y,spritename,cursors)
   {
     Character.call(this,game,speed,x,y,spritename);
     this.cursors = cursors;
+   // this.knockback = false;
+   // this.distance = 70;
+   // this.lastposition = 0;
   }
 
   Player.prototype = Object.create(Character.prototype);
@@ -40,6 +43,10 @@ function Player(game,speed,x,y,spritename,cursors)
       this.speed += this.speed/2;
     }
   }
+  /*Player.prototype.changeKnockback = function()
+  {
+    this.knockback = false;
+  }*/
   Player.prototype.update = function()
   {
     if (this.cursors.left.isDown)
@@ -66,6 +73,6 @@ function Player(game,speed,x,y,spritename,cursors)
       this.body.velocity.x= 0;
       this.body.velocity.y= 0;
       this.animations.play('idle');
-    }
+      }
   }
   module.exports = Player;
