@@ -17,7 +17,7 @@ function Player(game,speed,x,y,spritename,cursors)
   Player.prototype.create = function()
   {
     this.game.add.existing(this);
-    this.game.physics.arcade.enable(this);
+    this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
     this.animations.add('idle', [17],1,true);
@@ -25,6 +25,8 @@ function Player(game,speed,x,y,spritename,cursors)
     this.animations.add('runright', [8,9,10,11,12,13,14,15],8,true);
     this.animations.add('rundown', [16,17,18,19,20,21,22,23],8,true);
     this.animations.add('runup', [24,25,26,27,28,29,30,31],8,true);
+    this.body.setSize(30, 35, 6, 10);
+    this.anchor.setTo(0.5, 0.5);
   }
 
   Player.prototype.moveY = function(speed)

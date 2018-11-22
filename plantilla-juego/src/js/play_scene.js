@@ -28,12 +28,11 @@ var PlayScene = {
     
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.jugador = new Player(this.game,300,545,2835,"player",this.cursors);
-    this.enemy = new Enemy(this.game, 75, 150,150,"esqueleto");
+    this.enemy = new Enemy(this.game, 75, 700,1990,"esqueleto");
     //this.rock = new RockRoll(this.game, 80, 500, 150, "rock", 0, 400);
     this.jugador.create();
     this.enemy.create();
     //this.rock.create();
-    
     var barconfig = {x: 200, y: 50};
     this.health = new HealthBar(this.game, barconfig);
     this.health.setFixedToCamera(true);
