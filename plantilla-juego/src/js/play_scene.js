@@ -1,7 +1,8 @@
 'use strict';
 var Player = require('./player.js');
 var Enemy = require('./Enemy.js');
-var RockRoll = require('./RockRoll');
+var RockRoll = require('./RockRoll.js');
+var HealthBar = require('./HealthBar.js');
 
 var PlayScene = {
 
@@ -29,11 +30,14 @@ var PlayScene = {
     this.jugador = new Player(this.game,300,this.game.world.centerX,this.game.world.centerY,"player",this.cursors);
     this.enemy = new Enemy(this.game, 75, 150,150,"esqueleto");
     //this.rock = new RockRoll(this.game, 80, 500, 150, "rock", 0, 400);
-  
     this.jugador.create();
     this.enemy.create();
     //this.rock.create();
     
+    var barconfig = {x: 200, y: 100};
+    this.health = new HealthBar(this.game, barconfig);
+    this.health.setFixedToCamera(true);
+
     this.camera.follow(this.jugador);
 
   },
@@ -47,6 +51,9 @@ var PlayScene = {
     //this.physics.arcade.collide(this.rock, this.layer);
 
     this.physics.arcade.overlap(this.jugador, this.enemy, this.collision, null, this);
+    this.physics.arcade.overlap(this.jugador, this.rock, this.collision, null, this);
+
+    //this.cosa.sprite.rotation += 0.01;
     this.jugador.update();
     this.enemy.update(this.jugador.x, this.jugador.y);
     //this.rock.update(this.jugador.x, this.jugador.y);
@@ -57,21 +64,26 @@ var PlayScene = {
 
     if (enemy.x > jugador.x)
     {
-      jugador.x -= 20;
-      /*jugador.body.velocity.x = -500;
-      jugador.knockback = true;
-      jugador.lastposition = jugador.x;*/
+      jugador.x -= 100;
+      jugador.salud -= 5;
+      this.health.setPercent(jugador.salud);
     }
-    else{
-      jugador.x += 20;
-    }
-    if (enemy.y > jugador.y)
+    else if (enemy.x <= jugador.x) {
+      jugador.x += 100;
+      jugador.salud -= 5;
+      this.health.setPercent(jugador.salud);
+      
+    } else if (enemy.y > jugador.y)
     {
-      jugador.y += 20;
+      jugador.y += 100;
+      jugador.salud -= 5;
+      this.health.setPercent(jugador.salud);
     }
-    else
+    else if (enemy.y <= jugador.y)
     {
-      jugador.y -= 20;
+      jugador.y -= 100;
+      jugador.salud -= 5;
+      this.health.setPercent(jugador.salud);
     }
 
     //this.game.state.start(this.game.state.current);
