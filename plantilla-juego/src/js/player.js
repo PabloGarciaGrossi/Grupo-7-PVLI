@@ -5,6 +5,7 @@ function Player(game,speed,x,y,spritename,cursors)
   {
     Character.call(this,game,speed,x,y,spritename);
     this.cursors = cursors;
+    this.salud = 100;
   }
 
   Player.prototype = Object.create(Character.prototype);
@@ -66,6 +67,10 @@ function Player(game,speed,x,y,spritename,cursors)
       this.body.velocity.x= 0;
       this.body.velocity.y= 0;
       this.animations.play('idle');
+    }
+
+    if (this.salud <= 0){
+      this.game.state.start(this.game.state.current);
     }
   }
   module.exports = Player;
