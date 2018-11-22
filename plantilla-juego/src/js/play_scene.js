@@ -15,6 +15,7 @@ var PlayScene = {
    // this.map.setCollisionBetween(1, 5000, true, 0);
     this.layer.resizeWorld();
     this.layer.debug = true;
+    this.distance = 40;
     
     
     this.cursors = this.game.input.keyboard.createCursorKeys();
