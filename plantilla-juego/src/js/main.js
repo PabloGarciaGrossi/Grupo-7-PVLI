@@ -29,6 +29,7 @@ var PreloaderScene = {
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
     this.game.load.spritesheet('esqueleto', 'images/skeletons2.png',32, 50, 8);
     this.game.load.spritesheet('player', 'images/SoldadoSouls2.png', 38, 48, 32);
+    this.game.load.spritesheet('sword', 'images/Espada.png', 28, 28, 7);
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
     this.game.load.tilemap('mapa', 'maps/ElMapa.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tilesetCastillo', 'images/tilesCastillo.png');
@@ -53,7 +54,6 @@ var config = {
   height: 600,
   zoom: 2,
   pixelArt: true,
-  debug: true,
   physics: {
     default: 'arcade',
     arcade: {

@@ -3,6 +3,7 @@ var Player = require('./player.js');
 var Enemy = require('./Enemy.js');
 var RockRoll = require('./RockRoll.js');
 var HealthBar = require('./HealthBar.js');
+var Sword = require('./Sword.js');
 
 var PlayScene = {
 
@@ -29,9 +30,12 @@ var PlayScene = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.jugador = new Player(this.game,300,545,2835,"player",this.cursors);
     this.enemy = new Enemy(this.game, 75, 700,1990,"esqueleto");
+    this.sword = new Sword(this.game, 0, 700, 1980, 'sword');
     //this.rock = new RockRoll(this.game, 80, 500, 150, "rock", 0, 400);
     this.jugador.create();
     this.enemy.create();
+    this.sword.create();
+    this.jugador.addChild(this.sword);
     //this.rock.create();
     var barconfig = {x: 200, y: 50};
     this.health = new HealthBar(this.game, barconfig);
@@ -47,6 +51,9 @@ var PlayScene = {
     this.physics.arcade.collide(this.jugador,this.layer3);
     this.physics.arcade.collide(this.jugador,this.layer4);
     this.physics.arcade.collide(this.enemy, this.layer);
+    this.physics.arcade.collide(this.enemy,this.layer2);
+    this.physics.arcade.collide(this.enemy,this.layer3);
+    this.physics.arcade.collide(this.enemy,this.layer4);
     //this.physics.arcade.collide(this.rock, this.layer);
 
     this.physics.arcade.overlap(this.jugador, this.enemy, this.collision, null, this);
