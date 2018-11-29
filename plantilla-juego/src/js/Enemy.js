@@ -41,13 +41,24 @@ Enemy.prototype.distanceToXY = function (x, y) {
 Enemy.prototype.detectAnimation = function(x,y){
     var cx = this.x -x;
     var cy = this.y -y;
-    if (cx > 0)
+    if (cx > 0 && Math.abs(cx) >= Math.abs(cy))
     {
         this.animations.play('runleft');
+        this.direction = 1;
     }
-    else if (cx < 0)
+    else if (cx < 0 && Math.abs(cx) >= Math.abs(cy))
     {
         this.animations.play('runright');
+        this.direction = 3;
+    }
+    else if (cy > 0)
+    {
+        this.animations.play('runup');
+        this.direction = 2;
+    }
+    else{
+        this.animations.play('rundown');
+        this.direction = 0;
     }
 }
 Enemy.prototype.update = function(playerx, playery)

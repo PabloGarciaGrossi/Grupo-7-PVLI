@@ -6,10 +6,10 @@ function Sword(game, speed, x, y, spritename)
     Character.call(this,game,speed,x,y,spritename);
     this.game = game;
     this.direction = 0;
-    this.rot = 1;
+    this.rot = 100;
 }
 Sword.prototype = Object.create(Character.prototype);
-Sword.prototype.constructor = Enemy;
+Sword.prototype.constructor = Sword;
 
 Sword.prototype.create = function()
 {
@@ -17,36 +17,52 @@ Sword.prototype.create = function()
     this.game.physics.arcade.enable(this);
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
-    this.slashAnim = this.animations.add('slash', [6,0,1,2,3,4,5],7,false);
-    this.slashAnim.onStart.add(function(){slash.visible = true}, this);
-    this.slashAnim.onComplete.add(function () {slash.visible = false}, this);
+    this.animations.add('slash', [0,1,2,3,4,5,6],7,false);
+    this.slashAnim = this.animations.add('slash', [0,1,2,3,4,5,6],7,false);
     this. anchor.setTo(0.5,0.5);
 }
 
-Sword.prototype.startAttack() = function(dir)
+Sword.prototype.startAttack = function(dir)
 {
     this.direction = dir;
-    switch(this.direction)
+    switch(dir)
     {
         case 0:
-            this.angle = 45;
+            this.scale.setTo(1, 1);
+            this.y = 25;
+            this.x = 0;
             break;
         case 1:
-            this.angle = 135;
+            this.scale.setTo(1, -1);
+            this.x = -25;
+            this.y = 0;
             break;
         case 2:
-            this.angle = 225;
+            this.scale.setTo(-1, -1);
+            this.y = -25;
+            this.x = 0;
             break;
         case 3:
-            this.angle = 315;
+            this.scale.setTo(-1, 1);
+            this.y = 0;
+            this.x = 25;
             break;
     }
     this.rotation = this.rot;
-    this.animations.play('slash');
+    //this.animations.play('slash');
 }
 
-Sword.prototype.stopAttack() = function()
+Sword.prototype.stopAttack = function(player)
 {
     this.rotation = 0;
+    player.attacking = false;
+}
+
+Sword.prototype.update = function(player)
+{
+    if (player.attacking)
+    {
+        this.startAttack(0, player);
+    }
 }
 module.exports = Sword;
