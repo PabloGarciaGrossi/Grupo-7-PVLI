@@ -1,15 +1,16 @@
 'use strict';
 var Character = require('./Character.js');
 
-function Player(game,speed,x,y,spritename,cursors, sword)
+function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
   {
     Character.call(this,game,speed,x,y,spritename);
     this.cursors = cursors;
+    this.spriteshoot = spriteweapon;
     this.salud = 100;
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
+    this.fireButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
     this.attacking = false;
     this.sword = sword;
-    
     this.invincible = false;
     this.moving = true;
     this.knockForce = 500;
@@ -32,6 +33,13 @@ function Player(game,speed,x,y,spritename,cursors, sword)
     this.animations.add('runup', [24,25,26,27,28,29,30,31],8,true);
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
+
+    this.shoot = this.game.add.weapon(1, this.spriteshoot);
+    this.shoot.bulletSpeed = 300;
+    this.shoot.fireRate = 1000;
+    this.shoot.bulletLifespan = 2000;
+    this.shoot.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
+    this.shoot.trackSprite(this, 0, 0, false);
   }
 
   Player.prototype.moveY = function(speed)
@@ -124,6 +132,23 @@ function Player(game,speed,x,y,spritename,cursors, sword)
       this.moveY(this.speed);
       this.animations.play('rundown');
       this.direction = 0;
+    }
+    else if (this.fireButton.isDown){
+      switch (this.direction)
+      {
+        case 0:
+          this.shoot.fireAtXY(this.x, this.y + 100);
+          break;
+        case 1: 
+          this.shoot.fireAtXY(this.x - 100, this.y);
+          break;
+        case 2: 
+          this.shoot.fireAtXY(this.x, this.y - 100);
+          break;
+        case 3: 
+          this.shoot.fireAtXY(this.x + 100, this.y);
+          break;
+      }
     }
     else{
       this.body.velocity.x= 0;

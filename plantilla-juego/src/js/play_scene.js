@@ -31,7 +31,7 @@ var PlayScene = {
     this.enemy = new Enemy(this.game, 75, 700,1990,"esqueleto");
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
-    this.jugador = new Player(this.game,300,545,2835,"player",this.cursors, this.sword);
+    this.jugador = new Player(this.game,300,545,2835,"player",this.cursors, this.sword, "fireball");
     //this.rock = new RockRoll(this.game, 80, 500, 150, "rock", 0, 400);
     this.jugador.create();
     this.enemy.create();
