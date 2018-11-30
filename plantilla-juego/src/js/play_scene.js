@@ -72,9 +72,7 @@ var PlayScene = {
 
   collision : function (jugador, enemy) {
         jugador.playerCol(enemy);
-
-    //this.game.state.start(this.game.state.current);
-
+        this.health.setPercent(this.jugador.salud - 10);
   }
 
 };
