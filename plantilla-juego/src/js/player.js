@@ -9,10 +9,12 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.salud = 100;
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.fireButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+    this.rollButton = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
     this.attacking = false;
     this.sword = sword;
     this.invincible = false;
     this.moving = true;
+    this.rolling = false;
     this.knockForce = 500;
     this.knockback = false;
   }
@@ -54,17 +56,45 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     }
   Player.prototype.roll = function()
   {
-    if (this.body.velocity.x != 0 && this.body.velocity.y != 0)
+    if (this.body.velocity.x != 0 || this.body.velocity.y != 0)
     {
-      this.speed += this.speed/2;
+      switch(this.direction)
+      {
+        case 0:
+          this.body.velocity.y = 500;
+          this.body.velocity.x = 0;
+          break;
+        case 1:
+          this.body.velocity.y = 0;
+          this.body.velocity.x = -500;
+          break;
+        case 2:
+          this.body.velocity.y = -500;
+          this.body.velocity.x = 0;
+          break;
+        case 3:
+          this.body.velocity.y = 0;
+          this.body.velocity.x = 500;
+          break;
+      }
+      this.alpha = 0.5;
+      this.invincible = true;
+      this.rolling = true;
+      this.game.time.events.add(Phaser.Timer.SECOND * 0.2, Player.prototype.stopRoll , this);
     }
+  }
+  Player.prototype.stopRoll = function()
+  {
+    this.body.velocity.y = 0;
+    this.body.velocity.x = 0;
+    this.alpha = 1;
+    this.invincible = false;
+    this.rolling = false;
   }
   Player.prototype.attack = function(){
     //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
     //(May not be necessary in your game.)
     if (!this.attacking){
-        //Play the "attack" animation
-        this.sword.animations.play('slash');
         this.attacking = true;
         this.moving = false;
         this.sword.startAttack(this.direction);
@@ -105,33 +135,37 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
   }
   Player.prototype.update = function()
   {
-  if (this.moving)
+  if (this.moving && !this.rolling)
   {
     if (this.attackButton.isDown)
         this.attack();
+    else if (this.rollButton.isDown)
+      {
+        this.roll();
+      }
     else if (this.cursors.left.isDown)
     {
+      this.direction = 1;
       this.moveX(-this.speed);
       this.animations.play('runleft');
-      this.direction = 1;
     }
     else if (this.cursors.right.isDown)
     {
+      this.direction = 3;
       this.moveX(this.speed);
       this.animations.play('runright');
-      this.direction = 3;
     }
     else if (this.cursors.up.isDown)
     {
+      this.direction = 2;
       this.moveY(-this.speed);
       this.animations.play('runup');
-      this.direction = 2;
     }
     else if (this.cursors.down.isDown)
     {
+      this.direction = 0;
       this.moveY(this.speed);
       this.animations.play('rundown');
-      this.direction = 0;
     }
     else if (this.fireButton.isDown){
       switch (this.direction)
@@ -156,7 +190,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
       this.animations.play('idle');
     }
   }
-  else if (this.attacking && !this.knockback)
+  else if (this.attacking && !this.knockback && !this.rolling)
   {
     this.body.velocity.x= 0;
     this.body.velocity.y= 0;
