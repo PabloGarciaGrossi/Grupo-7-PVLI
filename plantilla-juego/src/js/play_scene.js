@@ -66,7 +66,7 @@ var PlayScene = {
     //this.cosa.sprite.rotation += 0.01;
     this.jugador.update();
     this.enemy.update(this.jugador.x, this.jugador.y);
-    this.sword.update(this.jugador);
+    //this.sword.update(this.jugador);
     //this.rock.update(this.jugador.x, this.jugador.y);
   },
 
