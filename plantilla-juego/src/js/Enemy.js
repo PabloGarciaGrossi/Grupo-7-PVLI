@@ -64,7 +64,7 @@ Enemy.prototype.detectAnimation = function(x,y){
 Enemy.prototype.update = function(playerx, playery)
 {
     var dist = this.distanceToXY(playerx, playery);
-    if (dist < 200)
+    if (dist < 200 && this.moving)
     {
     this.MoveTo(playerx, playery);
     this.detectAnimation(playerx, playery);
@@ -74,6 +74,13 @@ Enemy.prototype.update = function(playerx, playery)
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
         this.animations.play('idle');
+    }
+}
+Enemy.prototype.col = function(sword)
+{
+    if (sword.attacking)
+    {
+        this.knock(sword);
     }
 }
 module.exports = Enemy;

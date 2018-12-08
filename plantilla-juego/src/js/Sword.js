@@ -6,6 +6,7 @@ function Sword(game, speed, x, y, spritename)
     Character.call(this,game,speed,x,y,spritename);
     this.game = game;
     this.rot = 100;
+    this.attacking = false;
 }
 Sword.prototype = Object.create(Character.prototype);
 Sword.prototype.constructor = Sword;
@@ -23,6 +24,7 @@ Sword.prototype.create = function()
 
 Sword.prototype.startAttack = function(dir)
 {
+    this.direction = dir;
     switch(dir){
         case 0:
             this.scale.setTo(1, 1);
@@ -56,9 +58,7 @@ Sword.prototype.stopAttack = function(player)
 
 Sword.prototype.update = function(player)
 {
-    if (player.attacking)
-    {
-        this.startAttack(0, player);
-    }
+    this.body.velocity.x = 0;
+    this.body.velocity.y = 0;
 }
 module.exports = Sword;

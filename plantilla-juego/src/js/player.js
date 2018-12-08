@@ -97,42 +97,21 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     if (!this.attacking){
         this.attacking = true;
         this.moving = false;
+        this.sword.attacking = true;
         this.sword.startAttack(this.direction);
         //Start the Timer object that will wait for 1 second and then will triger the inner function.
         this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
             this.animations.play('idle');//Returns the animation to "idle"
             this.attacking = false;//Returns the boolean var to "false"
             this.moving = true;
+            this.sword.attacking = false;
         }, this);
     }
 }
-  Player.prototype.playerCol = function(enemy){
-      this.salud -= 10;
-      switch(enemy.direction)
-      {
-        case 0:
-          this.body.velocity.y = 500;
-          this.body.velocity.x = 0;
-          break;
-        case 1:
-          this.body.velocity.y = 0;
-          this.body.velocity.x = -500;
-          break;
-        case 2:
-          this.body.velocity.y = -500;
-          this.body.velocity.x = 0;
-          break;
-        case 3:
-          this.body.velocity.y = 0;
-          this.body.velocity.x = 500;
-          break;
-      }
-    this.moving = false;
-    this.invincible = true;
-    this.knockback = true;
-    this.alpha = 0.5;
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.1, function() { this.invincible = false; this.alpha = 1;this.moving = true;this.knockback = false;}, this);
-  }
+Player.prototype.col = function(enemy)
+{
+  this.knock(enemy);
+}
   Player.prototype.update = function()
   {
   if (this.moving && !this.rolling)

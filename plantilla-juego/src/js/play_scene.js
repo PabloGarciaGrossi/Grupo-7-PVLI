@@ -60,20 +60,21 @@ var PlayScene = {
     //this.physics.arcade.collide(this.rock, this.layer);
     if (this.jugador.invincible === false)
     this.physics.arcade.collide(this.jugador, this.enemy, this.collision, null, this);
+    this.physics.arcade.collide(this.enemy, this.jugador.sword, this.collision, null, this);
     //this.physics.arcade.overlap(this.jugador, this.rock, this.collision, null, this);
     //this.game.physics.arcade.overlap(this.jugador, this.enemy,this.jugador.playercol,null,this);
 
     //this.cosa.sprite.rotation += 0.01;
     this.jugador.update();
+    this.jugador.sword.update();
     this.enemy.update(this.jugador.x, this.jugador.y);
     //this.sword.update(this.jugador);
     //this.rock.update(this.jugador.x, this.jugador.y);
   },
 
   collision : function (jugador, enemy) {
-        jugador.playerCol(enemy);
+        jugador.col(enemy);
         this.health.setPercent(this.jugador.salud - 10);
   }
-
 };
 module.exports = PlayScene;
