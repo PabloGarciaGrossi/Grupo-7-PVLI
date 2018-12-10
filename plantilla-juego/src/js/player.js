@@ -33,6 +33,10 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.animations.add('runright', [8,9,10,11,12,13,14,15],8,true);
     this.animations.add('rundown', [16,17,18,19,20,21,22,23],8,true);
     this.animations.add('runup', [24,25,26,27,28,29,30,31],8,true);
+    this.animations.add('attackdown', [32,33,34,35,36,37],6,false);
+    this.animations.add('attackup', [40,41,42,43,44],5,false);
+    this.animations.add('attackright', [48,49,50,51,52],5,false);
+    this.animations.add('attackleft', [56,57,58,59,60],5,false);
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
 
@@ -99,6 +103,21 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
         this.moving = false;
         this.sword.attacking = true;
         this.sword.startAttack(this.direction);
+        switch(this.direction)
+        {
+          case 0:
+          this.animations.play('attackdown');
+          break;
+          case 1:
+          this.animations.play('attackleft');
+          break;
+          case 2:
+          this.animations.play('attackup');
+          break;
+          case 3:
+          this.animations.play('attackright');
+          break;
+        }
         //Start the Timer object that will wait for 1 second and then will triger the inner function.
         this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
             this.animations.play('idle');//Returns the animation to "idle"
