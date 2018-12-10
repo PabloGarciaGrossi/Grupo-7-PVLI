@@ -28,7 +28,7 @@ var PreloaderScene = {
     this.game.load.image('logo', 'images/Fondo.png');
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
     this.game.load.spritesheet('esqueleto', 'images/skeletons2.png',32, 50, 16);
-    this.game.load.spritesheet('player', 'images/SoldadoSouls2.png', 38, 48, 64);
+    this.game.load.spritesheet('player', 'images/SoldadoSouls2.png', 38, 48, 72);
     this.game.load.spritesheet('sword', 'images/ProbandoEspada.png', 51, 57, 32);
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
     this.game.load.tilemap('mapa', 'maps/ElMapa.json', null, Phaser.Tilemap.TILED_JSON);

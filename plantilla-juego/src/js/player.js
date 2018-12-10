@@ -38,7 +38,8 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.animations.add('attackup', [40,41,42,43,44],5,false);
     this.animations.add('attackright', [48,49,50,51,52],5,false);
     this.animations.add('attackleft', [56,57,58,59,60],5,false);
-    this.animations.add('rollleft', [38,39,45],false);
+    this.animations.add('rollleft', [66,67,68],3,true);
+    this.animations.add('rollright', [64,65,68],3,true);
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
 
@@ -86,7 +87,15 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
             this.body.velocity.x = 500;
             break;
         }
-        this.animations.play('rollleft');
+        switch(this.direction)
+        {
+          case 1:
+          this.animations.play('rollleft',10);
+          break;
+          case 3:
+          this.animations.play('rollright',10);
+          break;
+        }
         this.alpha = 0.5;
         this.invincible = true;
         this.rolling = true;
@@ -116,16 +125,16 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
           switch(this.direction)
           {
             case 0:
-            this.animations.play('attackdown');
+            this.animations.play('attackdown',15);
             break;
             case 1:
-            this.animations.play('attackleft');
+            this.animations.play('attackleft',15);
             break;
             case 2:
-            this.animations.play('attackup');
+            this.animations.play('attackup',15);
             break;
             case 3:
-            this.animations.play('attackright');
+            this.animations.play('attackright',15);
             break;
           }
           this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function(){

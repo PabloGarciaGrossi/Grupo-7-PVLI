@@ -30,22 +30,22 @@ Sword.prototype.startAttack = function(dir)
     this.direction = dir;
     switch(dir){
         case 0:
-            this.animations.play('slashdown');
+            this.animations.play('slashdown',15);
             this.y = 0;
             this.x = 0;
             break;
         case 1:
-            this.animations.play('slashleft');
+            this.animations.play('slashleft',15);
             this.x = -10;
             this.y = 0;
             break;
         case 2:
-            this.animations.play('slashup');
+            this.animations.play('slashup',15);
             this.y = -17;
             this.x = -6;
             break;
         case 3:
-            this.animations.play('slashright');
+            this.animations.play('slashright',15);
             this.y = 0;
             this.x = 10;
             break;
