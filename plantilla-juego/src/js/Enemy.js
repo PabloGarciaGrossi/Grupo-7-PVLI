@@ -5,6 +5,8 @@ function Enemy(game, speed, x, y, spritename)
 {
     Character.call(this,game,speed,x,y,spritename);
     this.game = game;
+    this.salud = 100;
+    this.reviving = false;
 }
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
@@ -20,6 +22,7 @@ Enemy.prototype.create = function()
     this.animations.add('runright', [6,7],2,true);
     this.animations.add('rundown', [0,1],2,true);
     this.animations.add('runup', [4,5],2,true);
+    this.animations.add('dead',[8],1,true);
 }
 Enemy.prototype.MoveTo = function(x, y){
 
@@ -63,17 +66,28 @@ Enemy.prototype.detectAnimation = function(x,y){
 }
 Enemy.prototype.update = function(playerx, playery)
 {
-    var dist = this.distanceToXY(playerx, playery);
-    if (dist < 200 && this.moving)
+    if (this.salud > 0)
     {
-    this.MoveTo(playerx, playery);
-    this.detectAnimation(playerx, playery);
+        this.reviving = false;
+        var dist = this.distanceToXY(playerx, playery);
+        if (dist < 200 && this.moving)
+        {
+        this.MoveTo(playerx, playery);
+        this.detectAnimation(playerx, playery);
+        }
+        else if (dist >= 200)
+        {
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+            this.animations.play('idle');
+        }
     }
-    else if (dist >= 200)
+    else if (!this.reviving)
     {
-        this.body.velocity.x = 0;
-        this.body.velocity.y = 0;
-        this.animations.play('idle');
+        this.body.enable = false;
+        this.play('dead');
+        this.reviving = true;
+        this.game.time.events.add(Phaser.Timer.SECOND * 5, function() {this.body.enable = true;this.salud = 100;}, this);
     }
 }
 Enemy.prototype.col = function(sword)
@@ -81,6 +95,7 @@ Enemy.prototype.col = function(sword)
     if (sword.attacking)
     {
         this.knock(sword);
+        this.salud-=25;
     }
 }
 module.exports = Enemy;

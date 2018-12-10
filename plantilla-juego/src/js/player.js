@@ -17,6 +17,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.rolling = false;
     this.knockForce = 500;
     this.knockback = false;
+    this.stamina = 100;
   }
 
   Player.prototype = Object.create(Character.prototype);
@@ -37,6 +38,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.animations.add('attackup', [40,41,42,43,44],5,false);
     this.animations.add('attackright', [48,49,50,51,52],5,false);
     this.animations.add('attackleft', [56,57,58,59,60],5,false);
+    this.animations.add('rollleft', [38,39,45],false);
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
 
@@ -60,31 +62,36 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     }
   Player.prototype.roll = function()
   {
-    if (this.body.velocity.x != 0 || this.body.velocity.y != 0)
+    if (this.stamina >= 35)
     {
-      switch(this.direction)
+      if (this.body.velocity.x != 0 || this.body.velocity.y != 0)
       {
-        case 0:
-          this.body.velocity.y = 500;
-          this.body.velocity.x = 0;
-          break;
-        case 1:
-          this.body.velocity.y = 0;
-          this.body.velocity.x = -500;
-          break;
-        case 2:
-          this.body.velocity.y = -500;
-          this.body.velocity.x = 0;
-          break;
-        case 3:
-          this.body.velocity.y = 0;
-          this.body.velocity.x = 500;
-          break;
+        this.stamina = this.stamina - 50;
+        switch(this.direction)
+        {
+          case 0:
+            this.body.velocity.y = 500;
+            this.body.velocity.x = 0;
+            break;
+          case 1:
+            this.body.velocity.y = 0;
+            this.body.velocity.x = -500;
+            break;
+          case 2:
+            this.body.velocity.y = -500;
+            this.body.velocity.x = 0;
+            break;
+          case 3:
+            this.body.velocity.y = 0;
+            this.body.velocity.x = 500;
+            break;
+        }
+        this.animations.play('rollleft');
+        this.alpha = 0.5;
+        this.invincible = true;
+        this.rolling = true;
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.2, Player.prototype.stopRoll , this);
       }
-      this.alpha = 0.5;
-      this.invincible = true;
-      this.rolling = true;
-      this.game.time.events.add(Phaser.Timer.SECOND * 0.2, Player.prototype.stopRoll , this);
     }
   }
   Player.prototype.stopRoll = function()
@@ -98,43 +105,54 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
   Player.prototype.attack = function(){
     //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
     //(May not be necessary in your game.)
-    if (!this.attacking){
-        this.attacking = true;
-        this.moving = false;
-        this.sword.attacking = true;
-        this.sword.startAttack(this.direction);
-        switch(this.direction)
-        {
-          case 0:
-          this.animations.play('attackdown');
-          break;
-          case 1:
-          this.animations.play('attackleft');
-          break;
-          case 2:
-          this.animations.play('attackup');
-          break;
-          case 3:
-          this.animations.play('attackright');
-          break;
-        }
-        //Start the Timer object that will wait for 1 second and then will triger the inner function.
-        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
-            this.animations.play('idle');//Returns the animation to "idle"
+    if (this.stamina >= 35)
+    {
+      if (!this.attacking){
+          this.stamina = this.stamina - 50;
+          this.attacking = true;
+          this.moving = false;
+          this.sword.attacking = true;
+          this.sword.startAttack(this.direction);
+          switch(this.direction)
+          {
+            case 0:
+            this.animations.play('attackdown');
+            break;
+            case 1:
+            this.animations.play('attackleft');
+            break;
+            case 2:
+            this.animations.play('attackup');
+            break;
+            case 3:
+            this.animations.play('attackright');
+            break;
+          }
+          this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function(){
             this.attacking = false;//Returns the boolean var to "false"
-            this.moving = true;
             this.sword.attacking = false;
         }, this);
+          //Start the Timer object that will wait for 1 second and then will triger the inner function.
+          this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+              this.animations.play('idle');//Returns the animation to "idle"
+              this.moving = true;
+          }, this);
+      }
     }
 }
 Player.prototype.col = function(enemy)
 {
+  this.salud -= 10;
   this.knock(enemy);
 }
   Player.prototype.update = function()
   {
   if (this.moving && !this.rolling)
   {
+    if (this.stamina < 100)
+    {
+      this.stamina = this.stamina + 0.2;
+    }
     if (this.attackButton.isDown)
         this.attack();
     else if (this.rollButton.isDown)

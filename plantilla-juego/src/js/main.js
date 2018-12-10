@@ -27,7 +27,7 @@ var PreloaderScene = {
     //imagenes
     this.game.load.image('logo', 'images/Fondo.png');
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
-    this.game.load.spritesheet('esqueleto', 'images/skeletons2.png',32, 50, 8);
+    this.game.load.spritesheet('esqueleto', 'images/skeletons2.png',32, 50, 16);
     this.game.load.spritesheet('player', 'images/SoldadoSouls2.png', 38, 48, 64);
     this.game.load.spritesheet('sword', 'images/ProbandoEspada.png', 51, 57, 32);
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
@@ -35,7 +35,7 @@ var PreloaderScene = {
     this.game.load.image('tilesetCastillo', 'images/tilesCastillo.png');
     this.game.load.image('tileset', 'images/tileset.png');
     this.game.load.image('menu', 'images/Menu.png');
-    this.game.load.image('fireball', 'images/fireball.png');
+    this.game.load.spritesheet('fireball', 'images/fireball.png',35,22,4);
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');

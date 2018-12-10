@@ -28,19 +28,25 @@ var PlayScene = {
     
     
     this.cursors = this.game.input.keyboard.createCursorKeys();
+    //this.vidaconfigEnemy = {x: 50, y: 10};
+    //this.enemyhealth = new HealthBar(this.game, this.vidaconfigEnemy);
     this.enemy = new Enemy(this.game, 75, 700,1990,"esqueleto");
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
     this.jugador = new Player(this.game,300,545,2835,"player",this.cursors, this.sword, "fireball");
     //this.rock = new RockRoll(this.game, 80, 500, 150, "rock", 0, 400);
-    this.jugador.create();
     this.enemy.create();
+    this.jugador.create();
     this.jugador.addChild(this.sword);
+    //this.enemy.addChild(this.enemyhealth);
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     //this.rock.create();
     var barconfig = {x: 200, y: 50};
+    var staminaconfig = {x: 162, y: 75, width: 175, height: 15};
+    this.stamina = new HealthBar(this.game, staminaconfig);
     this.health = new HealthBar(this.game, barconfig);
     this.health.setFixedToCamera(true);
+    this.stamina.setFixedToCamera(true);
     this.enemies = this.game.add.group();
     this.enemies.add(this.enemy);
     this.camera.follow(this.jugador);
@@ -60,7 +66,8 @@ var PlayScene = {
     //this.physics.arcade.collide(this.rock, this.layer);
     if (this.jugador.invincible === false)
     this.physics.arcade.collide(this.jugador, this.enemy, this.collision, null, this);
-    this.physics.arcade.collide(this.enemy, this.jugador.sword, this.collision, null, this);
+    this.physics.arcade.overlap(this.enemy, this.jugador.sword, this.collision, null, this);
+    this.physics.arcade.collide(this.enemy, this.jugador.shoot, this.collision, null, this);
     //this.physics.arcade.overlap(this.jugador, this.rock, this.collision, null, this);
     //this.game.physics.arcade.overlap(this.jugador, this.enemy,this.jugador.playercol,null,this);
 
@@ -68,13 +75,14 @@ var PlayScene = {
     this.jugador.update();
     this.jugador.sword.update();
     this.enemy.update(this.jugador.x, this.jugador.y);
+    this.stamina.setPercent(this.jugador.stamina);
+    this.health.setPercent(this.jugador.salud);
     //this.sword.update(this.jugador);
     //this.rock.update(this.jugador.x, this.jugador.y);
   },
 
   collision : function (jugador, enemy) {
         jugador.col(enemy);
-        this.health.setPercent(this.jugador.salud - 10);
   }
 };
 module.exports = PlayScene;
