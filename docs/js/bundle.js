@@ -520,6 +520,7 @@ window.onload = function () {
 //   this._health = health;
 //   this._damage = damage;
 // };
+//a
 // LivingThing.prototype.moveX = function () {
 //   this._graphic.x += this._speed;
 // }
