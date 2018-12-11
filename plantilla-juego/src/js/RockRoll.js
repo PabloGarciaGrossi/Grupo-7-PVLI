@@ -3,7 +3,7 @@ var Character = require('./Character.js');
 
 function RockRoll(game, speed, x, y, spritename, dir)
 {
-    Character.call(this,game,speed,x,y,spritename);
+    Character.call(this, game, speed,x,y,spritename);
     this.active = false;
     this.direction = dir;   //0 derecha, 1 izquierda, 2 abajo, 3 arriba
     this.game = game;
@@ -27,14 +27,20 @@ RockRoll.prototype.update = function(playerX, playerY){
     if (dist < 200){
         if (this.direction == 0) {
             this.moveX(this.speed);
+            this.active = true;
         } else if (this.direction == 1) {
             this.moveX(-this.speed);
+            this.active = true;
         } else if (this.direction == 2) {
             this.moveY(this.speed);
+            this.active = true;
         } else if (this.direction == 3) {
             this.moveY(-this.speed);
+            this.active = true;
         }
     }
+
+    if(this.active) this.angle += 1;
 }
 
 RockRoll.prototype.distanceToXY = function (x, y) {
