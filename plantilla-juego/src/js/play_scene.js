@@ -29,19 +29,16 @@ var PlayScene = {
     
     
     this.cursors = this.game.input.keyboard.createCursorKeys();
-    //this.vidaconfigEnemy = {x: 50, y: 10};
-    //this.enemyhealth = new HealthBar(this.game, this.vidaconfigEnemy);
     this.enemy = new Enemy(this.game, 75, 700,1990,"esqueleto");
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
-    this.jugador = new Player(this.game,300,545,2835,"player",this.cursors, this.sword, "fireball");
+    this.jugador = new Player(this.game,300,550,2835,"player",this.cursors, this.sword, "fireball");
     this.rock = new RockRoll(this.game, 80, 700, 2835, "rock", 0, 400);
-    this.archer = new RangedEnemy(this.game, 1000, 2835, "esqueleto", "fireball");
+    this.archer = new RangedEnemy(this.game, 1000, 2835,0, "esqueleto", "fireball");
     this.enemy.create();
     this.jugador.create();
     this.archer.create();
     this.jugador.addChild(this.sword);
-    //this.enemy.addChild(this.enemyhealth);
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.rock.create();
     var barconfig = {x: 200, y: 50};
@@ -68,13 +65,16 @@ var PlayScene = {
     //this.physics.arcade.collide(this.jugador,this.enemy);
     //this.physics.arcade.collide(this.rock, this.layer);
     if (this.jugador.invincible === false)
-    this.physics.arcade.collide(this.jugador, this.enemy, this.collision, null, this);
-    this.physics.arcade.overlap(this.enemy, this.jugador.sword, this.collision, null, this);
+    {
+      this.physics.arcade.collide(this.jugador, this.enemy, this.collision, null, this);
+      this.physics.arcade.collide(this.jugador, this.rock, this.collision, null, this);
+      this.physics.arcade.collide(this.jugador, this.archer, this.collision, null, this);
+    }
+    
+    this.physics.arcade.collide(this.enemy, this.jugador.sword, this.collision, null, this);
     this.physics.arcade.collide(this.enemy, this.jugador.shoot, this.collision, null, this);
-    this.physics.arcade.overlap(this.jugador, this.rock, this.collision, null, this);
-    this.physics.arcade.overlap(this.jugador, this.archer, this.collision, null, this);
-    this.physics.arcade.collide(this.jugador, this.archer.bullets, this.collision, null, this);
-    //this.game.physics.arcade.overlap(this.jugador, this.enemy,this.jugador.playercol,null,this);
+    this.physics.arcade.collide(this.archer, this.jugador.sword, this.collision, null, this);
+    this.physics.arcade.collide(this.archer, this.jugador.shoot, this.collision, null, this);
 
     this.jugador.update();
     this.jugador.sword.update();
