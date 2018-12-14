@@ -149,12 +149,14 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
       }
     }
 }
+
 Player.prototype.col = function(enemy)
 {
   this.salud -= 10;
   this.knock(enemy);
 }
-  Player.prototype.update = function()
+
+Player.prototype.update = function()
   {
   if (this.moving && !this.rolling)
   {
@@ -225,4 +227,17 @@ Player.prototype.col = function(enemy)
       this.game.state.start(this.game.state.current);
     }
   }
+
+  Player.prototype.bulletHit = function (enemy) 
+  {
+      var esto = this;
+      this.shoot.bullets.forEach(function (bullet) {
+          if(esto.game.physics.arcade.collide(bullet, enemy)) {
+              bullet.kill();
+              enemy.col(esto);
+          }
+      }
+      );
+  } 
+
   module.exports = Player;
