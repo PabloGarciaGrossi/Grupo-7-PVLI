@@ -7,6 +7,9 @@ function Enemy(game, speed, x, y, spritename)
     this.game = game;
     this.salud = 100;
     this.reviving = false;
+    this.charging = false;
+    this.tackling = false;
+    this.cooldown = false;
 }
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
@@ -23,6 +26,14 @@ Enemy.prototype.create = function()
     this.animations.add('rundown', [0,1],2,true);
     this.animations.add('runup', [4,5],2,true);
     this.animations.add('dead',[8],1,true);
+    this.animations.add('chargedown',[9],1,false);
+    this.animations.add('chargeleft',[11],1,false);
+    this.animations.add('chargeright',[13],1,false);
+    this.animations.add('chargeup',[16],1,false);
+    this.animations.add('tackledown',[9,10],false);
+    this.animations.add('tackleleft',[11,12],false);
+    this.animations.add('tackleright',[13,14],false);
+    this.animations.add('tackleup',[16,17],false);
     this.anchor.setTo(0.5, 0.5);
     this.body.setSize(30, 30, 6, 10);
 }
@@ -35,6 +46,59 @@ Enemy.prototype.MoveTo = function(x, y){
 
     return angle;
 
+}
+Enemy.prototype.charge = function()
+{
+    this.body.velocity.y = 0;
+    this.body.velocity.x = 0;
+    this.charging = true;
+    switch (this.direction)
+    {
+        case 0:
+            this.animations.play('chargedown');
+            break;
+        case 1:
+            this.animations.play('chargeleft');
+            break;
+        case 2:
+            this.animations.play('chargeup');
+            break;
+        case 3:
+            this.animations.play('chargeright');
+            break;
+    }
+    this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {Enemy.prototype.tackle()}, this);
+}
+Enemy.prototype.tackle = function()
+{
+    switch (this.direction)
+    {
+        case 0:
+            this.animations.play('tackledown',5);
+            this.body.velocity.y += 300;
+            this.body.velocity.x = 0;
+            break;
+        case 1:
+            this.animations.play('tackleleft',5);
+            this.body.velocity.x -= 300;
+            this.body.velocity.y = 0;
+            break;
+        case 2:
+            this.animations.play('tackleup',5);
+            this.body.velocity.y -= 300;
+            this.body.velocity.x = 0;
+            break;
+        case 3:
+            this.animations.play('tackleright',5);
+            this.body.velocity.x += 300;
+            this.body.velocity.y = 0;
+            break;
+    }
+    this.moving = false;
+    this.tackling = true;
+    this.cooldown = true;
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {this.moving = true;this.body.velocity.x = 0; this.body.velocity.y = 0;}, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {this.tackling = false;}, this);
 }
 Enemy.prototype.distanceToXY = function (x, y) {
 
@@ -74,8 +138,15 @@ Enemy.prototype.update = function(playerx, playery)
         var dist = this.distanceToXY(playerx, playery);
         if (dist < 200 && this.moving)
         {
-        this.MoveTo(playerx, playery);
-        this.detectAnimation(playerx, playery);
+            if (dist < 70 && !this.tackling)
+            {
+                this.tackle();
+            }
+            else
+            {
+            this.MoveTo(playerx, playery);
+            this.detectAnimation(playerx, playery);
+            }
         }
         else if (dist >= 200)
         {
