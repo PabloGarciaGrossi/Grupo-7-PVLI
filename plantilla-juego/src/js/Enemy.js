@@ -23,6 +23,7 @@ Enemy.prototype.create = function()
     this.animations.add('rundown', [0,1],2,true);
     this.animations.add('runup', [4,5],2,true);
     this.animations.add('dead',[8],1,true);
+    this.anchor.setTo(0.5, 0.5);
 }
 Enemy.prototype.MoveTo = function(x, y){
 
