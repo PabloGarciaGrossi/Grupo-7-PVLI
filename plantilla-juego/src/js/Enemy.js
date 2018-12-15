@@ -24,6 +24,7 @@ Enemy.prototype.create = function()
     this.animations.add('runup', [4,5],2,true);
     this.animations.add('dead',[8],1,true);
     this.anchor.setTo(0.5, 0.5);
+    this.body.setSize(30, 30, 6, 10);
 }
 Enemy.prototype.MoveTo = function(x, y){
 
@@ -88,7 +89,7 @@ Enemy.prototype.update = function(playerx, playery)
         this.body.enable = false;
         this.play('dead');
         this.reviving = true;
-        this.game.time.events.add(Phaser.Timer.SECOND * 5, function() {this.body.enable = true;this.salud = 100;}, this);
+        this.game.time.events.add(Phaser.Timer.SECOND * 11, function() {this.body.enable = true;this.salud = 100;}, this);
     }
 }
 Enemy.prototype.col = function(sword)

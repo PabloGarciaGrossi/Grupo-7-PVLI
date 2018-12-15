@@ -10,6 +10,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.fireButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
     this.rollButton = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
+    this.drinkButton = this.game.input.keyboard.addKey(Phaser.KeyCode.C);
     this.attacking = false;
     this.sword = sword;
     this.invincible = false;
@@ -18,6 +19,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.knockForce = 500;
     this.knockback = false;
     this.stamina = 100;
+    this.estus = 5;
   }
 
   Player.prototype = Object.create(Character.prototype);
@@ -40,6 +42,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.animations.add('attackleft', [56,57,58,59,60],5,false);
     this.animations.add('rollleft', [66,67,68],3,true);
     this.animations.add('rollright', [64,65,68],3,true);
+    this.animations.add('drinking', [72,73,74],3,false);
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
 
@@ -111,6 +114,22 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.invincible = false;
     this.rolling = false;
   }
+  Player.prototype.drink = function()
+  {
+    if (this.estus > 0)
+    {
+    this.body.velocity.y = 0;
+    this.body.velocity.x = 0;
+    this.moving = false;
+    this.animations.play('drinking',5);
+    this.estus--;
+    if (this.salud <= 50)
+      this.salud += 50;
+    else
+      this.salud = 100;
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){this.animations.play('idle'); this.moving = true;} , this);
+    }
+  }
   Player.prototype.attack = function(){
     //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
     //(May not be necessary in your game.)
@@ -142,7 +161,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
             this.sword.attacking = false;
         }, this);
           //Start the Timer object that will wait for 1 second and then will triger the inner function.
-          this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+          this.game.time.events.add(Phaser.Timer.SECOND * 0.75, function(){
               this.animations.play('idle');//Returns the animation to "idle"
               this.moving = true;
           }, this);
@@ -210,6 +229,10 @@ Player.prototype.update = function()
           this.shoot.fireAtXY(this.x + 100, this.y);
           break;
       }
+    }
+    else if (this.drinkButton.isDown)
+    {
+      this.drink();
     }
     else{
       this.body.velocity.x= 0;

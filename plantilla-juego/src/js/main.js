@@ -36,6 +36,9 @@ var PreloaderScene = {
     this.game.load.image('tileset', 'images/tileset.png');
     this.game.load.image('menu', 'images/Menu.png');
     this.game.load.image('rock', 'images/Pedrolo.png');
+    this.game.load.image('estus', 'images/Estus.png');
+    this.game.load.image('cross', 'images/cross.png');
+    this.game.load.spritesheet('numbers', 'images/Numbers.png',58,93,6);
     this.game.load.spritesheet('fireball', 'images/fireball.png',35,22,4);
 
     //musica

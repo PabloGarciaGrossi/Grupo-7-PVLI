@@ -48,18 +48,33 @@ var PlayScene = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
-    this.jugador = new Player(this.game,300,550,2835,"player",this.cursors, this.sword, "fireball");
+    this.jugador = new Player(this.game,200,550,2835,"player",this.cursors, this.sword, "fireball");
     this.rock = new RockRoll(this.game, 80, 700, 2835, "rock", 0, 400);
     this.jugador.create();
     this.jugador.addChild(this.sword);
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.rock.create();
+    this.estus = this.game.add.sprite(100, 100, 'estus');
+    this.estus.scale.setTo(0.3,0.3);
+    this.cross = this.game.add.sprite(140,120,'cross');
+    this.cross.scale.setTo(0.05,0.05);
+    this.num = this.game.add.sprite(180,113,'numbers');
+    this.num.scale.setTo(0.45,0.45);
+    this.num.animations.add('cero', [0], 1, false);
+    this.num.animations.add('uno', [1], 1, false);
+    this.num.animations.add('dos', [2], 1, false);
+    this.num.animations.add('tres', [3], 1, false);
+    this.num.animations.add('cuatro', [4], 1, false);
+    this.num.animations.add('cinco', [5], 1, false);
     var barconfig = {x: 200, y: 50};
     var staminaconfig = {x: 162, y: 75, width: 175, height: 15};
     this.stamina = new HealthBar(this.game, staminaconfig);
     this.health = new HealthBar(this.game, barconfig);
     this.health.setFixedToCamera(true);
     this.stamina.setFixedToCamera(true);
+    this.estus.fixedToCamera = true;
+    this.cross.fixedToCamera = true;
+    this.num.fixedToCamera = true;
     this.camera.follow(this.jugador);
 
   },
@@ -99,6 +114,27 @@ var PlayScene = {
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
     this.rock.update(this.jugador.x, this.jugador.y);
+    switch(this.jugador.estus)
+    {
+      case 0:
+      this.num.animations.play('cero');
+      break;
+      case 1:
+      this.num.animations.play('uno');
+      break;
+      case 2:
+      this.num.animations.play('dos');
+      break;
+      case 3:
+      this.num.animations.play('tres');
+      break;
+      case 4:
+      this.num.animations.play('cuatro');
+      break;
+      case 5:
+      this.num.animations.play('cinco');
+      break;
+    }
   },
 
   collision : function (jugador, enemy) {
