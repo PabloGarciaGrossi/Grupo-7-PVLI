@@ -126,7 +126,7 @@ var PlayScene = {
     }
     for (var i in this.skeletons)
     {
-      this.physics.arcade.collide(this.skeletons[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.overlap(this.skeletons[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.collide(this.skeletons[i], this.jugador.shoot, this.collision, null, this);
     }
     for (var i in this.archers)
@@ -174,7 +174,7 @@ var PlayScene = {
   },
   render: function() {
 
-    this.game.debug.body(this.jugador);
+    //this.game.debug.body(this.jugador);
     this.game.debug.body(this.jugador.sword);
     for (var i in this.skeletons)
     {

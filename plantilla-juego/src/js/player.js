@@ -158,7 +158,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
             this.animations.play('attackright',15);
             break;
           }
-          this.game.time.events.add(Phaser.Timer.SECOND * 0.65, function(){
+          this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function(){
             this.attacking = false;//Returns the boolean var to "false"
             this.sword.attacking = false;
         }, this);
