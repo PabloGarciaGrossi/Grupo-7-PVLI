@@ -48,7 +48,7 @@ var PlayScene = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
-    this.jugador = new Player(this.game,200,550,2835,"player",this.cursors, this.sword, "fireball");
+    this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword, "fireball");
     this.rock = new RockRoll(this.game, 80, 700, 2835, "rock", 0, 400);
     this.jugador.create();
     this.jugador.addChild(this.sword);
@@ -80,6 +80,8 @@ var PlayScene = {
   },
 
   update: function() {
+    this.stamina.setPercent(this.jugador.stamina);
+    this.health.setPercent(this.jugador.salud);
     this.physics.arcade.collide(this.jugador,this.layer);
     this.physics.arcade.collide(this.jugador,this.layer2);
     this.physics.arcade.collide(this.jugador,this.layer3);
@@ -111,8 +113,6 @@ var PlayScene = {
     {
       this.skeletons[i].update(this.jugador.x, this.jugador.y);
     }
-    this.stamina.setPercent(this.jugador.stamina);
-    this.health.setPercent(this.jugador.salud);
     this.rock.update(this.jugador.x, this.jugador.y);
     switch(this.jugador.estus)
     {
@@ -140,5 +140,14 @@ var PlayScene = {
   collision : function (jugador, enemy) {
         jugador.col(enemy);
   },
+  render: function() {
+
+    this.game.debug.body(this.jugador);
+    for (var i in this.skeletons)
+    {
+      this.game.debug.body(this.skeletons[i]);
+    }
+
+}
 };
 module.exports = PlayScene;

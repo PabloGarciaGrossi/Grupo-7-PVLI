@@ -43,6 +43,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.animations.add('rollleft', [66,67,68],3,true);
     this.animations.add('rollright', [64,65,68],3,true);
     this.animations.add('drinking', [72,73,74],3,false);
+    this.animations.add('dead',[75],1,false);
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
 
@@ -171,8 +172,10 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
 
 Player.prototype.col = function(enemy)
 {
-  this.salud -= 10;
-  this.knock(enemy);
+  if (enemy.attacking)
+  {
+    this.knock(enemy);
+  }
 }
 
 Player.prototype.update = function()
@@ -247,6 +250,9 @@ Player.prototype.update = function()
   }
 
     if (this.salud <= 0){
+      this.animations.play('dead');
+      this.moving = false;
+      this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){ this.game.state.start(this.game.state.current)},this);
       this.game.state.start(this.game.state.current);
     }
   }

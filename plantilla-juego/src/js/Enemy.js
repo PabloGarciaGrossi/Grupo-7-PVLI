@@ -7,9 +7,8 @@ function Enemy(game, speed, x, y, spritename)
     this.game = game;
     this.salud = 100;
     this.reviving = false;
-    this.charging = false;
     this.tackling = false;
-    this.cooldown = false;
+    this.attacking = false;
 }
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
@@ -35,7 +34,6 @@ Enemy.prototype.create = function()
     this.animations.add('tackleright',[13,14],false);
     this.animations.add('tackleup',[16,17],false);
     this.anchor.setTo(0.5, 0.5);
-    this.body.setSize(30, 30, 6, 10);
 }
 Enemy.prototype.MoveTo = function(x, y){
 
@@ -96,8 +94,8 @@ Enemy.prototype.tackle = function()
     }
     this.moving = false;
     this.tackling = true;
-    this.cooldown = true;
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {this.moving = true;this.body.velocity.x = 0; this.body.velocity.y = 0;}, this);
+    this.attacking = true;
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.6, function() {this.moving = true;this.body.velocity.x = 0; this.body.velocity.y = 0;this.attacking = false;}, this);
     this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {this.tackling = false;}, this);
 }
 Enemy.prototype.distanceToXY = function (x, y) {
@@ -136,9 +134,9 @@ Enemy.prototype.update = function(playerx, playery)
     {
         this.reviving = false;
         var dist = this.distanceToXY(playerx, playery);
-        if (dist < 200 && this.moving)
+        if (dist < 260 && this.moving)
         {
-            if (dist < 70 && !this.tackling)
+            if (dist < 130 && !this.tackling)
             {
                 this.tackle();
             }
