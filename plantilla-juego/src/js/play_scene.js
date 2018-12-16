@@ -31,18 +31,31 @@ var PlayScene = {
     this.enemies = this.game.add.group();
     this.enemies.enableBody = true;
     this.skeletons = [];
+    this.archers = [];
     for (var ol in this.map.objects)
     {
       for (var o in this.map.objects[ol])
       {
+        if (this.map.objects[ol][o].gid == 5505)
+        {
         var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto");
         this.enemies.add(enemy);
         this.skeletons[o] = enemy;
+        }
+        else if (this.map.objects[ol][o].gid == 5824)
+        {
+          var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow");
+          this.archers[o] = enemy;
+        }
       }
     }
     for (var i in this.skeletons)
     {
       this.skeletons[i].create();
+    }
+    for (var i in this.archers)
+    {
+      this.archers[i].create();
     }
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
@@ -92,11 +105,22 @@ var PlayScene = {
       this.physics.arcade.collide(this.skeletons[i],this.layer3);
       this.physics.arcade.collide(this.skeletons[i],this.layer4);
     }
+    for (var i in this.archers)
+    {
+      this.physics.arcade.collide(this.archers[i], this.layer);
+      this.physics.arcade.collide(this.archers[i], this.layer2);
+      this.physics.arcade.collide(this.archers[i], this.layer3);
+      this.physics.arcade.collide(this.archers[i], this.layer4);
+    }
     if (this.jugador.invincible === false)
     {
       for (var i in this.skeletons)
       {
         this.physics.arcade.collide(this.jugador, this.skeletons[i], this.collision, null, this);
+      }
+      for (var i in this.archers)
+      {
+        this.physics.arcade.collide(this.jugador, this.archers[i], this.collision, null, this);
       }
       this.physics.arcade.collide(this.jugador, this.rock, this.collision, null, this);
     }
@@ -105,12 +129,21 @@ var PlayScene = {
       this.physics.arcade.collide(this.skeletons[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.collide(this.skeletons[i], this.jugador.shoot, this.collision, null, this);
     }
+    for (var i in this.archers)
+    {
+      this.physics.arcade.collide(this.archers[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.collide(this.archers[i], this.jugador.shoot, this.collision, null, this);
+    }
 
     this.jugador.update();
     this.jugador.sword.update();
     for (var i in this.skeletons)
     {
       this.skeletons[i].update(this.jugador.x, this.jugador.y);
+    }
+    for (var i in this.archers)
+    {
+      this.archers[i].update(this.jugador, this.jugador.x, this.jugador.y);
     }
     this.rock.update(this.jugador.x, this.jugador.y);
     switch(this.jugador.estus)

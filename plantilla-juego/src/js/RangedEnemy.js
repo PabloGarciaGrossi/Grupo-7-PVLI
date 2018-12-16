@@ -5,6 +5,7 @@ function RangedEnemy(game, x, y,speed, spritename, spriteweapon)
 {
     Enemy.call(this, game, speed, x, y, spritename);
     this.spriteshoot = spriteweapon;
+    this.attacking = true;
 }
 RangedEnemy.prototype = Object.create(Enemy.prototype);
 RangedEnemy.prototype.constructor = RangedEnemy;
@@ -17,10 +18,10 @@ RangedEnemy.prototype.create = function ()
     this.body.collideWorldBounds = true;
 
     this.animations.add('idle', [0],1,true);
-    this.animations.add('left', [3],1,true);
-    this.animations.add('right', [6],1,true);
-    this.animations.add('down', [0],1,true);
-    this.animations.add('up', [4],1,true);
+    this.animations.add('left', [2,3],1,true);
+    this.animations.add('right', [6,7],1,true);
+    this.animations.add('down', [0,1],1,true);
+    this.animations.add('up', [4,5],1,true);
     this.animations.add('dead',[8],1,true);
 
     this.shoot = this.game.add.weapon(1, this.spriteshoot);
@@ -46,7 +47,7 @@ RangedEnemy.prototype.update = function(player, playerx, playery)
     if (this.salud > 0)
     {
         var dist = this.distanceToXY(playerx, playery);
-        if (dist < 200 && this.moving)
+        if (dist < 270 && this.moving)
         {
             this.MoveTo(playerx, playery);
             this.shoot.fireAtXY(player.x, player.y);
