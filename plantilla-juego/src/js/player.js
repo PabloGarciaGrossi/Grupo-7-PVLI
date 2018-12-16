@@ -53,6 +53,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.shoot.bulletLifespan = 2000;
     this.shoot.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.shoot.trackSprite(this, 0, 0, false);
+    this.body.mass = 3;
   }
 
   Player.prototype.moveY = function(speed)
@@ -157,7 +158,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
             this.animations.play('attackright',15);
             break;
           }
-          this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function(){
+          this.game.time.events.add(Phaser.Timer.SECOND * 0.65, function(){
             this.attacking = false;//Returns the boolean var to "false"
             this.sword.attacking = false;
         }, this);
@@ -165,6 +166,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
           this.game.time.events.add(Phaser.Timer.SECOND * 0.75, function(){
               this.animations.play('idle');//Returns the animation to "idle"
               this.moving = true;
+              this.sword.body.setSize(0,0);
           }, this);
       }
     }
@@ -175,6 +177,9 @@ Player.prototype.col = function(enemy)
   if (enemy.attacking)
   {
     this.knock(enemy);
+    this.invincible = true;
+    this.alpha = 0.5;
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {this.invincible = false; this.alpha = 1;}, this);
   }
 }
 

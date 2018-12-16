@@ -172,14 +172,15 @@ var PlayScene = {
   collision : function (jugador, enemy) {
         jugador.col(enemy);
   },
-  /*render: function() {
+  render: function() {
 
     this.game.debug.body(this.jugador);
+    this.game.debug.body(this.jugador.sword);
     for (var i in this.skeletons)
     {
       this.game.debug.body(this.skeletons[i]);
     }
 
-}*/
+}
 };
 module.exports = PlayScene;

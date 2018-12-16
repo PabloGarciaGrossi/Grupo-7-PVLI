@@ -23,6 +23,7 @@ Sword.prototype.create = function()
     this.animations.add('slashleft', [24,25,26,27,28,29,30,31],8,false);
     this.slashAnim = this.animations.add('slash', [0,1,2,3,4,5,6],7,false);
     this. anchor.setTo(0.5,0.5);
+    this.body.setSize(0,0);
 }
 
 Sword.prototype.startAttack = function(dir)
@@ -33,21 +34,25 @@ Sword.prototype.startAttack = function(dir)
             this.animations.play('slashdown',15);
             this.y = 0;
             this.x = 0;
+            this.body.setSize(50,10,0,55);
             break;
         case 1:
             this.animations.play('slashleft',15);
             this.x = -10;
             this.y = 0;
+            this.body.setSize(10,50,-10,0);
             break;
         case 2:
             this.animations.play('slashup',15);
             this.y = -17;
             this.x = -6;
+            this.body.setSize(50,10,0,0);
             break;
         case 3:
             this.animations.play('slashright',15);
             this.y = 0;
             this.x = 10;
+            this.body.setSize(10,50,45,0);
             break;
     }
 }

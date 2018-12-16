@@ -44,9 +44,9 @@ function Character(game, speed, x, y, spritename)
         break;
     }
   this.moving = false;
-  this.invincible = true;
+  //this.invincible = true;
   this.knockback = true;
-  this.alpha = 0.5;
-  this.game.time.events.add(Phaser.Timer.SECOND * 0.1, function() { this.invincible = false; this.alpha = 1;this.moving = true;this.knockback = false;}, this);
+  //this.alpha = 0.5;
+  this.game.time.events.add(Phaser.Timer.SECOND * 0.1, function() {this.moving = true;this.knockback = false;}, this);
     }
     module.exports = Character;

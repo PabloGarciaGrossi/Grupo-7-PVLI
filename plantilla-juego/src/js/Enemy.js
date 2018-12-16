@@ -168,6 +168,9 @@ Enemy.prototype.col = function(sword)
     {
         this.knock(sword);
         this.salud-=25;
+        this.invincible = true;
+        this.alpha = 0.5;
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.3, function() {this.invincible = false; this.alpha = 1;}, this);
     }
 }
 module.exports = Enemy;
