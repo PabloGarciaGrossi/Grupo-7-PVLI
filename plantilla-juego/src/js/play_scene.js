@@ -31,7 +31,6 @@ var PlayScene = {
     this.enemies = this.game.add.group();
     this.enemies.enableBody = true;
     this.skeletons = [];
-    //this.map.createFromObjects("enemies", 5505, 'esqueleto', 0, true, false, this.enemies,Enemy);
     for (var ol in this.map.objects)
     {
       for (var o in this.map.objects[ol])
@@ -140,7 +139,7 @@ var PlayScene = {
   collision : function (jugador, enemy) {
         jugador.col(enemy);
   },
-  render: function() {
+  /*render: function() {
 
     this.game.debug.body(this.jugador);
     for (var i in this.skeletons)
@@ -148,6 +147,6 @@ var PlayScene = {
       this.game.debug.body(this.skeletons[i]);
     }
 
-}
+}*/
 };
 module.exports = PlayScene;

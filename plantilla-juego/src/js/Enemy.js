@@ -95,7 +95,8 @@ Enemy.prototype.tackle = function()
     this.moving = false;
     this.tackling = true;
     this.attacking = true;
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.6, function() {this.moving = true;this.body.velocity.x = 0; this.body.velocity.y = 0;this.attacking = false;}, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.6, function() {this.body.velocity.x = 0; this.body.velocity.y = 0;this.attacking = false;}, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 1.1, function() {this.moving = true;}, this);
     this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {this.tackling = false;}, this);
 }
 Enemy.prototype.distanceToXY = function (x, y) {
