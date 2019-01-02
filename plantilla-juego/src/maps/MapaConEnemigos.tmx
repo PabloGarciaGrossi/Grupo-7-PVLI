@@ -379,40 +379,40 @@
                  "y":2206.91
                 }, 
                 {
-                 "gid":5280,
+                 "gid":5824,
                  "height":32,
-                 "id":62,
+                 "id":57,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":1124,
-                 "y":2336
+                 "x":1768.85,
+                 "y":228.121
                 }, 
                 {
-                 "gid":5280,
+                 "gid":5824,
                  "height":32,
-                 "id":63,
+                 "id":58,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":2368,
-                 "y":1978.66666666667
+                 "x":1508,
+                 "y":2296
                 }, 
                 {
-                 "gid":5280,
+                 "gid":4993,
                  "height":32,
-                 "id":64,
+                 "id":59,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":32,
-                 "x":162.666666666667,
-                 "y":1248
+                 "x":1185.33333333333,
+                 "y":2337.33333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -421,24 +421,15 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":65,
+ "nextobjectid":60,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.0",
  "tileheight":32,
  "tilesets":[
         {
-         "columns":8,
          "firstgid":1,
-         "image":"tilesCastillo.png",
-         "imageheight":30000,
-         "imagewidth":256,
-         "margin":0,
-         "name":"tilesInterior",
-         "spacing":0,
-         "tilecount":7496,
-         "tileheight":32,
-         "tilewidth":32
+         "source":"..\/..\/..\/..\/..\/..\/..\/Desktop\/Cosas de trabajo\/pokemon.tsx"
         }],
  "tilewidth":32,
  "type":"map",

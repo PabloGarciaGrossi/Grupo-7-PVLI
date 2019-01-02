@@ -35,6 +35,7 @@ var PlayScene = {
     this.enemies.enableBody = true;
     this.skeletons = [];
     this.archers = [];
+    this.rats = [];
     for (var ol in this.map.objects)
     {
       for (var o in this.map.objects[ol])
@@ -50,6 +51,11 @@ var PlayScene = {
           var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow");
           this.archers[o] = enemy;
         }
+        else if (this.map.objects[ol][o].gid == 5280)
+        {
+          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison");
+          this.rats[o] = enemy;
+        }
       }
     }
     for (var i in this.skeletons)
@@ -60,6 +66,10 @@ var PlayScene = {
     {
       this.archers[i].create();
     }
+    for (var i in this.rats)
+    {
+      this.rats[i].create();
+    }
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
@@ -69,8 +79,6 @@ var PlayScene = {
     this.chest.create();
     this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword, "fireball");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
-    this.rat = new Rats(this, 0, 0, 30, 'rat', 'poison');
-    this.rat.create();
     this.jugador.create();
     this.jugador.addChild(this.sword);
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
@@ -79,8 +87,8 @@ var PlayScene = {
     this.estus.scale.setTo(0.3,0.3);
     this.cross = this.game.add.sprite(140,120,'cross');
     this.cross.scale.setTo(0.05,0.05);
-    this.sans = this.game.add.sprite(1508,2226,'sans');
-    this.sans.scale.setTo(0.2,0.2);
+    //this.sans = this.game.add.sprite(1508,2226,'sans');
+    //this.sans.scale.setTo(0.2,0.2);
     this.num = this.game.add.sprite(180,113,'numbers');
     this.num.scale.setTo(0.45,0.45);
     this.num.animations.add('cero', [0], 1, false);
@@ -123,6 +131,13 @@ var PlayScene = {
       this.physics.arcade.collide(this.archers[i], this.layer3);
       this.physics.arcade.collide(this.archers[i], this.layer4);
     }
+    for (var i in this.rats)
+    {
+      this.physics.arcade.collide(this.rats[i], this.layer);
+      this.physics.arcade.collide(this.rats[i], this.layer2);
+      this.physics.arcade.collide(this.rats[i], this.layer3);
+      this.physics.arcade.collide(this.rats[i], this.layer4);
+    }
     if (this.jugador.invincible === false)
     {
       for (var i in this.skeletons)
@@ -132,6 +147,10 @@ var PlayScene = {
       for (var i in this.archers)
       {
         this.physics.arcade.collide(this.jugador, this.archers[i], this.collision, null, this);
+      }
+      for (var i in this.rats)
+      {
+        this.physics.arcade.collide(this.jugador, this.rats[i], this.collision, null, this);
       }
       this.physics.arcade.collide(this.jugador, this.rock, this.collision, null, this);
     }
@@ -144,6 +163,11 @@ var PlayScene = {
     {
       this.physics.arcade.collide(this.archers[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.collide(this.archers[i], this.jugador.shoot, this.collision, null, this);
+    }
+    for (var i in this.rats)
+    {
+      this.physics.arcade.collide(this.rats[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.collide(this.rats[i], this.jugador.shoot, this.collision, null, this);
     }
 
     this.chest.update();
@@ -158,6 +182,10 @@ var PlayScene = {
     for (var i in this.archers)
     {
       this.archers[i].update(this.jugador, this.jugador.x, this.jugador.y);
+    }
+    for (var i in this.rats)
+    {
+      this.rats[i].update(this.jugador, this.jugador.x, this.jugador.y);
     }
     this.rock.update(this.jugador.x, this.jugador.y);
     switch(this.jugador.estus)
