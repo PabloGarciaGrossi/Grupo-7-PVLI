@@ -22,8 +22,8 @@ function Character(game, speed, x, y, spritename)
       this.body.velocity.x = speed;
       this.body.velocity.y = 0;
     }
-  Character.prototype.knock = function(enemy){
-    this.salud -= 10;
+  Character.prototype.knock = function(enemy, dmg){
+    this.salud -= dmg;
     switch(enemy.direction)
     {
       case 0:

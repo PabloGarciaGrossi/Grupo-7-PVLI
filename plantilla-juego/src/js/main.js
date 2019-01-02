@@ -42,6 +42,7 @@ var PreloaderScene = {
     this.game.load.spritesheet('numbers', 'images/Numbers.png',58,93,6);
     this.game.load.spritesheet('fireball', 'images/fireball.png',35,22,4);
     this.game.load.image('arrow', 'images/Arrow.png');
+    this.game.load.spritesheet('chest', 'images/chest.png', 122, 131, 2);
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
