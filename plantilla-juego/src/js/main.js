@@ -44,6 +44,8 @@ var PreloaderScene = {
     this.game.load.spritesheet('stone', 'images/Pedrolo.png',117,124,4);
     this.game.load.image('sans', 'images/Sans.png');
     this.game.load.image('arrow', 'images/Arrow.png');
+    this.game.load.image('poison', 'images/posion.png');
+    this.game.load.spritesheet('rat', 'images/Ratitas.png', 32,32,16);
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');

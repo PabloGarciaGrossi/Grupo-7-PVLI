@@ -5,6 +5,7 @@ var RockRoll = require('./RockRoll.js');
 var HealthBar = require('./HealthBar.js');
 var Sword = require('./sword.js');
 var RangedEnemy = require('./RangedEnemy.js');
+var Rats = require('./Rats.js');
 
 var PlayScene = {
 
@@ -62,6 +63,8 @@ var PlayScene = {
     this.sword.create();
     this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword, "fireball");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
+    this.rat = new Rats(this, 0, 0, 30, 'rat', 'poison');
+    this.rat.create();
     this.jugador.create();
     this.jugador.addChild(this.sword);
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
