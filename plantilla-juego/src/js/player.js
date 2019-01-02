@@ -11,15 +11,17 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.fireButton = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
     this.rollButton = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
     this.drinkButton = this.game.input.keyboard.addKey(Phaser.KeyCode.C);
+    this.interactButton = this.game.input.keyboard.addKey(Phaser.KeyCode.E);
     this.attacking = false;
     this.sword = sword;
     this.invincible = false;
     this.moving = true;
     this.rolling = false;
-    this.knockForce = 500;
     this.knockback = false;
     this.stamina = 100;
     this.estus = 5;
+    this.resistencia = 10;
+    this.nearNPC = false;
   }
 
   Player.prototype = Object.create(Character.prototype);
@@ -176,7 +178,7 @@ Player.prototype.col = function(enemy)
 {
   if (enemy.attacking)
   {
-    this.knock(enemy);
+    this.knock(enemy, this.resistencia);
     this.invincible = true;
     this.alpha = 0.5;
     this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {this.invincible = false; this.alpha = 1;}, this);
@@ -242,6 +244,11 @@ Player.prototype.update = function()
     {
       this.drink();
     }
+    // else if (this.interactButton.isDown)
+    // {
+    //   this.interactCofre(cofres);
+    //   this.interactNPC(npcs);
+    // }
     else{
       this.body.velocity.x= 0;
       this.body.velocity.y= 0;
@@ -273,5 +280,13 @@ Player.prototype.update = function()
       }
       );
   } 
+
+  Player.prototype.interactCofre = function(cofre){
+    if (cofre!=undefined && this.interactButton.isDown){
+      if (Phaser.Rectangle.intersects(this.getBounds(), cofre.getBounds())){
+       cofre.col(this);
+      }
+    }
+  }
 
   module.exports = Player;

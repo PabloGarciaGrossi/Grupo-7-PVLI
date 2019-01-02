@@ -166,7 +166,7 @@ Enemy.prototype.col = function(sword)
 {
     if (sword.attacking)
     {
-        this.knock(sword);
+        this.knock(sword, 10);
         this.salud-=25;
         this.invincible = true;
         this.alpha = 0.5;

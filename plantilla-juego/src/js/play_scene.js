@@ -6,6 +6,8 @@ var HealthBar = require('./HealthBar.js');
 var Sword = require('./sword.js');
 var RangedEnemy = require('./RangedEnemy.js');
 var Rats = require('./Rats.js');
+var Chest = require('./Chest.js');
+var NPC = require('./NPC.js');
 
 var PlayScene = {
 
@@ -61,6 +63,10 @@ var PlayScene = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
+    this.enepece = new NPC(this.game, 1300, 2900, "player", "holi");
+    this.enepece.create();
+    this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
+    this.chest.create();
     this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword, "fireball");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.rat = new Rats(this, 0, 0, 30, 'rat', 'poison');
@@ -140,7 +146,10 @@ var PlayScene = {
       this.physics.arcade.collide(this.archers[i], this.jugador.shoot, this.collision, null, this);
     }
 
+    this.chest.update();
     this.jugador.update();
+    this.jugador.interactCofre(this.chest);
+    this.jugador.interactCofre(this.enepece);
     this.jugador.sword.update();
     for (var i in this.skeletons)
     {
