@@ -159,15 +159,14 @@ Enemy.prototype.update = function(playerx, playery)
         this.body.enable = false;
         this.play('dead');
         this.reviving = true;
-        this.game.time.events.add(Phaser.Timer.SECOND * 11, function() {this.body.enable = true;this.salud = 100;}, this);
+        this.game.time.events.add(Phaser.Timer.SECOND * 30, function() {this.body.enable = true;this.salud = 100;}, this);
     }
 }
 Enemy.prototype.col = function(sword)
 {
     if (sword.attacking)
     {
-        this.knock(sword, 10);
-        this.salud-=25;
+        this.knock(sword, 25,200);
         this.invincible = true;
         this.alpha = 0.5;
         this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function() {this.invincible = false; this.alpha = 1;}, this);

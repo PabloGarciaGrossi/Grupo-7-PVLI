@@ -12,10 +12,12 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.rollButton = this.game.input.keyboard.addKey(Phaser.KeyCode.X);
     this.drinkButton = this.game.input.keyboard.addKey(Phaser.KeyCode.C);
     this.interactButton = this.game.input.keyboard.addKey(Phaser.KeyCode.E);
+    this.blockButton = this.game.input.keyboard.addKey(Phaser.KeyCode.V);
     this.attacking = false;
     this.sword = sword;
     this.invincible = false;
     this.moving = true;
+    this.blocking = false;
     this.rolling = false;
     this.knockback = false;
     this.stamina = 100;
@@ -46,6 +48,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.animations.add('rollright', [64,65,68],3,true);
     this.animations.add('drinking', [72,73,74],3,false);
     this.animations.add('dead',[75],1,false);
+    this.animations.add('block',[76],1,false);
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
 
@@ -108,6 +111,17 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
         this.rolling = true;
         this.game.time.events.add(Phaser.Timer.SECOND * 0.2, Player.prototype.stopRoll , this);
       }
+    }
+  }
+  Player.prototype.block = function()
+  {
+    if (this.stamina > 30)
+    {
+    this.blocking = true;
+    this.body.velocity.y = 0;
+    this.body.velocity.x = 0;
+    this.animations.play("block");
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function(){this. blocking = false;} , this);
     }
   }
   Player.prototype.stopRoll = function()
@@ -176,18 +190,29 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
 
 Player.prototype.col = function(enemy)
 {
-  if (enemy.attacking)
+  if (!this.blocking)
   {
-    this.knock(enemy, this.resistencia);
-    this.invincible = true;
-    this.alpha = 0.5;
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {this.invincible = false; this.alpha = 1;}, this);
+    if (enemy.attacking)
+    {
+      this.knock(enemy, this.resistencia, 300);
+      this.invincible = true;
+      this.alpha = 0.5;
+      this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {this.invincible = false; this.alpha = 1;}, this);
+    }
+  }
+  else
+  {
+    if (enemy.attacking)
+    {
+    this.stamina -= 30;
+    enemy.knock(this, 0, 0);
+    }
   }
 }
 
 Player.prototype.update = function()
   {
-  if (this.moving && !this.rolling)
+  if (this.moving && !this.rolling && !this.blocking)
   {
     if (this.stamina < 100)
     {
@@ -195,6 +220,8 @@ Player.prototype.update = function()
     }
     if (this.attackButton.isDown)
         this.attack();
+    else if (this.blockButton.isDown)
+        this.block();
     else if (this.rollButton.isDown)
       {
         this.roll();

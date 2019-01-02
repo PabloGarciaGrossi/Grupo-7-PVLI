@@ -22,25 +22,25 @@ function Character(game, speed, x, y, spritename)
       this.body.velocity.x = speed;
       this.body.velocity.y = 0;
     }
-  Character.prototype.knock = function(enemy, dmg){
+  Character.prototype.knock = function(enemy, dmg, knockpower){
     this.salud -= dmg;
     switch(enemy.direction)
     {
       case 0:
-        this.body.velocity.y = 500;
+        this.body.velocity.y = knockpower;
         this.body.velocity.x = 0;
         break;
       case 1:
         this.body.velocity.y = 0;
-        this.body.velocity.x = -500;
+        this.body.velocity.x = -knockpower;
         break;
       case 2:
-        this.body.velocity.y = -500;
+        this.body.velocity.y = -knockpower;
         this.body.velocity.x = 0;
         break;
       case 3:
         this.body.velocity.y = 0;
-        this.body.velocity.x = 500;
+        this.body.velocity.x = knockpower;
         break;
     }
   this.moving = false;
