@@ -61,7 +61,7 @@ var PlayScene = {
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
     this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword, "fireball");
-    this.rock = new RockRoll(this.game, 80, 700, 2835, "rock", 0, 400);
+    this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.jugador.addChild(this.sword);
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
@@ -70,6 +70,8 @@ var PlayScene = {
     this.estus.scale.setTo(0.3,0.3);
     this.cross = this.game.add.sprite(140,120,'cross');
     this.cross.scale.setTo(0.05,0.05);
+    this.sans = this.game.add.sprite(1508,2226,'sans');
+    this.sans.scale.setTo(0.2,0.2);
     this.num = this.game.add.sprite(180,113,'numbers');
     this.num.scale.setTo(0.45,0.45);
     this.num.animations.add('cero', [0], 1, false);
@@ -172,7 +174,7 @@ var PlayScene = {
   collision : function (jugador, enemy) {
         jugador.col(enemy);
   },
-  render: function() {
+  /*render: function() {
 
     //this.game.debug.body(this.jugador);
     this.game.debug.body(this.jugador.sword);
@@ -181,6 +183,6 @@ var PlayScene = {
       this.game.debug.body(this.skeletons[i]);
     }
 
-}
+}*/
 };
 module.exports = PlayScene;
