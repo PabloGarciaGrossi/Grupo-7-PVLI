@@ -143,8 +143,11 @@ Enemy.prototype.update = function(playerx, playery)
             }
             else
             {
-            this.MoveTo(playerx, playery);
-            this.detectAnimation(playerx, playery);
+            if (dist > 40)
+                {
+                this.MoveTo(playerx, playery);
+                }
+                this.detectAnimation(playerx, playery);
             }
         }
         else if (dist >= 200)

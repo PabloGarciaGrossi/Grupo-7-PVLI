@@ -33,15 +33,6 @@ RangedEnemy.prototype.create = function ()
 
 }
 
-RangedEnemy.prototype.distanceToXY = function(x, y) 
-{
-
-    var dx =  this.x - x;
-    var dy =  this.y - y;
-
-    return Math.sqrt(dx * dx + dy * dy);
-}
-
 RangedEnemy.prototype.update = function(player, playerx, playery)
 {
     if (this.salud > 0)

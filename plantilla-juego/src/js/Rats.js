@@ -66,8 +66,11 @@ Rats.prototype.update = function(player, playerx, playery)
         var dist = this.distanceToXY(playerx, playery);
         if (dist < 330 && this.moving)
         {
-            this.MoveTo(playerx, playery);
-            this.detectAnimation(player.x, player.y);
+            this.detectAnimation(playerx, playery);
+            if (dist > 40)
+                {
+                this.MoveTo(playerx, playery);
+                }
             if (!this.spitting && dist < 90)
                 this.attack(player);
         }

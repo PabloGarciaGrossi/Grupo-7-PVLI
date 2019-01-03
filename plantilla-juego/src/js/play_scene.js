@@ -22,7 +22,7 @@ var PlayScene = {
     this.layer4 = this.map.createLayer('objects');
     // this.enemieslayer = this.map.createLayer('enemies');
     this.map.setCollisionBetween(1, 10000, true, 'walls');
-    this.map.setCollisionBetween(7192, 7194, false, 'walls');
+    this.map.setCollisionBetween(1, 10000, true, 'windows');
     this.map.setCollisionBetween(1, 10000, true, 'objects');
     this.layer.resizeWorld();
     this.layer2.resizeWorld();
@@ -117,6 +117,7 @@ var PlayScene = {
     this.physics.arcade.collide(this.jugador,this.layer2);
     this.physics.arcade.collide(this.jugador,this.layer3);
     this.physics.arcade.collide(this.jugador,this.layer4);
+    this.physics.arcade.collide(this.jugador,this.chest);
     for (var i in this.skeletons)
     {
       this.physics.arcade.collide(this.skeletons[i], this.layer);
@@ -157,16 +158,19 @@ var PlayScene = {
     for (var i in this.skeletons)
     {
       this.physics.arcade.overlap(this.skeletons[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.collide(this.skeletons[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.collide(this.skeletons[i], this.jugador.shoot, this.collision, null, this);
     }
     for (var i in this.archers)
     {
       this.physics.arcade.collide(this.archers[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.overlap(this.archers[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.collide(this.archers[i], this.jugador.shoot, this.collision, null, this);
     }
     for (var i in this.rats)
     {
       this.physics.arcade.collide(this.rats[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.overlap(this.rats[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.collide(this.rats[i], this.jugador.shoot, this.collision, null, this);
     }
 
@@ -214,15 +218,19 @@ var PlayScene = {
   collision : function (jugador, enemy) {
         jugador.col(enemy);
   },
- /* render: function() {
+ render: function() {
 
-    //this.game.debug.body(this.jugador);
+    this.game.debug.body(this.jugador);
     this.game.debug.body(this.jugador.sword);
     for (var i in this.rats)
     {
       this.game.debug.body(this.rats[i]);
     }
+    for (var i in this.skeletons)
+    {
+      this.game.debug.body(this.skeletons[i]);
+    }
 
-}*/
+}
 };
 module.exports = PlayScene;

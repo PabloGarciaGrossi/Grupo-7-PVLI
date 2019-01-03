@@ -20,6 +20,7 @@ Chest.prototype.create = function() {
     this.game.physics.arcade.enable(this);
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
+    this.body.moves = false;
     this.animations.add('closed', [0], 1, true);
     this.animations.add('opened', [1], 1, true);
 }

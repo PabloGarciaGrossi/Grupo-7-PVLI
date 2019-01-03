@@ -35,7 +35,10 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
-    this.animations.add('idle', [17],1,true);
+    this.animations.add('idledown', [17],1,true);
+    this.animations.add('idleleft', [2],1,true);
+    this.animations.add('idleup', [24],1,true);
+    this.animations.add('idleright', [9],1,true);
     this.animations.add('runleft', [0,1,2,3,4,5,6,7],8,true);
     this.animations.add('runright', [8,9,10,11,12,13,14,15],8,true);
     this.animations.add('rundown', [16,17,18,19,20,21,22,23],8,true);
@@ -60,7 +63,24 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.shoot.trackSprite(this, 0, 0, false);
     this.body.mass = 3;
   }
-
+  Player.prototype.setIdle = function()
+  {
+    switch(this.direction)
+    {
+      case 0:
+      this.animations.play("idledown");
+      break;
+      case 1:
+      this.animations.play("idleleft");
+      break;
+      case 2:
+      this.animations.play("idleup");
+      break;
+      case 3:
+      this.animations.play("idleright");
+      break;
+    }
+  }
   Player.prototype.moveY = function(speed)
     {
       this.body.velocity.y = speed;
@@ -162,27 +182,27 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
           switch(this.direction)
           {
             case 0:
-            this.animations.play('attackdown',15);
+            this.animations.play('attackdown',30);
             break;
             case 1:
-            this.animations.play('attackleft',15);
+            this.animations.play('attackleft',30);
             break;
             case 2:
-            this.animations.play('attackup',15);
+            this.animations.play('attackup',30);
             break;
             case 3:
-            this.animations.play('attackright',15);
+            this.animations.play('attackright',30);
             break;
           }
-          this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function(){
+          this.game.time.events.add(Phaser.Timer.SECOND * 0.25, function(){
             this.attacking = false;//Returns the boolean var to "false"
             this.sword.attacking = false;
+            this.sword.body.setSize(0,0);
         }, this);
           //Start the Timer object that will wait for 1 second and then will triger the inner function.
           this.game.time.events.add(Phaser.Timer.SECOND * 0.75, function(){
-              this.animations.play('idle');//Returns the animation to "idle"
+              this.setIdle();//Returns the animation to "idle"
               this.moving = true;
-              this.sword.body.setSize(0,0);
           }, this);
       }
     }
@@ -212,6 +232,10 @@ Player.prototype.col = function(enemy)
 
 Player.prototype.update = function()
   {
+  if (this.stamina < 0)
+  {
+    this.stamina = 0;
+  }
   if (this.moving && !this.rolling && !this.blocking)
   {
     if (this.stamina < 100)
@@ -221,7 +245,9 @@ Player.prototype.update = function()
     if (this.attackButton.isDown)
         this.attack();
     else if (this.blockButton.isDown)
+    {
         this.block();
+    }
     else if (this.rollButton.isDown)
       {
         this.roll();
@@ -279,10 +305,15 @@ Player.prototype.update = function()
     else{
       this.body.velocity.x= 0;
       this.body.velocity.y= 0;
-      this.animations.play('idle');
+      this.setIdle();
     }
   }
-  else if (this.attacking && !this.knockback && !this.rolling)
+  else if (this.blockButton.isDown)
+  {
+    this.body.velocity.x= 0;
+    this.body.velocity.y= 0;
+  }
+  else if (this.attacking && !this.knockback && !this.rolling && !this.blocking)
   {
     this.body.velocity.x= 0;
     this.body.velocity.y= 0;

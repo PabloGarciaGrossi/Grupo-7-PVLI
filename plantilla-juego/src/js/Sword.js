@@ -31,25 +31,25 @@ Sword.prototype.startAttack = function(dir)
     this.direction = dir;
     switch(dir){
         case 0:
-            this.animations.play('slashdown',15);
+            this.animations.play('slashdown',30);
             this.y = 0;
             this.x = 0;
             this.body.setSize(50,10,0,55);
             break;
         case 1:
-            this.animations.play('slashleft',15);
+            this.animations.play('slashleft',30);
             this.x = -10;
             this.y = 0;
             this.body.setSize(10,50,-10,0);
             break;
         case 2:
-            this.animations.play('slashup',15);
+            this.animations.play('slashup',30);
             this.y = -17;
             this.x = -6;
             this.body.setSize(50,10,0,0);
             break;
         case 3:
-            this.animations.play('slashright',15);
+            this.animations.play('slashright',30);
             this.y = 0;
             this.x = 10;
             this.body.setSize(10,50,45,0);
