@@ -1,7 +1,7 @@
 'use strict';
 var Character = require('./Character.js');
 
-function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
+function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon)
   {
     Character.call(this,game,speed,x,y,spritename);
     this.cursors = cursors;
@@ -15,6 +15,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     this.blockButton = this.game.input.keyboard.addKey(Phaser.KeyCode.V);
     this.attacking = false;
     this.sword = sword;
+    this.fireCone = fireCone;
     this.invincible = false;
     this.moving = true;
     this.blocking = false;
@@ -208,6 +209,46 @@ function Player(game,speed,x,y,spritename,cursors, sword, spriteweapon)
     }
 }
 
+Player.prototype.attackFire = function(){
+  //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
+  //(May not be necessary in your game.)
+  if (this.stamina >= 75)
+  {
+    if (!this.attacking){
+        this.stamina = this.stamina - 75;
+        this.attacking = true;
+        this.moving = false;
+        this.fireCone.attacking = true;
+        this.fireCone.startAttack(this.direction);
+        switch(this.direction)
+        {
+          case 0:
+          this.animations.play('attackdown');
+          break;
+          case 1:
+          this.animations.play('attackleft');
+          break;
+          case 2:
+          this.animations.play('attackup');
+          break;
+          case 3:
+          this.animations.play('attackright');
+          break;
+        }
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function(){
+          this.attacking = false;//Returns the boolean var to "false"
+          this.fireCone.attacking = false;
+          this.fireCone.body.setSize(0,0);
+      }, this);
+        //Start the Timer object that will wait for 1 second and then will triger the inner function.
+        this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){
+            this.setIdle();//Returns the animation to "idle"
+            this.moving = true;
+        }, this);
+    }
+  }
+}
+
 Player.prototype.col = function(enemy)
 {
   if (!this.blocking)
@@ -277,7 +318,7 @@ Player.prototype.update = function()
       this.animations.play('rundown');
     }
     else if (this.fireButton.isDown){
-      switch (this.direction)
+     /* switch (this.direction)
       {
         case 0:
           this.shoot.fireAtXY(this.x, this.y + 100);
@@ -291,7 +332,8 @@ Player.prototype.update = function()
         case 3: 
           this.shoot.fireAtXY(this.x + 100, this.y);
           break;
-      }
+      }*/
+      this.attackFire();
     }
     else if (this.drinkButton.isDown)
     {

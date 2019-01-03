@@ -8,6 +8,7 @@ var RangedEnemy = require('./RangedEnemy.js');
 var Rats = require('./Rats.js');
 var Chest = require('./Chest.js');
 var NPC = require('./NPC.js');
+var FireCone = require ('./FireCone.js');
 
 var PlayScene = {
 
@@ -73,14 +74,17 @@ var PlayScene = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
+    this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
+    this.fireCone.create();
     this.enepece = new NPC(this.game, 1300, 2900, "player", "holi");
     this.enepece.create();
     this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
     this.chest.create();
-    this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword, "fireball");
+    this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword,this.fireCone, "fireball");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.jugador.addChild(this.sword);
+    this.jugador.addChild(this.fireCone);
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.rock.create();
     this.estus = this.game.add.sprite(100, 100, 'estus');
@@ -159,18 +163,24 @@ var PlayScene = {
     {
       this.physics.arcade.overlap(this.skeletons[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.collide(this.skeletons[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.overlap(this.skeletons[i], this.jugador.fireCone, this.collision, null, this);
+      this.physics.arcade.collide(this.skeletons[i], this.jugador.fireCone, this.collision, null, this);
       this.physics.arcade.collide(this.skeletons[i], this.jugador.shoot, this.collision, null, this);
     }
     for (var i in this.archers)
     {
       this.physics.arcade.collide(this.archers[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.overlap(this.archers[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.overlap(this.archers[i], this.jugador.fireCone, this.collision, null, this);
+      this.physics.arcade.collide(this.archers[i], this.jugador.fireCone, this.collision, null, this);
       this.physics.arcade.collide(this.archers[i], this.jugador.shoot, this.collision, null, this);
     }
     for (var i in this.rats)
     {
       this.physics.arcade.collide(this.rats[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.overlap(this.rats[i], this.jugador.sword, this.collision, null, this);
+      this.physics.arcade.overlap(this.rats[i], this.jugador.fireCone, this.collision, null, this);
+      this.physics.arcade.collide(this.rats[i], this.jugador.fireCone, this.collision, null, this);
       this.physics.arcade.collide(this.rats[i], this.jugador.shoot, this.collision, null, this);
     }
 
@@ -179,6 +189,7 @@ var PlayScene = {
     this.jugador.interactCofre(this.chest);
     this.jugador.interactCofre(this.enepece);
     this.jugador.sword.update();
+    this.jugador.fireCone.update();
     for (var i in this.skeletons)
     {
       this.skeletons[i].update(this.jugador.x, this.jugador.y);
@@ -220,8 +231,9 @@ var PlayScene = {
   },
  render: function() {
 
-    this.game.debug.body(this.jugador);
+    /*this.game.debug.body(this.jugador);
     this.game.debug.body(this.jugador.sword);
+    this.game.debug.body(this.jugador.fireCone);
     for (var i in this.rats)
     {
       this.game.debug.body(this.rats[i]);
@@ -229,7 +241,7 @@ var PlayScene = {
     for (var i in this.skeletons)
     {
       this.game.debug.body(this.skeletons[i]);
-    }
+    }*/
 
 }
 };

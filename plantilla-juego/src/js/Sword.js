@@ -63,7 +63,7 @@ Sword.prototype.stopAttack = function(player)
     player.attacking = false;
 }
 
-Sword.prototype.update = function(player)
+Sword.prototype.update = function()
 {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
