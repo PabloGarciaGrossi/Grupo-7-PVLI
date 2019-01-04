@@ -1,5 +1,6 @@
 'use strict';
 var Character = require('./Character.js');
+var TextBox = require('./TextBox.js');
 
 function NPC(game,x,y,spritename, dialogue)
 {
@@ -15,10 +16,13 @@ NPC.prototype.create = function() {
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
+    
+    this.texto = new TextBox(this.game, this.text);
+    this.texto.create();
 }
 
 NPC.prototype.col = function() {
-    console.log("Hola, viajero");
+    this.texto.show();
 }
 
 module.exports = NPC;

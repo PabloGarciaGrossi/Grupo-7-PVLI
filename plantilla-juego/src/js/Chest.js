@@ -9,7 +9,6 @@ function Chest(game, x, y, spritename, mejora)
     this.item = mejora;
     this.width = 50;
     this.height = 50;
-    this.texto = new TextBox(this.game, this.x, this.y - 100, "fireball", "holi");
   }
 
 Chest.prototype = Object.create(Phaser.Sprite.prototype);
@@ -23,6 +22,9 @@ Chest.prototype.create = function() {
     this.body.moves = false;
     this.animations.add('closed', [0], 1, true);
     this.animations.add('opened', [1], 1, true);
+    
+    this.texto = new TextBox(this.game, "Mejora");
+    this.texto.create();
 }
 
 Chest.prototype.col = function(player) {
@@ -54,6 +56,7 @@ Chest.prototype.update = function() {
     this.animations.play('opened');
   }
   else this.animations.play('closed');
+  this.texto.update();
 }
 
 module.exports = Chest;

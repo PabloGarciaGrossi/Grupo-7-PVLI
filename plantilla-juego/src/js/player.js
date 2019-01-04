@@ -24,7 +24,6 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.stamina = 100;
     this.estus = 5;
     this.resistencia = 10;
-    this.nearNPC = false;
   }
 
   Player.prototype = Object.create(Character.prototype);
