@@ -48,6 +48,8 @@ var PreloaderScene = {
     this.game.load.image('poison', 'images/posion.png');
     this.game.load.spritesheet('rat', 'images/Ratitas.png', 32,32,16);
     this.game.load.spritesheet('chest', 'images/chest.png', 122, 131, 2);
+    this.game.load.spritesheet('knight', 'images/Caballero.png', 44,52,16);
+    this.game.load.image('maza', 'images/maza.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');

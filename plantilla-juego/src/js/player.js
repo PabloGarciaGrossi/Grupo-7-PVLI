@@ -56,6 +56,8 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.body.setSize(30, 35, 6, 10);
     this.anchor.setTo(0.5, 0.5);
 
+    this.addChild(this.sword);
+    this.addChild(this.fireCone);
     this.shoot = this.game.add.weapon(1, this.spriteshoot);
     this.shoot.bulletSpeed = 300;
     this.shoot.fireRate = 1000;
