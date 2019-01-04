@@ -1,6 +1,7 @@
 'use strict';
 
 var PlayScene = require('./play_scene.js');
+var NivelBosque = require('./NivelBosque.js');
 var MainMenu = require('./MainMenu.js');
 
 
@@ -31,8 +32,8 @@ var PreloaderScene = {
     this.game.load.spritesheet('archer', 'images/Arquero.png',44,52,16);
     this.game.load.spritesheet('player', 'images/SoldadoSouls2.png', 38, 48, 80);
     this.game.load.spritesheet('sword', 'images/ProbandoEspada.png', 51, 57, 32);
-    this.game.load.tilemap('map', 'images/MapaPrueba.csv');
-    this.game.load.tilemap('mapa', 'maps/Bosque.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('primero', 'maps/MapaConEnemigos.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('bosque', 'maps/Bosque.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tilesetCastillo', 'images/tilesCastillo.png');
     this.game.load.image('tilesetBosque', 'images/tilesBosque.png');
     this.game.load.image('tileset', 'images/tileset.png');
@@ -59,7 +60,7 @@ var PreloaderScene = {
   },
 
   create: function () {
-    this.game.state.start('play');
+    this.game.state.start('bosque');
   }
 };
 
@@ -84,20 +85,8 @@ window.onload = function () {
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
   game.state.add('play', PlayScene);
+  game.state.add('bosque', NivelBosque);
   game.state.add('mainmenu', MainMenu);
 
   game.state.start('boot');
 };
-
-// function LivingThing(graphic, speed, health, damage) {
-//   this._graphic = graphic;
-//   this._speed = speed;
-//   this._health = health;
-//   this._damage = damage;
-// };
-// LivingThing.prototype.moveX = function () {
-//   this._graphic.x += this._speed;
-// }
-// LivingThing.prototype.moveY = function () {
-//   this._graphic.y += this._speed;
-// }
