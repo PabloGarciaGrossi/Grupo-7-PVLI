@@ -50,7 +50,7 @@ Knight.prototype.update = function(playerx, playery)
         this.animations.play('dead');
         this.body.enable = false;
         this.maza.alpha = 0;
-        this.maza.body.setSize(0,0);
+        this.maza.body.enable = false;
     }
 }
 

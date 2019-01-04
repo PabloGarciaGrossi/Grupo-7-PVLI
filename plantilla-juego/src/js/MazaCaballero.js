@@ -38,6 +38,8 @@ mazaCaballero.prototype.update = function(direction)
     }
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
+    this.x = 0;
+    this.y = 0;
     this.rotation += 0.2;
 }
 module.exports = mazaCaballero;

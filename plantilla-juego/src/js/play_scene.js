@@ -17,16 +17,20 @@ var PlayScene = {
   create: function () {
     this.game.stage.backgroundColor = '#787878';
     this.map = this.game.add.tilemap('mapa');
-    this.map.addTilesetImage('tilesInterior', 'tilesetCastillo');
+    this.map.addTilesetImage('Exterior', 'tilesetBosque');
     //this.map.setCollisionBetween(0,23);
     this.layer = this.map.createLayer('grounds');
     this.layer2 = this.map.createLayer('walls');
     this.layer3 = this.map.createLayer('windows');
     this.layer4 = this.map.createLayer('objects');
+    this.layer.renderSettings.enableScrollDelta = true;
+    this.layer2.renderSettings.enableScrollDelta = true;
+    this.layer3.renderSettings.enableScrollDelta = true;
+    this.layer4.renderSettings.enableScrollDelta = true;
     // this.enemieslayer = this.map.createLayer('enemies');
     this.map.setCollisionBetween(1, 10000, true, 'walls');
     this.map.setCollisionBetween(1, 10000, true, 'windows');
-    this.map.setCollisionBetween(1, 10000, true, 'objects');
+    //this.map.setCollisionBetween(1, 10000, true, 'objects');
     this.layer.resizeWorld();
     this.layer2.resizeWorld();
     this.layer3.resizeWorld();
@@ -44,13 +48,13 @@ var PlayScene = {
     {
       for (var o in this.map.objects[ol])
       {
-        if (this.map.objects[ol][o].gid == 5505)
+        if (this.map.objects[ol][o].gid == 7100)
         {
         var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto");
         this.enemies.add(enemy);
         this.skeletons[o] = enemy;
         }
-        else if (this.map.objects[ol][o].gid == 5824)
+        else if (this.map.objects[ol][o].gid == 7099)
         {
           var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow");
           this.archers[o] = enemy;
@@ -60,7 +64,7 @@ var PlayScene = {
           var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison");
           this.rats[o] = enemy;
         }
-        else if (this.map.objects[ol][o].gid == 5264)
+        else if (this.map.objects[ol][o].gid == 7107)
         {
           var maza = new mazaCaballero(this.game, 0, 0, 0, 'maza');
           var enemy = new Knight(this.game, 30, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 'knight', maza);
@@ -93,7 +97,7 @@ var PlayScene = {
     this.enepece.create();
     this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
     this.chest.create();
-    this.jugador = new Player(this.game,200,1408.24,2916,"player",this.cursors, this.sword,this.fireCone, "fireball");
+    this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);

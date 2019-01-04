@@ -32,8 +32,9 @@ var PreloaderScene = {
     this.game.load.spritesheet('player', 'images/SoldadoSouls2.png', 38, 48, 80);
     this.game.load.spritesheet('sword', 'images/ProbandoEspada.png', 51, 57, 32);
     this.game.load.tilemap('map', 'images/MapaPrueba.csv');
-    this.game.load.tilemap('mapa', 'maps/MapaConEnemigos.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('mapa', 'maps/Bosque.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tilesetCastillo', 'images/tilesCastillo.png');
+    this.game.load.image('tilesetBosque', 'images/tilesBosque.png');
     this.game.load.image('tileset', 'images/tileset.png');
     this.game.load.image('menu', 'images/Menu.png');
     this.game.load.image('rock', 'images/Pedrolo.png');
