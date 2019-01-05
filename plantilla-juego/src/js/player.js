@@ -1,9 +1,9 @@
 'use strict';
 var Character = require('./Character.js');
 
-function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon)
+function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon, audio)
   {
-    Character.call(this,game,speed,x,y,spritename);
+    Character.call(this,game,speed,x,y,spritename, audio);
     this.cursors = cursors;
     this.spriteshoot = spriteweapon;
     this.salud = 100;
@@ -57,6 +57,10 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
 
     this.addChild(this.sword);
     this.addChild(this.fireCone);
+    this.healAudio = this.game.add.audio('heal');
+    this.swordAudio = this.game.add.audio('sword');
+    this.fireAudio = this.game.add.audio('fire');
+    this.stepAudio = this.game.add.audio('step');
     this.shoot = this.game.add.weapon(1, this.spriteshoot);
     this.shoot.bulletSpeed = 300;
     this.shoot.fireRate = 1000;
@@ -162,6 +166,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.body.velocity.x = 0;
     this.moving = false;
     this.animations.play('drinking',5);
+    this.healAudio.play();
     this.estus--;
     if (this.salud <= 50)
       this.salud += 50;
@@ -181,6 +186,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
           this.moving = false;
           this.sword.attacking = true;
           this.sword.startAttack(this.direction);
+          this.swordAudio.play();
           switch(this.direction)
           {
             case 0:
@@ -213,27 +219,28 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
 Player.prototype.attackFire = function(){
   //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
   //(May not be necessary in your game.)
-  if (this.stamina >= 75)
+  if (this.stamina >= 100)
   {
     if (!this.attacking){
-        this.stamina = this.stamina - 75;
+        this.stamina = this.stamina - 100;
         this.attacking = true;
         this.moving = false;
         this.fireCone.attacking = true;
         this.fireCone.startAttack(this.direction);
+        this.fireAudio.play();
         switch(this.direction)
         {
           case 0:
-          this.animations.play('attackdown');
+          this.animations.play('attackdown',0.1);
           break;
           case 1:
-          this.animations.play('attackleft');
+          this.animations.play('attackleft',0.1);
           break;
           case 2:
-          this.animations.play('attackup');
+          this.animations.play('attackup',0.1);
           break;
           case 3:
-          this.animations.play('attackright');
+          this.animations.play('attackright',0.1);
           break;
         }
         this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function(){
@@ -259,6 +266,7 @@ Player.prototype.col = function(enemy)
       this.knock(enemy, this.resistencia, 300);
       this.invincible = true;
       this.alpha = 0.5;
+      this.hurt.play();
       this.game.time.events.add(Phaser.Timer.SECOND * 0.5, function() {this.invincible = false; this.alpha = 1;}, this);
     }
   }
@@ -296,24 +304,28 @@ Player.prototype.update = function()
       }
     else if (this.cursors.left.isDown)
     {
+      this.stepAudio.play('',0,1,false,false);
       this.direction = 1;
       this.moveX(-this.speed);
       this.animations.play('runleft');
     }
     else if (this.cursors.right.isDown)
     {
+      this.stepAudio.play('',0,1,false,false);
       this.direction = 3;
       this.moveX(this.speed);
       this.animations.play('runright');
     }
     else if (this.cursors.up.isDown)
     {
+      this.stepAudio.play('',0,1,false,false);
       this.direction = 2;
       this.moveY(-this.speed);
       this.animations.play('runup');
     }
     else if (this.cursors.down.isDown)
     {
+      this.stepAudio.play('',0,1,false,false);
       this.direction = 0;
       this.moveY(this.speed);
       this.animations.play('rundown');

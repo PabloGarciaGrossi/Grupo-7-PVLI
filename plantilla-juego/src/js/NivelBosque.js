@@ -15,6 +15,7 @@ var mazaCaballero = require('./MazaCaballero.js');
 var PlayScene = {
 
   create: function () {
+    this.music = this.game.add.audio('woods');
     this.game.stage.backgroundColor = '#787878';
     this.map = this.game.add.tilemap('bosque');
     this.map.addTilesetImage('Exterior', 'tilesetBosque');
@@ -50,24 +51,24 @@ var PlayScene = {
       {
         if (this.map.objects[ol][o].gid == 7100)
         {
-        var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto");
+        var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto","skeletonAudio","tackle");
         this.enemies.add(enemy);
         this.skeletons[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 7099)
         {
-          var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow");
+          var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow","armor","archer");
           this.archers[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 5280)
         {
-          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison");
+          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack");
           this.rats[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 7107)
         {
           var maza = new mazaCaballero(this.game, 0, 0, 0, 'maza');
-          var enemy = new Knight(this.game, 30, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 'knight', maza);
+          var enemy = new Knight(this.game, 30, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 'knight', maza,"armor","swing");
           this.knights[o] = enemy;
         }
       }
@@ -97,7 +98,7 @@ var PlayScene = {
     this.enepece.create();
     this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
     this.chest.create();
-    this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball");
+    this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
@@ -130,7 +131,7 @@ var PlayScene = {
   },
 
   update: function() {
-
+    this.music.play('',0,1,false,false);
     if (this.jugador.x > 1360 && this.jugador.x < 1400 && this.jugador.y < 350){
         this.game.state.start('play');
     }

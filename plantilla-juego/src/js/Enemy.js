@@ -1,14 +1,15 @@
 'use strict';
 var Character = require('./Character.js');
 
-function Enemy(game, speed, x, y, spritename)
+function Enemy(game, speed, x, y, spritename, audio, audioAttack)
 {
-    Character.call(this,game,speed,x,y,spritename);
+    Character.call(this,game,speed,x,y,spritename, audio);
     this.game = game;
     this.salud = 100;
     this.reviving = false;
     this.tackling = false;
     this.attacking = false;
+    this.attackAudio = this.game.add.audio(audioAttack);
 }
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
@@ -69,6 +70,7 @@ Enemy.prototype.charge = function()
 }
 Enemy.prototype.tackle = function()
 {
+    this.attackAudio.play();
     switch (this.direction)
     {
         case 0:
@@ -172,6 +174,7 @@ Enemy.prototype.col = function(sword)
         this.knock(sword, 25,200);
         this.invincible = true;
         this.alpha = 0.5;
+        this.hurt.play();
         this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function() {this.invincible = false; this.alpha = 1;}, this);
     }
 }

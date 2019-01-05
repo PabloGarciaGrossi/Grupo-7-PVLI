@@ -1,5 +1,5 @@
 'use strict';
-function Character(game, speed, x, y, spritename)
+function Character(game, speed, x, y, spritename,audio)
   {
     Phaser.Sprite.call(this, game, x, y, spritename)
     this.anchor.setTo(0.5,0.5);
@@ -8,6 +8,7 @@ function Character(game, speed, x, y, spritename)
     this.invincible = false;
     this.moving = true;
     this.knockback = false;
+    this.hurt = this.game.add.audio(audio);
   }
 
   Character.prototype = Object.create(Phaser.Sprite.prototype);
@@ -24,6 +25,7 @@ function Character(game, speed, x, y, spritename)
     }
   Character.prototype.knock = function(enemy, dmg, knockpower){
     this.salud -= dmg;
+    this.hurt.play();
     switch(enemy.direction)
     {
       case 0:
