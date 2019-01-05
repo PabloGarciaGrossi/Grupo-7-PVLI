@@ -9,6 +9,7 @@ function Chest(game, x, y, spritename, mejora)
     this.item = mejora;
     this.width = 50;
     this.height = 50;
+   
   }
 
 Chest.prototype = Object.create(Phaser.Sprite.prototype);
@@ -25,6 +26,14 @@ Chest.prototype.create = function() {
     
     this.texto = new TextBox(this.game, "Mejora");
     this.texto.create();
+
+    var esto = this;
+     
+    this.e = this.game.add.sprite(esto.x, esto.y - 50, "e");
+    this.e.width = 50;
+    this.e.height = 50;
+    this.e.anchor.setTo(0.5,0.5);
+    this.game.add.existing(this.e);
 }
 
 Chest.prototype.col = function(player) {
@@ -51,12 +60,31 @@ Chest.prototype.col = function(player) {
   }
 }
 
-Chest.prototype.update = function() {
+Chest.prototype.update = function(playerx, playery) {
+
+  var dist = this.distanceToXY(playerx, playery);
+
   if (this.opened){
     this.animations.play('opened');
+    this.e.alpha = 0;
   }
-  else this.animations.play('closed');
-  this.texto.update();
+  else {
+    this.animations.play('closed');
+    if (dist > 50){
+      this.e.alpha = 0;
+    }
+    if(dist < 50) {
+      this.e.alpha = 1;
+    }
+  }
+}
+
+Chest.prototype.distanceToXY = function (x, y) {
+
+  var dx =  this.x - x;
+  var dy =  this.y - y;
+
+  return Math.sqrt(dx * dx + dy * dy);
 }
 
 module.exports = Chest;

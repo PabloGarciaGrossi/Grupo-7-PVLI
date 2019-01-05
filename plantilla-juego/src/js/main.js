@@ -56,6 +56,8 @@ var PreloaderScene = {
     this.game.load.image('textbox', 'images/textbox.png');
     this.game.load.spritesheet('knight', 'images/Caballero.png', 44,52,16);
     this.game.load.image('maza', 'images/maza.png');
+    this.game.load.image('e', 'images/e.png');
+    this.game.load.image('bonfire', 'images/bonfire.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
@@ -63,7 +65,7 @@ var PreloaderScene = {
   },
 
   create: function () {
-    this.game.state.start('cueva');
+    this.game.state.start('play');
   }
 };
 

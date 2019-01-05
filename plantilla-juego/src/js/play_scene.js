@@ -11,6 +11,7 @@ var NPC = require('./NPC.js');
 var FireCone = require ('./FireCone.js');
 var Knight = require('./Knight.js');
 var mazaCaballero = require('./MazaCaballero.js');
+var Bonfire = require('./Bonfire.js');
 
 var PlayScene = {
 
@@ -97,6 +98,8 @@ var PlayScene = {
     this.enepece.create();
     this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
     this.chest.create();
+    this.bonfire = new Bonfire (this.game, 1408, 2700, "bonfire");
+    this.bonfire.create();
     this.jugador = new Player(this.game,200,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
@@ -219,10 +222,13 @@ var PlayScene = {
       this.physics.arcade.collide(this.knights[i], this.jugador.fireCone, this.collision, null, this);
       this.physics.arcade.collide(this.knights[i], this.jugador.shoot, this.collision, null, this);
     }
-    this.chest.update();
+    this.chest.update(this.jugador.x, this.jugador.y);
+    this.enepece.update(this.jugador.x, this.jugador.y);
+    this.bonfire.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
     this.jugador.interactCofre(this.chest);
     this.jugador.interactCofre(this.enepece);
+    this.jugador.interactCofre(this.bonfire);
     this.jugador.sword.update();
     this.jugador.fireCone.update();
     for (var i in this.skeletons)

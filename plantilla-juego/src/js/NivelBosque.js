@@ -224,7 +224,8 @@ var PlayScene = {
       this.physics.arcade.collide(this.knights[i], this.jugador.fireCone, this.collision, null, this);
       this.physics.arcade.collide(this.knights[i], this.jugador.shoot, this.collision, null, this);
     }
-    this.chest.update();
+    this.chest.update(this.jugador.x, this.jugador.y);
+    this.enepece.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
     this.jugador.interactCofre(this.chest);
     this.jugador.interactCofre(this.enepece);
