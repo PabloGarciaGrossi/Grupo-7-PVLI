@@ -14,8 +14,7 @@ Bonfire.prototype.create = function() {
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
     this.body.moves = false;
-    this.width = 100;
-    this.height = 100;
+    this.animations.add('bonfire',[0,1,2,3],4,true);
 
     var esto = this;
      
@@ -33,7 +32,7 @@ Bonfire.prototype.col = function(player) {
 }
 
 Bonfire.prototype.update = function(playerx, playery) {
-    
+    this.animations.play('bonfire');
     var dist = this.distanceToXY(playerx, playery);
 
     if (dist > 50){

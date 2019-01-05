@@ -57,7 +57,7 @@ var PreloaderScene = {
     this.game.load.spritesheet('knight', 'images/Caballero.png', 44,52,16);
     this.game.load.image('maza', 'images/maza.png');
     this.game.load.image('e', 'images/e.png');
-    this.game.load.image('bonfire', 'images/bonfire.png');
+    this.game.load.spritesheet('bonfire', 'images/Hoguera.png',36,40,4);
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
@@ -104,8 +104,8 @@ window.onload = function () {
 
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
-  game.state.add('castillo', PlayScene);
-  //game.state.add('bosque', NivelBosque);
+  game.state.add('play', PlayScene);
+  game.state.add('bosque', NivelBosque);
   game.state.add('mainmenu', MainMenu);
 
   game.state.start('boot');

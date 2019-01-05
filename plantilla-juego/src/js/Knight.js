@@ -40,7 +40,7 @@ Knight.prototype.update = function(playerx, playery)
                 }
             this.maza.update(this.direction);
         }
-        else if (dist >= 500)
+        else if (dist >= 300)
         {
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;

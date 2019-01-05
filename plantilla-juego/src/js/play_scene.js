@@ -95,13 +95,15 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 1300, 2900, "player", "holi");
+    this.enepece = new NPC(this.game, 585, 324, "player", "Me cago en todos tus muertos");
     this.enepece.create();
-    this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
+    this.chest = new Chest(this.game, 1980, 1895, "chest", "speed");
     this.chest.create();
-    this.bonfire = new Bonfire (this.game, 1408, 2700, "bonfire");
+    this.bonfire = new Bonfire (this.game, 49, 1095, "bonfire");
     this.bonfire.create();
-    this.jugador = new Player(this.game,200,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    this.bonfire2 = new Bonfire (this.game, 1250, 3072, "bonfire");
+    this.bonfire2.create();
+    this.jugador = new Player(this.game,200,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
@@ -110,8 +112,6 @@ var PlayScene = {
     this.estus.scale.setTo(0.3,0.3);
     this.cross = this.game.add.sprite(140,120,'cross');
     this.cross.scale.setTo(0.05,0.05);
-    //this.sans = this.game.add.sprite(1508,2226,'sans');
-    //this.sans.scale.setTo(0.2,0.2);
     this.num = this.game.add.sprite(180,113,'numbers');
     this.num.scale.setTo(0.45,0.45);
     this.num.animations.add('cero', [0], 1, false);
@@ -142,6 +142,9 @@ var PlayScene = {
     this.physics.arcade.collide(this.jugador,this.layer3);
     this.physics.arcade.collide(this.jugador,this.layer4);
     this.physics.arcade.collide(this.jugador,this.chest);
+    this.physics.arcade.collide(this.jugador,this.bonfire);
+    this.physics.arcade.collide(this.jugador,this.bonfire2);
+    this.physics.arcade.collide(this.jugador,this.enepece);
     for (var i in this.skeletons)
     {
       this.physics.arcade.collide(this.skeletons[i], this.layer);
@@ -227,6 +230,7 @@ var PlayScene = {
     this.chest.update(this.jugador.x, this.jugador.y);
     this.enepece.update(this.jugador.x, this.jugador.y);
     this.bonfire.update(this.jugador.x, this.jugador.y);
+    this.bonfire2.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
     this.jugador.interactCofre(this.chest);
     this.jugador.interactCofre(this.enepece);
@@ -279,10 +283,9 @@ var PlayScene = {
  render: function() {
 
     /*this.game.debug.body(this.jugador);
+    this.game.debug.body(this.bonfire);
     this.game.debug.body(this.jugador.sword);
     this.game.debug.body(this.jugador.fireCone);
-    this.game.debug.body(this.knight);
-    this.game.debug.body(this.knight.maza);
     for (var i in this.rats)
     {
       this.game.debug.body(this.rats[i]);
