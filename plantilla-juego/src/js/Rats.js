@@ -1,9 +1,9 @@
 'use strict'
 var RangedEnemy = require('./RangedEnemy.js');
 
-function Rats (game, x, y,speed, spritename, spriteweapon)
+function Rats (game, x, y,speed, spritename, spriteweapon, audio, audioAttack)
 {
-    RangedEnemy.call(this, game, x, y, speed, spritename, spriteweapon);
+    RangedEnemy.call(this, game, x, y, speed, spritename, spriteweapon, audio, audioAttack);
     this.spitting = false;
 }
 Rats.prototype = Object.create(RangedEnemy.prototype);
@@ -39,6 +39,7 @@ Rats.prototype.attack = function(player)
     this.spitting = true;
     this.moving = false;
     this.shoot.fireAtXY(player.x, player.y);
+    this.attackAudio.play();
     switch (this.direction)
     {
         case 0:
@@ -64,7 +65,7 @@ Rats.prototype.update = function(player, playerx, playery)
     if (this.salud > 0)
     {
         var dist = this.distanceToXY(playerx, playery);
-        if (dist < 330 && this.moving)
+        if (dist < 230 && this.moving)
         {
             this.detectAnimation(playerx, playery);
             if (dist > 40)

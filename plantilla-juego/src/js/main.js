@@ -59,11 +59,26 @@ var PreloaderScene = {
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
+    this.game.load.audio('hurt', 'music/hurt.mp3');
+    this.game.load.audio('skeletonAudio', 'music/skeleton.wav');
+    this.game.load.audio('heal', 'music/heal.wav');
+    this.game.load.audio('tackle', 'music/tackle.wav');
+    this.game.load.audio('sword', 'music/sword.mp3');
+    this.game.load.audio('rat', 'music/rat.wav');
+    this.game.load.audio('ratAttack', 'music/ratAttack.wav');
+    this.game.load.audio('archer', 'music/archer.mp3');
+    this.game.load.audio('armor', 'music/armor.mp3');
+    this.game.load.audio('swing', 'music/swing.wav');
+    this.game.load.audio('cave', 'music/cave.mp3');
+    this.game.load.audio('woods', 'music/woods.mp3');
+    this.game.load.audio('castle', 'music/PraiseJoselillo.mp3');
+    this.game.load.audio('fire', 'music/fire.mp3');
+    this.game.load.audio('step', 'music/step.ogg');
 
   },
 
   create: function () {
-    this.game.state.start('cueva');
+    this.game.state.start('castillo');
   }
 };
 
@@ -87,8 +102,8 @@ window.onload = function () {
 
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
-  game.state.add('play', PlayScene);
-  game.state.add('cueva', play_sceneCueva);
+  game.state.add('castillo', PlayScene);
+  //game.state.add('bosque', NivelBosque);
   game.state.add('mainmenu', MainMenu);
 
   game.state.start('boot');

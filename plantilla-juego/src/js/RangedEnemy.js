@@ -1,9 +1,9 @@
 'use strict'
 var Enemy = require('./Enemy.js');
 
-function RangedEnemy(game, x, y,speed, spritename, spriteweapon) 
+function RangedEnemy(game, x, y,speed, spritename, spriteweapon, audio, audioAttack) 
 {
-    Enemy.call(this, game, speed, x, y, spritename);
+    Enemy.call(this, game, speed, x, y, spritename, audio, audioAttack);
     this.spriteshoot = spriteweapon;
     this.attacking = true;
 }

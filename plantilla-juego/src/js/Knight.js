@@ -1,9 +1,9 @@
 'use strict';
 var Enemy = require('./Enemy.js');
 
-function Knight (game, speed, x, y, spritename, maza)
+function Knight (game, speed, x, y, spritename, maza, audio,audioAttack)
 {
-    Enemy.call(this,game,speed,x,y,spritename);
+    Enemy.call(this,game,speed,x,y,spritename,audio,audioAttack);
     this.maza = maza;
 }
 Knight.prototype = Object.create(Enemy.prototype);
@@ -32,6 +32,7 @@ Knight.prototype.update = function(playerx, playery)
         var dist = this.distanceToXY(playerx, playery);
         if (dist < 300 && this.moving)
         {
+            this.attackAudio.play('',0,1,false,false);
             this.detectAnimation(playerx, playery);
             if (dist > 40)
                 {
