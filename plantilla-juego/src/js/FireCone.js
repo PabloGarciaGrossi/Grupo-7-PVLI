@@ -5,6 +5,7 @@ function FireCone(game, speed, x, y, spritename)
     Character.call(this,game,speed,x,y,spritename);
     this.game = game;
     this.attacking = false;
+    this.dmg = 4;
 }
 FireCone.prototype = Object.create(Character.prototype);
 FireCone.prototype.constructor = FireCone;

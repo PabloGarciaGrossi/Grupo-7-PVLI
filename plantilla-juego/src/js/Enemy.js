@@ -1,15 +1,20 @@
 'use strict';
 var Character = require('./Character.js');
+var HealthBar = require('./HealthBar.js');
 
-function Enemy(game, speed, x, y, spritename, audio, audioAttack)
+function Enemy(game, speed, x, y, spritename, audio, audioAttack,salud,dmg)
 {
     Character.call(this,game,speed,x,y,spritename, audio);
     this.game = game;
     this.salud = 100;
+    this.dmg = dmg;
+    this.resistencia = salud;
     this.reviving = false;
     this.tackling = false;
     this.attacking = false;
     this.attackAudio = this.game.add.audio(audioAttack);
+    this.config = {x: 0, y: 0, width: 60, height: 7};
+    this.myHealthBar = new HealthBar(this.game, this.config);
 }
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
@@ -133,6 +138,8 @@ Enemy.prototype.detectAnimation = function(x,y){
 }
 Enemy.prototype.update = function(playerx, playery)
 {
+    this.myHealthBar.setPosition(this.x, this.y-30);
+    this.myHealthBar.setPercent(this.salud);
     if (this.salud > 0)
     {
         this.reviving = false;
@@ -164,14 +171,14 @@ Enemy.prototype.update = function(playerx, playery)
         this.body.enable = false;
         this.play('dead');
         this.reviving = true;
-        this.game.time.events.add(Phaser.Timer.SECOND * 30, function() {this.body.enable = true;this.salud = 100;}, this);
+        this.game.time.events.add(Phaser.Timer.SECOND * 50, function() {this.body.enable = true;this.salud = 100;}, this);
     }
 }
 Enemy.prototype.col = function(sword)
 {
     if (sword.attacking)
     {
-        this.knock(sword, 25,200);
+        this.knock(sword, (sword.dmg-this.resistencia),200);
         this.invincible = true;
         this.alpha = 0.5;
         this.hurt.play();

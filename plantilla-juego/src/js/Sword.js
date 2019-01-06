@@ -7,6 +7,7 @@ function Sword(game, speed, x, y, spritename)
     this.game = game;
     this.rot = 100;
     this.attacking = false;
+    this.dmg = 8;
 }
 Sword.prototype = Object.create(Character.prototype);
 Sword.prototype.constructor = Sword;

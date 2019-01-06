@@ -219,10 +219,10 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
 Player.prototype.attackFire = function(){
   //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
   //(May not be necessary in your game.)
-  if (this.stamina >= 100)
+  if (this.stamina >= 75)
   {
     if (!this.attacking){
-        this.stamina = this.stamina - 100;
+        this.stamina = this.stamina - 75;
         this.attacking = true;
         this.moving = false;
         this.fireCone.attacking = true;
@@ -263,7 +263,7 @@ Player.prototype.col = function(enemy)
   {
     if (enemy.attacking)
     {
-      this.knock(enemy, this.resistencia, 300);
+      this.knock(enemy, (enemy.dmg)-(this.resistencia), 300);
       this.invincible = true;
       this.alpha = 0.5;
       this.hurt.play();
