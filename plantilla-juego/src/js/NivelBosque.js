@@ -95,9 +95,9 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 1300, 2900, "player", "holi");
+    this.enepece = new NPC(this.game, 855, 209, "player", "I only abuse of\nyour mother negro");
     this.enepece.create();
-    this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
+    this.chest = new Chest(this.game, 410, 1157, "chest", "estus");
     this.chest.create();
     if (this.game.mejoraSpeed) {
       this.jugador = new Player(this.game,400,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
@@ -137,6 +137,11 @@ var PlayScene = {
   },
 
   update: function() {
+
+    
+console.log(this.jugador.x);
+console.log(this.jugador.y);
+
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 1360 && this.jugador.x < 1400 && this.jugador.y < 350){
          this.music.pause();
