@@ -2,7 +2,6 @@
 
 function Interactuable(game, x, y,spritename) {
     Phaser.Sprite.call(this, game, x, y, spritename)
-    this.anchor.setTo(0.5,0.5);
 }
 
 Interactuable.prototype = Object.create(Phaser.Sprite.prototype);

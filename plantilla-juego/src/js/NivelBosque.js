@@ -237,8 +237,9 @@ var PlayScene = {
     this.bonfire.update(this.jugador.x, this.jugador.y);
     this.enepece.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
-    this.jugador.interactCofre(this.chest);
-    this.jugador.interactCofre(this.enepece);
+    this.jugador.interact(this.chest);
+    this.jugador.interact(this.enepece);
+    this.jugador.interact(this.bonfire);
     this.jugador.sword.update();
     this.jugador.fireCone.update();
     for (var i in this.skeletons)

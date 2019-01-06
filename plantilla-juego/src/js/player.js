@@ -65,12 +65,6 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.swordAudio = this.game.add.audio('sword');
     this.fireAudio = this.game.add.audio('fire');
     this.stepAudio = this.game.add.audio('step');
-    this.shoot = this.game.add.weapon(1, this.spriteshoot);
-    this.shoot.bulletSpeed = 300;
-    this.shoot.fireRate = 1000;
-    this.shoot.bulletLifespan = 2000;
-    this.shoot.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
-    this.shoot.trackSprite(this, 0, 0, false);
     this.body.mass = 3;
   }
   Player.prototype.setIdle = function()
@@ -335,32 +329,12 @@ Player.prototype.update = function()
       this.animations.play('rundown');
     }
     else if (this.fireButton.isDown){
-     /* switch (this.direction)
-      {
-        case 0:
-          this.shoot.fireAtXY(this.x, this.y + 100);
-          break;
-        case 1: 
-          this.shoot.fireAtXY(this.x - 100, this.y);
-          break;
-        case 2: 
-          this.shoot.fireAtXY(this.x, this.y - 100);
-          break;
-        case 3: 
-          this.shoot.fireAtXY(this.x + 100, this.y);
-          break;
-      }*/
       this.attackFire();
     }
     else if (this.drinkButton.isDown)
     {
       this.drink();
     }
-    // else if (this.interactButton.isDown)
-    // {
-    //   this.interactCofre(cofres);
-    //   this.interactNPC(npcs);
-    // }
     else{
       this.body.velocity.x= 0;
       this.body.velocity.y= 0;
@@ -386,22 +360,10 @@ Player.prototype.update = function()
     }
   }
 
-  Player.prototype.bulletHit = function (enemy) 
-  {
-      var esto = this;
-      this.shoot.bullets.forEach(function (bullet) {
-          if(esto.game.physics.arcade.collide(bullet, enemy)) {
-              bullet.kill();
-              enemy.col(esto);
-          }
-      }
-      );
-  } 
-
-  Player.prototype.interactCofre = function(cofre){
-    if (cofre!=undefined && this.interactButton.isDown){
-      if (Phaser.Rectangle.intersects(this.getBounds(), cofre.getBounds())){
-       cofre.col(this);
+  Player.prototype.interact = function(objeto){
+    if (objeto!=undefined && this.interactButton.isDown){
+      if (Phaser.Rectangle.intersects(this.getBounds(), objeto.getBounds())){
+       objeto.col(this);
       }
     }
   }

@@ -17,8 +17,6 @@ TextBox.prototype.create = function()
     var style = { font: "32px Arial", wordWrap: true, wordWrapWidth: esto.width, align: "left"};
 
     this.texto = this.game.add.text(0, 0, esto.txt, style);
-    this.texto.anchor.x = 0.5;
-    this.texto.anchor.y = 0.5;
     this.alpha = 0;
     this.texto.alpha = 0;
 }

@@ -4,37 +4,23 @@ var Interactuable = require('./Interactuable.js');
 
 function Chest(game, x, y, spritename, mejora)
   {
-    Phaser.Sprite.call(this, game, x, y, spritename)
+    Interactuable.call(this, game, x, y, spritename)
     this.opened = false;
     this.item = mejora;
     this.width = 50;
     this.height = 50;
-   
-  }
 
-Chest.prototype = Object.create(Interactuable.prototype);
-Chest.prototype.constructor = Chest;
-
-Chest.prototype.create = function() {
-    this.game.add.existing(this);
-    this.game.physics.arcade.enable(this);
-    this.body.gravity.y = 0;
-    this.body.collideWorldBounds = true;
-    this.body.moves = false;
+    
     this.animations.add('closed', [0], 1, true);
     this.animations.add('opened', [1], 1, true);
     
     this.texto = new TextBox(this.game, "Mejora");
     this.texto.create();
+   
+  }
 
-    var esto = this;
-     
-    this.e = this.game.add.sprite(esto.x, esto.y - 50, "e");
-    this.e.width = 50;
-    this.e.height = 50;
-    this.e.anchor.setTo(0.5,0.5);
-    this.game.add.existing(this.e);
-}
+Chest.prototype = Object.create(Interactuable.prototype);
+Chest.prototype.constructor = Chest;
 
 Chest.prototype.col = function(player) {
   if (this.opened == false) {
