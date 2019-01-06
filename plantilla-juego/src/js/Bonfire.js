@@ -1,11 +1,12 @@
 'use strict'
 
+var Interactuable = require('./Interactuable.js');
+
 function Bonfire(game, x, y, spritename) {
-    Phaser.Sprite.call(this, game, x, y, spritename);
-    this.anchor.setTo(0.5, 0.5);
+    Phaser.Sprite.call(this, game, x, y, spritename)
 }
 
-Bonfire.prototype = Object.create(Phaser.Sprite.prototype);
+Bonfire.prototype = Object.create(Interactuable.prototype);
 Bonfire.prototype.constructor = Bonfire;
 
 Bonfire.prototype.create = function() {
@@ -32,24 +33,5 @@ Bonfire.prototype.col = function(player) {
     player.stamina = 100;
 }
 
-Bonfire.prototype.update = function(playerx, playery) {
-    
-    var dist = this.distanceToXY(playerx, playery);
-
-    if (dist > 50){
-       this.e.alpha = 0;
-     }
-     if(dist < 50) {
-       this.e.alpha = 1;
-     }
-}
-
-Bonfire.prototype.distanceToXY = function (x, y) {
-
-   var dx =  this.x - x;
-   var dy =  this.y - y;
- 
-   return Math.sqrt(dx * dx + dy * dy);
-}
 
 module.exports = Bonfire;

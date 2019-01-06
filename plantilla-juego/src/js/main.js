@@ -80,7 +80,7 @@ var PreloaderScene = {
   },
 
   create: function () {
-    this.game.state.start('play');
+    this.game.state.start('castillo');
   }
 };
 
@@ -105,7 +105,7 @@ window.onload = function () {
   game.state.add('boot', BootScene);
   game.state.add('preloader', PreloaderScene);
   game.state.add('castillo', PlayScene);
-  //game.state.add('bosque', NivelBosque);
+  game.state.add('bosque', NivelBosque);
   game.state.add('mainmenu', MainMenu);
 
   game.state.start('boot');

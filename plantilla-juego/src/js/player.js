@@ -22,8 +22,12 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.rolling = false;
     this.knockback = false;
     this.stamina = 100;
-    this.estus = 5;
-    this.resistencia = 10;
+    if (this.game.mejoraEstus) {
+      this.estus = 6;
+    } else this.estus = 5;
+    if (this.game.mejoraArmor) {
+      this.resistencia = 5;
+    } else this.resistencia = 10;
   }
 
   Player.prototype = Object.create(Character.prototype);

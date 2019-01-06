@@ -98,7 +98,9 @@ var PlayScene = {
     this.enepece.create();
     this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
     this.chest.create();
-    this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    if (this.game.mejoraSpeed) {
+      this.jugador = new Player(this.game,400,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,200,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);

@@ -1,14 +1,14 @@
 'use strict';
-var Character = require('./Character.js');
+var Interactuable = require('./Interactuable.js');
 var TextBox = require('./TextBox.js');
 
 function NPC(game,x,y,spritename, dialogue)
 {
-    Character.call(this,game,0,x,y,spritename);
+    Interactuable.call(this, game, x, y, spritename)
     this.text = dialogue;
 }
 
-NPC.prototype = Object.create(Character.prototype);
+NPC.prototype = Object.create(Interactuable.prototype);
 NPC.prototype.constructor = NPC;
 
 NPC.prototype.create = function() {
@@ -31,26 +31,6 @@ NPC.prototype.create = function() {
 
 NPC.prototype.col = function() {
     this.texto.show();
-}
-
-NPC.prototype.update = function(playerx, playery) {
-    
-     var dist = this.distanceToXY(playerx, playery);
-
-     if (dist > 50){
-        this.e.alpha = 0;
-      }
-      if(dist < 50) {
-        this.e.alpha = 1;
-      }
-}
-
-NPC.prototype.distanceToXY = function (x, y) {
-
-    var dx =  this.x - x;
-    var dy =  this.y - y;
-  
-    return Math.sqrt(dx * dx + dy * dy);
 }
 
 module.exports = NPC;

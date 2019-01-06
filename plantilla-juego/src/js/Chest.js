@@ -1,10 +1,10 @@
 'use strict'
 var TextBox = require('./TextBox.js');
+var Interactuable = require('./Interactuable.js');
 
 function Chest(game, x, y, spritename, mejora)
   {
     Phaser.Sprite.call(this, game, x, y, spritename)
-    this.anchor.setTo(0.5,0.5);
     this.opened = false;
     this.item = mejora;
     this.width = 50;
@@ -12,7 +12,7 @@ function Chest(game, x, y, spritename, mejora)
    
   }
 
-Chest.prototype = Object.create(Phaser.Sprite.prototype);
+Chest.prototype = Object.create(Interactuable.prototype);
 Chest.prototype.constructor = Chest;
 
 Chest.prototype.create = function() {
@@ -44,16 +44,19 @@ Chest.prototype.col = function(player) {
       case "estus":
        player.estus += 1;
        console.log("mejora de estus");
+       this.game.mejoraEstus = true;
        this.texto.show();
        break;
       case "speed":
        player.speed += 200;
        console.log("mejora de velocidad");
+       this.game.mejoraSpeed = true;
        this.texto.show();
        break;
       case "armor":
        player.resistencia -= 5;
        console.log("mejora de armor");
+       this.game.mejoraArmor = true;
        this.texto.show();
        break;
     }
@@ -77,14 +80,6 @@ Chest.prototype.update = function(playerx, playery) {
       this.e.alpha = 1;
     }
   }
-}
-
-Chest.prototype.distanceToXY = function (x, y) {
-
-  var dx =  this.x - x;
-  var dy =  this.y - y;
-
-  return Math.sqrt(dx * dx + dy * dy);
 }
 
 module.exports = Chest;
