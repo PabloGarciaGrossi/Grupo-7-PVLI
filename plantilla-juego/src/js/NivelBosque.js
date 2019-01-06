@@ -11,6 +11,7 @@ var NPC = require('./NPC.js');
 var FireCone = require ('./FireCone.js');
 var Knight = require('./Knight.js');
 var mazaCaballero = require('./MazaCaballero.js');
+var Bonfire = require('./Bonfire.js');
 
 var PlayScene = {
 
@@ -51,24 +52,24 @@ var PlayScene = {
       {
         if (this.map.objects[ol][o].gid == 7100)
         {
-        var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto","skeletonAudio","tackle");
+        var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto","skeletonAudio","tackle",0.7,30);
         this.enemies.add(enemy);
         this.skeletons[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 7099)
         {
-          var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow","armor","archer");
+          var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow","armor","archer",0,25);
           this.archers[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 5280)
         {
-          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack");
+          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack",0.5,25);
           this.rats[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 7107)
         {
-          var maza = new mazaCaballero(this.game, 0, 0, 0, 'maza');
-          var enemy = new Knight(this.game, 30, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 'knight', maza,"armor","swing");
+          var maza = new mazaCaballero(this.game, 0, 0, 0, 'maza',35);
+          var enemy = new Knight(this.game, 30, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 'knight', maza,"armor","swing",2,35);
           this.knights[o] = enemy;
         }
       }
@@ -99,8 +100,10 @@ var PlayScene = {
     this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
     this.chest.create();
     if (this.game.mejoraSpeed) {
-      this.jugador = new Player(this.game,400,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
-    } else this.jugador = new Player(this.game,200,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+      this.jugador = new Player(this.game,400,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    this.bonfire = new Bonfire (this.game, 898, 1346, "bonfire");
+    this.bonfire.create();
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
@@ -122,6 +125,7 @@ var PlayScene = {
     var barconfig = {x: 200, y: 50};
     var staminaconfig = {x: 162, y: 75, width: 175, height: 15};
     this.stamina = new HealthBar(this.game, staminaconfig);
+    this.stamina.setBarColor('#109510');
     this.health = new HealthBar(this.game, barconfig);
     this.health.setFixedToCamera(true);
     this.stamina.setFixedToCamera(true);
@@ -135,6 +139,7 @@ var PlayScene = {
   update: function() {
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 1360 && this.jugador.x < 1400 && this.jugador.y < 350){
+         this.music.pause();
         this.game.state.start('play');
     }
 
@@ -145,6 +150,7 @@ var PlayScene = {
     this.physics.arcade.collide(this.jugador,this.layer3);
     this.physics.arcade.collide(this.jugador,this.layer4);
     this.physics.arcade.collide(this.jugador,this.chest);
+    this.physics.arcade.collide(this.jugador,this.bonfire);
     for (var i in this.skeletons)
     {
       this.physics.arcade.collide(this.skeletons[i], this.layer);
@@ -228,6 +234,7 @@ var PlayScene = {
       this.physics.arcade.collide(this.knights[i], this.jugador.shoot, this.collision, null, this);
     }
     this.chest.update(this.jugador.x, this.jugador.y);
+    this.bonfire.update(this.jugador.x, this.jugador.y);
     this.enepece.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
     this.jugador.interactCofre(this.chest);

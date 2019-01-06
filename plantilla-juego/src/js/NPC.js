@@ -16,6 +16,7 @@ NPC.prototype.create = function() {
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
+    this.body.moves = false;
     
     this.texto = new TextBox(this.game, this.text);
     this.texto.create();

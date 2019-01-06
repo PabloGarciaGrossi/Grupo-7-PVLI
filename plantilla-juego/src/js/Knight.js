@@ -1,9 +1,9 @@
 'use strict';
 var Enemy = require('./Enemy.js');
 
-function Knight (game, speed, x, y, spritename, maza, audio,audioAttack)
+function Knight (game, speed, x, y, spritename, maza, audio,audioAttack,salud,dmg)
 {
-    Enemy.call(this,game,speed,x,y,spritename,audio,audioAttack);
+    Enemy.call(this,game,speed,x,y,spritename,audio,audioAttack,salud,dmg);
     this.maza = maza;
 }
 Knight.prototype = Object.create(Enemy.prototype);
@@ -27,6 +27,8 @@ Knight.prototype.create = function()
 }
 Knight.prototype.update = function(playerx, playery)
 {
+    this.myHealthBar.setPosition(this.x, this.y-30);
+    this.myHealthBar.setPercent(this.salud);
     if (this.salud > 0)
     {
         var dist = this.distanceToXY(playerx, playery);
@@ -40,7 +42,7 @@ Knight.prototype.update = function(playerx, playery)
                 }
             this.maza.update(this.direction);
         }
-        else if (dist >= 500)
+        else if (dist >= 300)
         {
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;

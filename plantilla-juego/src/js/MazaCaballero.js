@@ -1,10 +1,11 @@
 'use strict';
 var Character = require('./Character.js');
-function mazaCaballero(game, speed, x, y, spritename)
+function mazaCaballero(game, speed, x, y, spritename,dmg)
 {
     Character.call(this,game,speed,x,y,spritename);
     this.game = game;
     this.attacking = true;
+    this.dmg = dmg;
 }
 mazaCaballero.prototype = Object.create(Character.prototype);
 mazaCaballero.prototype.constructor = mazaCaballero;

@@ -1,9 +1,9 @@
 'use strict'
 var Enemy = require('./Enemy.js');
 
-function RangedEnemy(game, x, y,speed, spritename, spriteweapon, audio, audioAttack) 
+function RangedEnemy(game, x, y,speed, spritename, spriteweapon, audio, audioAttack,salud,dmg) 
 {
-    Enemy.call(this, game, speed, x, y, spritename, audio, audioAttack);
+    Enemy.call(this, game, speed, x, y, spritename, audio, audioAttack,salud,dmg);
     this.spriteshoot = spriteweapon;
     this.attacking = true;
 }
@@ -35,6 +35,8 @@ RangedEnemy.prototype.create = function ()
 
 RangedEnemy.prototype.update = function(player, playerx, playery)
 {
+    this.myHealthBar.setPosition(this.x, this.y-30);
+    this.myHealthBar.setPercent(this.salud);
     if (this.salud > 0)
     {
         var dist = this.distanceToXY(playerx, playery);

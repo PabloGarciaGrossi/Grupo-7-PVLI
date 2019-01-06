@@ -11,6 +11,7 @@ var NPC = require('./NPC.js');
 var FireCone = require ('./FireCone.js');
 var Knight = require('./Knight.js');
 var mazaCaballero = require('./MazaCaballero.js');
+var Bonfire = require('./Bonfire.js');
 
 var PlayScene = {
 
@@ -51,24 +52,24 @@ var PlayScene = {
       {
         if (this.map.objects[ol][o].gid == 361)
         {
-        var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto","skeletonAudio","tackle");
+        var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto","skeletonAudio","tackle",0.6,30);
         this.enemies.add(enemy);
         this.skeletons[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 377)
         {
-          var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow","armor","archer");
+          var enemy = new RangedEnemy(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 0, "archer", "arrow","armor","archer",0.5,25);
           this.archers[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 337)
         {
-          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack");
+          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack",0,25);
           this.rats[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 5264)
         {
-          var maza = new mazaCaballero(this.game, 0, 0, 0, 'maza');
-          var enemy = new Knight(this.game, 30, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 'knight', maza,"armor","swing");
+          var maza = new mazaCaballero(this.game, 0, 0, 0, 'maza',35);
+          var enemy = new Knight(this.game, 30, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 'knight', maza,"armor","swing",2,35);
           this.knights[o] = enemy;
         }
       }
@@ -120,6 +121,7 @@ var PlayScene = {
     var barconfig = {x: 200, y: 50};
     var staminaconfig = {x: 162, y: 75, width: 175, height: 15};
     this.stamina = new HealthBar(this.game, staminaconfig);
+    this.stamina.setBarColor('#109510');
     this.health = new HealthBar(this.game, barconfig);
     this.health.setFixedToCamera(true);
     this.stamina.setFixedToCamera(true);
@@ -132,6 +134,10 @@ var PlayScene = {
 
   update: function() {
     this.music.play('',0,1,false,false);
+    if (this.jugador.x > 576 && this.jugador.x < 670 && this.jugador.y < 476 && this.jugador.y > 354){
+      this.music.pause();
+     this.game.state.start('bosque');
+ }
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
     this.physics.arcade.collide(this.jugador,this.layer);
