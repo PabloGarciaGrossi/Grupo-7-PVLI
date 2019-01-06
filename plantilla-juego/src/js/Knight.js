@@ -44,9 +44,7 @@ Knight.prototype.update = function(playerx, playery)
         }
         else if (dist >= 300)
         {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
-            this.animations.play('idle');
+            this.setIdle();
         }
     }
     else{

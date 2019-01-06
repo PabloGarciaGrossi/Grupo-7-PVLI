@@ -18,10 +18,10 @@ RangedEnemy.prototype.create = function ()
     this.body.collideWorldBounds = true;
 
     this.animations.add('idle', [0],1,true);
-    this.animations.add('left', [2,3],1,true);
-    this.animations.add('right', [6,7],1,true);
-    this.animations.add('down', [0,1],1,true);
-    this.animations.add('up', [4,5],1,true);
+    this.animations.add('runleft', [2,3],1,true);
+    this.animations.add('runright', [6,7],1,true);
+    this.animations.add('rundown', [0,1],1,true);
+    this.animations.add('runup', [4,5],1,true);
     this.animations.add('dead',[8],1,true);
 
     this.shoot = this.game.add.weapon(1, this.spriteshoot);
@@ -48,39 +48,13 @@ RangedEnemy.prototype.update = function(player, playerx, playery)
         }
         else if (dist >= 500)
         {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
-            this.animations.play('idle');
+            this.setIdle();
         }
         this.bulletHit(player);
     }
     else{
         this.animations.play('dead');
         this.body.enable = false;
-    }
-}
-
-RangedEnemy.prototype.detectAnimation = function(x,y){
-    var cx = this.x -x;
-    var cy = this.y -y;
-    if (cx > 0 && Math.abs(cx) >= Math.abs(cy))
-    {
-        this.animations.play('left');
-        this.direction = 1;
-    }
-    else if (cx < 0 && Math.abs(cx) >= Math.abs(cy))
-    {
-        this.animations.play('right');
-        this.direction = 3;
-    }
-    else if (cy > 0)
-    {
-        this.animations.play('up');
-        this.direction = 2;
-    }
-    else{
-        this.animations.play('down');
-        this.direction = 0;
     }
 }
 

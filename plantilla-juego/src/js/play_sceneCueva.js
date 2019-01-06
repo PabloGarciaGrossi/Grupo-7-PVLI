@@ -63,7 +63,7 @@ var PlayScene = {
         }
         else if (this.map.objects[ol][o].gid == 337)
         {
-          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack",0,25);
+          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack",-2,25);
           this.rats[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 5264)

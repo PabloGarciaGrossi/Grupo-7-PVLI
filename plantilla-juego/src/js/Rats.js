@@ -17,10 +17,10 @@ Rats.prototype.create = function ()
     this.body.collideWorldBounds = true;
 
     this.animations.add('idle', [0],1,true);
-    this.animations.add('left', [2,3],2,true);
-    this.animations.add('right', [6,7],2,true);
-    this.animations.add('down', [0,1],2,true);
-    this.animations.add('up', [4,5],2,true);
+    this.animations.add('runleft', [2,3],2,true);
+    this.animations.add('runright', [6,7],2,true);
+    this.animations.add('rundown', [0,1],2,true);
+    this.animations.add('runup', [4,5],2,true);
     this.animations.add('dead',[8],1,true);
     this.animations.add('spitleft',[9],1,true);
     this.animations.add('spitdown',[10],1,true);
@@ -79,9 +79,7 @@ Rats.prototype.update = function(player, playerx, playery)
         }
         else if (dist >= 500)
         {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
-            this.animations.play('idle');
+            this.setIdle();
         }
         this.bulletHit(player);
     }

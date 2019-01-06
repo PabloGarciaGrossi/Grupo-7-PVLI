@@ -61,6 +61,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.swordAudio = this.game.add.audio('sword');
     this.fireAudio = this.game.add.audio('fire');
     this.stepAudio = this.game.add.audio('step');
+    this.dieAudio = this.game.add.audio('die');
     this.shoot = this.game.add.weapon(1, this.spriteshoot);
     this.shoot.bulletSpeed = 300;
     this.shoot.fireRate = 1000;
@@ -68,6 +69,14 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.shoot.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.shoot.trackSprite(this, 0, 0, false);
     this.body.mass = 3;
+
+    this.deathimage = this.game.add.sprite(400, 300,"youdied");
+    this.deathimage.width = 800;
+    this.deathimage.height = 250;
+    this.deathimage.anchor.setTo(0.5,0.5);
+    this.deathimage.alpha = 0;
+    this.game.add.existing(this.deathimage);
+    this.deathimage.fixedToCamera = true;
   }
   Player.prototype.setIdle = function()
   {
@@ -331,21 +340,6 @@ Player.prototype.update = function()
       this.animations.play('rundown');
     }
     else if (this.fireButton.isDown){
-     /* switch (this.direction)
-      {
-        case 0:
-          this.shoot.fireAtXY(this.x, this.y + 100);
-          break;
-        case 1: 
-          this.shoot.fireAtXY(this.x - 100, this.y);
-          break;
-        case 2: 
-          this.shoot.fireAtXY(this.x, this.y - 100);
-          break;
-        case 3: 
-          this.shoot.fireAtXY(this.x + 100, this.y);
-          break;
-      }*/
       this.attackFire();
     }
     else if (this.drinkButton.isDown)
@@ -376,9 +370,13 @@ Player.prototype.update = function()
 
     if (this.salud <= 0){
       this.animations.play('dead');
-      this.moving = false;
-      this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){ this.game.state.start(this.game.state.current)},this);
-      this.game.state.start(this.game.state.current);
+      this.hurt.pause();
+      if (this.deathimage.alpha < 1)
+        this.deathimage.alpha += 0.005;
+      this.body.moves = false;
+      this.dieAudio.play('',0,1,false,false);
+      this.game.time.events.add(Phaser.Timer.SECOND * 5, function(){ this.game.state.start(this.game.state.current)},this);
+      //this.game.state.start(this.game.state.current);
     }
   }
 

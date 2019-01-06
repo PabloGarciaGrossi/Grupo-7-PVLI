@@ -9,8 +9,6 @@ function Enemy(game, speed, x, y, spritename, audio, audioAttack,salud,dmg)
     this.salud = 100;
     this.dmg = dmg;
     this.resistencia = salud;
-    this.reviving = false;
-    this.tackling = false;
     this.attacking = false;
     this.attackAudio = this.game.add.audio(audioAttack);
     this.config = {x: 0, y: 0, width: 60, height: 7};
@@ -40,6 +38,14 @@ Enemy.prototype.create = function()
     this.animations.add('tackleright',[13,14],false);
     this.animations.add('tackleup',[16,17],false);
     this.anchor.setTo(0.5, 0.5);
+    this.reviving = false;
+    this.tackling = false;
+}
+Enemy.prototype.setIdle = function()
+{
+    this.body.velocity.x = 0;
+    this.body.velocity.y = 0;
+    this.animations.play('idle');
 }
 Enemy.prototype.MoveTo = function(x, y){
 
@@ -106,13 +112,7 @@ Enemy.prototype.tackle = function()
     this.game.time.events.add(Phaser.Timer.SECOND * 1.1, function() {this.moving = true;}, this);
     this.game.time.events.add(Phaser.Timer.SECOND * 2.3, function() {this.tackling = false;}, this);
 }
-Enemy.prototype.distanceToXY = function (x, y) {
 
-    var dx =  this.x - x;
-    var dy =  this.y - y;
-
-    return Math.sqrt(dx * dx + dy * dy);
-}
 Enemy.prototype.detectAnimation = function(x,y){
     var cx = this.x -x;
     var cy = this.y -y;
@@ -161,9 +161,7 @@ Enemy.prototype.update = function(playerx, playery)
         }
         else if (dist >= 200)
         {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
-            this.animations.play('idle');
+            this.setIdle();
         }
     }
     else if (!this.reviving)

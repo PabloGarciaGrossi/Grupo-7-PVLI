@@ -58,6 +58,7 @@ var PreloaderScene = {
     this.game.load.image('maza', 'images/maza.png');
     this.game.load.image('e', 'images/e.png');
     this.game.load.spritesheet('bonfire', 'images/Hoguera.png',36,40,4);
+    this.game.load.image('youdied', 'images/youdied.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
@@ -76,6 +77,7 @@ var PreloaderScene = {
     this.game.load.audio('castle', 'music/PraiseJoselillo.mp3');
     this.game.load.audio('fire', 'music/fire.mp3');
     this.game.load.audio('step', 'music/step.ogg');
+    this.game.load.audio('die', 'music/You Died.mp3');
 
   },
 
