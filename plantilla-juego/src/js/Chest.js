@@ -9,6 +9,8 @@ function Chest(game, x, y, spritename, mejora)
     this.item = mejora;
     this.width = 50;
     this.height = 50;
+    this.anchor.x = 0.5;
+    this.anchor.y = 0.5;
 
     
     this.animations.add('closed', [0], 1, true);
