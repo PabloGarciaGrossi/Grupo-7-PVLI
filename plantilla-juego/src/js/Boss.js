@@ -56,6 +56,12 @@ Boss.prototype.create = function()
     
     this.attacking = true;
     this.attack = 1;
+
+    this.rayoAudio = this.game.add.audio('rayo');
+    this.bolaAudio = this.game.add.audio('bola');
+    this.fuegoAudio = this.game.add.audio('escudo');
+    this.pasoAudio = this.game.add.audio('pasos');
+
     this.cooldownInicial();
 }
 
@@ -76,6 +82,8 @@ Boss.prototype.cargaFuego = function()
         this.aura.alpha = 1;
         this.aura.attacking = true;
         this.moving = true;
+        this.aura.body.enable = true;
+        this.fuegoAudio.play();
     }, this);
     this.game.time.events.add(Phaser.Timer.SECOND * 9.5, function() {
         this.aura.alpha = 0;
@@ -83,6 +91,7 @@ Boss.prototype.cargaFuego = function()
         this.lanzafuego = false;
         this.attack += 1;
         this.cooldown = true;
+        this.aura.body.enable = false;
     }, this);
     this.game.time.events.add(Phaser.Timer.SECOND * 10.5, function() {
         this.cooldown = false;
@@ -139,6 +148,7 @@ Boss.prototype.update = function(player,playerx,playery)
         {
             this.detectAnimation(playerx, playery);
             this.MoveTo(playerx, playery);
+            this.pasoAudio.play('',0,1,false,false);
             if (!this.lanzafuego && !this.lanzahielo && !this.lanzarayo && !this.cooldown)
             {
             if (this.attack > 3)
@@ -170,6 +180,7 @@ Boss.prototype.update = function(player,playerx,playery)
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
             this.bolahielo.fireAtXY(playerx, playery);
+            this.bolaAudio.play('',0,1,false,false);
         }
         else if (this.lanzarayo)
         {
@@ -177,6 +188,7 @@ Boss.prototype.update = function(player,playerx,playery)
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
             this.rayo.fireAtXY(playerx, playery);
+            this.rayoAudio.play('',0,1,false,false);
         }
         this.hieloHit(player);
         this.rayoHit(player);

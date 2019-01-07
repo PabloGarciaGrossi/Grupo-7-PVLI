@@ -2,7 +2,7 @@
 var mazaCaballero = require('./MazaCaballero.js');
 function fireCircle(game, speed, x, y, spritename,dmg)
 {
-    mazaCaballero.call(this,game,speed,x,y,spritename);
+    mazaCaballero.call(this,game,speed,x,y,spritename,dmg);
 }
 fireCircle.prototype = Object.create(mazaCaballero.prototype);
 fireCircle.prototype.constructor = fireCircle;
