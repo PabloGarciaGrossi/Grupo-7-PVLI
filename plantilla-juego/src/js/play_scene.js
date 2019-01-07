@@ -102,11 +102,11 @@ var PlayScene = {
     this.bonfire = new Bonfire (this.game, 49, 1095, "bonfire");
     this.bonfire.create();
     if (this.game.mejoraSpeed) {
-      this.jugador = new Player(this.game,400,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+      this.jugador = new Player(this.game,300,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     } else this.jugador = new Player(this.game,200,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.bonfire2 = new Bonfire (this.game, 1250, 3072, "bonfire");
     this.bonfire2.create();
-    this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
+    this.rock = new RockRoll(this.game, 200, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.rock.create();
     this.estus = this.game.add.sprite(100, 100, 'estus');
@@ -137,6 +137,10 @@ var PlayScene = {
 
   update: function() {
     this.music.play('',0,1,false,false);
+    if (this.jugador.x > 1729 && this.jugador.x < 1814 && this.jugador.y < 119){
+      this.music.pause();
+      this.game.state.start('boss');
+ }
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
     this.physics.arcade.collide(this.jugador,this.layer);

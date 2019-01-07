@@ -96,14 +96,14 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 142, 2441, "jose", "Llevo siglos aqui en esta cueva\ny todavia tengo que hacer TPV");
-    this.enepece.create();
     this.chest = new Chest(this.game, 1785, 230, "chest", "armor");
     this.chest.create();
     if (this.game.mejoraSpeed) {
-      this.jugador = new Player(this.game,200,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
-    } else this.jugador = new Player(this.game,300,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+      this.jugador = new Player(this.game,300,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,200,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.jugador.create();
+    this.enepece = new NPC(this.game, 1538, 2226, "jose", "Llevo siglos aqui en esta cueva\ny todavia tengo que hacer TPV");
+    this.enepece.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.estus = this.game.add.sprite(100, 100, 'estus');
     this.estus.scale.setTo(0.3,0.3);
@@ -145,6 +145,7 @@ var PlayScene = {
     this.physics.arcade.collide(this.jugador,this.layer3);
     this.physics.arcade.collide(this.jugador,this.layer4);
     this.physics.arcade.collide(this.jugador,this.chest);
+    this.physics.arcade.collide(this.jugador,this.enepece);
     for (var i in this.skeletons)
     {
       this.physics.arcade.collide(this.skeletons[i], this.layer);

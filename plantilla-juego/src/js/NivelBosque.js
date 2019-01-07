@@ -100,9 +100,9 @@ var PlayScene = {
     this.chest = new Chest(this.game, 410, 1157, "chest", "estus");
     this.chest.create();
     if (this.game.mejoraSpeed) {
-      this.jugador = new Player(this.game,400,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+      this.jugador = new Player(this.game,300,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     } else this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
-    this.bonfire = new Bonfire (this.game, 898, 1346, "bonfire");
+    this.bonfire = new Bonfire (this.game, 910, 1346, "bonfire");
     this.bonfire.create();
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
@@ -151,6 +151,7 @@ var PlayScene = {
     this.physics.arcade.collide(this.jugador,this.layer4);
     this.physics.arcade.collide(this.jugador,this.chest);
     this.physics.arcade.collide(this.jugador,this.bonfire);
+    this.physics.arcade.collide(this.jugador,this.enepece);
     for (var i in this.skeletons)
     {
       this.physics.arcade.collide(this.skeletons[i], this.layer);
