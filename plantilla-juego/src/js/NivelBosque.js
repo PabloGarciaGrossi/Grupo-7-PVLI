@@ -95,7 +95,7 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 855, 209, "player", "I only abuse of\nyour mother negro");
+    this.enepece = new NPC(this.game, 855, 209, "thanos", "Yo exterminaria a los esqueletos,\npero solo a la mitad");
     this.enepece.create();
     this.chest = new Chest(this.game, 410, 1157, "chest", "estus");
     this.chest.create();
@@ -137,11 +137,6 @@ var PlayScene = {
   },
 
   update: function() {
-
-    
-console.log(this.jugador.x);
-console.log(this.jugador.y);
-
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 1360 && this.jugador.x < 1400 && this.jugador.y < 350){
          this.music.pause();
