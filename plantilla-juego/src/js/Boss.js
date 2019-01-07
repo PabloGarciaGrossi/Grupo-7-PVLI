@@ -1,7 +1,7 @@
 'use strict';
 var Enemy = require('./Enemy.js');
 
-function Boss (game, speed, x, y, spritename,audio,audioAttack,salud,dmg,bolahielo,rayo,bolafuego)
+function Boss (game, speed, x, y, spritename,audio,audioAttack,salud,dmg,bolahielo,rayo,bolafuego,aura)
 {
     Enemy.call(this,game,speed,x,y,spritename,audio,audioAttack,salud,dmg);
     this.hielosprite = bolahielo;
@@ -10,6 +10,8 @@ function Boss (game, speed, x, y, spritename,audio,audioAttack,salud,dmg,bolahie
     this.lanzafuego = false;
     this.lanzahielo = false;
     this.lanzarayo = false;
+    this.cooldown = true;
+    this.aura = aura;
 }
 
 Boss.prototype = Object.create(Enemy.prototype);
@@ -33,40 +35,64 @@ Boss.prototype.create = function()
 
     this.anchor.setTo(0.5, 0.5);
 
-    this.bolahielo = this.game.add.weapon(1, this.hielosprite);
-    this.bolahielo.bulletSpeed = 400;
-    this.bolahielo.fireRate = 500;
-    this.bolahielo.bulletLifespan = 1200;
+    this.bolahielo = this.game.add.weapon(5, this.hielosprite);
+    this.bolahielo.bulletSpeed = 700;
+    this.bolahielo.fireRate = 300;
+    this.bolahielo.bulletLifespan = 700;
     this.bolahielo.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.bolahielo.trackSprite(this, 0, 0, false);
 
-    this.rayo = this.game.add.weapon(1, this.rayosprite);
-    this.rayo.bulletSpeed = 700;
-    this.rayo.fireRate = 1200;
-    this.rayo.bulletLifespan = 1200;
+    this.rayo = this.game.add.weapon(5, this.rayosprite);
+    this.rayo.bulletSpeed = 950;
+    this.rayo.fireRate = 600;
+    this.rayo.bulletLifespan = 1400;
+    this.rayo.bulletAngleVariance = 10;
+    this.rayo.bulletAngleOffset = 90;
     this.rayo.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.rayo.trackSprite(this, 0, 0, false);
 
-    this.aura = this.game.add.sprite(this.x, this.y, this.bolafuegosprite);
-    this.aura.alpha = 0;
+    this.aura.create();
+    this.addChild(this.aura);
+    
     this.attacking = true;
+    this.attack = 1;
+    this.cooldownInicial();
 }
 
-Boss.prototype.auraFuego = function()
+Boss.prototype.cooldownInicial = function()
+{
+    this.game.time.events.add(Phaser.Timer.SECOND * 3, function() {
+        this.cooldown = !this.cooldown;
+    }, this);
+}
+Boss.prototype.cargaFuego = function()
 {
     this.animations.play('fuego');
     this.moving = false;
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.6, function() {
-        this.aura.alpha = 1;
-        this.body.setCircle(57.5);
-        this.moving = true;
+    this.body.velocity.x = 0;
+    this.body.velocity.y = 0;
+    this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {
         this.lanzafuego = true;
+        this.aura.alpha = 1;
+        this.aura.attacking = true;
+        this.moving = true;
     }, this);
-    this.game.time.events.add(Phaser.Timer.SECOND * 5.6, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND * 9.5, function() {
         this.aura.alpha = 0;
-        this.body.setSize(66,78);
+        this.aura.attacking = false;
         this.lanzafuego = false;
+        this.attack += 1;
+        this.cooldown = true;
     }, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 10.5, function() {
+        this.cooldown = false;
+    }, this);
+    
+}
+
+Boss.prototype.fireCircle = function()
+{
+    this.aura.update(this.direction);
 }
 
 Boss.prototype.iceThrowing = function()
@@ -74,9 +100,14 @@ Boss.prototype.iceThrowing = function()
     this.animations.play('hielo');
     this.moving = false;
     this.lanzahielo = true;
-    this.game.time.events.add(Phaser.Timer.SECOND * 3.5, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND * 6, function() {
         this.moving = true;
         this.lanzahielo = false;
+        this.attack += 1;
+        this.cooldown = true;
+    }, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 8, function() {
+        this.cooldown = false;
     }, this);
 }
 
@@ -85,29 +116,39 @@ Boss.prototype.thunderThrowing = function()
     this.animations.play('rayo');
     this.moving = false;
     this.lanzarayo = true;
-    this.game.time.events.add(Phaser.Timer.SECOND * 3.5, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND * 8, function() {
         this.moving = true;
         this.lanzarayo = false;
+        this.attack += 1;
+        this.cooldown = true;
+    }, this);
+    this.game.time.events.add(Phaser.Timer.SECOND * 8, function() {
+        this.cooldown = false;
     }, this);
 }
 
-Boss.prototype.update = function(player)
+Boss.prototype.update = function(player,playerx,playery)
 {
     this.myHealthBar.setPosition(this.x, this.y-30);
     this.myHealthBar.setPercent(this.salud);
 
     if (this.salud > 0)
     {
-        if (this.moving)
+        var dist = this.distanceToXY(playerx, playery);
+        if (dist < 600 && this.moving)
         {
-            this.MoveTo(player.x, player.y);
-            if (!this.lanzafuego && !this.lanzahielo && !this.lanzarayo)
+            this.detectAnimation(playerx, playery);
+            this.MoveTo(playerx, playery);
+            if (!this.lanzafuego && !this.lanzahielo && !this.lanzarayo && !this.cooldown)
             {
-            var value = Phaser.Math.Between(1, 3);
-            switch(value)
+            if (this.attack > 3)
+            {
+                this.attack = 1;
+            }
+            switch(this.attack)
                 {
                     case 1:
-                    this.auraFuego();
+                    this.cargaFuego();
                     break;
                     case 2:
                     this.iceThrowing();
@@ -117,16 +158,28 @@ Boss.prototype.update = function(player)
                     break;
                 }
             }
+            else if (this.lanzafuego)
+            {
+                this.dmg = 40;
+                this.fireCircle();
+            }
         }
         else if (this.lanzahielo)
         {
-            this.bolahielo.fireAtXY(player.x, player.y);
+            this.dmg = 30;
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+            this.bolahielo.fireAtXY(playerx, playery);
         }
         else if (this.lanzarayo)
         {
-            this.rayo.fireAtXY(player.x, player.y);
+            this.dmg = 35;
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+            this.rayo.fireAtXY(playerx, playery);
         }
-        this.bulletHit(player);
+        this.hieloHit(player);
+        this.rayoHit(player);
     }
     else
     {
@@ -135,10 +188,40 @@ Boss.prototype.update = function(player)
     }
 }
 
-Boss.prototype.bulletHit = function (player) 
+Boss.prototype.hieloHit = function (player) 
 {
     var esto = this;
-    this.shoot.bullets.forEach(function (bullet) {
+    this.bolahielo.bullets.forEach(function (bullet) {
+        if(esto.game.physics.arcade.collide(bullet, player)) {
+            bullet.kill();
+            if(!player.invincible)
+                player.col(esto);
+        }
+    }
+    );
+} 
+Boss.prototype.col = function(sword)
+{
+    if (sword.attacking)
+    {
+        if (sword.dmg -this.resistencia <= 0)
+        {
+            this.knock(sword,0.1,200);
+        }
+        else
+        {
+        this.knock(sword, (sword.dmg-this.resistencia),200);
+        }
+        this.invincible = true;
+        this.alpha = 0.5;
+        this.hurt.play();
+        this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function() {this.invincible = false; this.alpha = 1;}, this);
+    }
+}
+Boss.prototype.rayoHit = function (player) 
+{
+    var esto = this;
+    this.rayo.bullets.forEach(function (bullet) {
         if(esto.game.physics.arcade.collide(bullet, player)) {
             bullet.kill();
             if(!player.invincible)

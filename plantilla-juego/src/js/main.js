@@ -4,6 +4,8 @@ var PlayScene = require('./play_scene.js');
 var NivelBosque = require('./NivelBosque.js');
 var play_sceneCueva = require('./play_sceneCueva.js');
 var MainMenu = require('./MainMenu.js');
+var BossScene = require('./BossScene.js');
+
 
 
 var BootScene = {
@@ -36,6 +38,7 @@ var PreloaderScene = {
     this.game.load.tilemap('primero', 'maps/MapaConEnemigos.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('bosque', 'maps/Bosque.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('cueva', 'maps/Cueva.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('boss', 'maps/Boss.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tilesetCastillo', 'images/tilesCastillo.png');
     this.game.load.image('tilesetBosque', 'images/tilesBosque.png');
     this.game.load.image('tilesetCueva', 'images/tilesetCueva.png');
@@ -86,7 +89,7 @@ var PreloaderScene = {
   },
 
   create: function () {
-    this.game.state.start('cueva');
+    this.game.state.start('boss');
   }
 };
 
@@ -113,6 +116,7 @@ window.onload = function () {
   game.state.add('play', PlayScene);
   game.state.add('bosque', NivelBosque);
   game.state.add('cueva', play_sceneCueva);
+  game.state.add('boss', BossScene);
   game.state.add('mainmenu', MainMenu);
 
   game.state.start('boot');

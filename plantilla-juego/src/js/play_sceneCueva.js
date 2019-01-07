@@ -91,8 +91,6 @@ var PlayScene = {
     {
       this.knights[i].create();
     }
-    //this.boss = new Boss(this.game, 30, 424,2468,"boss",'','',3,40,"hielo","rayo","fuego");
-    //this.boss.create();
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
@@ -103,16 +101,14 @@ var PlayScene = {
     this.chest = new Chest(this.game, 1785, 230, "chest", "armor");
     this.chest.create();
     if (this.game.mejoraSpeed) {
-      this.jugador = new Player(this.game,400,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
-    } else this.jugador = new Player(this.game,500,1300, 2000,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+      this.jugador = new Player(this.game,200,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,300,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.estus = this.game.add.sprite(100, 100, 'estus');
     this.estus.scale.setTo(0.3,0.3);
     this.cross = this.game.add.sprite(140,120,'cross');
     this.cross.scale.setTo(0.05,0.05);
-    //this.sans = this.game.add.sprite(1508,2226,'sans');
-    //this.sans.scale.setTo(0.2,0.2);
     this.num = this.game.add.sprite(180,113,'numbers');
     this.num.scale.setTo(0.45,0.45);
     this.num.animations.add('cero', [0], 1, false);
@@ -136,8 +132,8 @@ var PlayScene = {
   },
 
   update: function() {
-console.log(this.jugador.x);
-console.log(this.jugador.y);
+//console.log(this.jugador.x);
+//console.log(this.jugador.y);
 
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 576 && this.jugador.x < 670 && this.jugador.y < 476 && this.jugador.y > 354){
@@ -226,7 +222,6 @@ console.log(this.jugador.y);
     for (var i in this.knights)
     {
       this.physics.arcade.collide(this.knights[i], this.jugador.sword, this.collision, null, this);
-      this.physics.arcade.collide(this.knights[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.overlap(this.knights[i], this.jugador.sword, this.collision, null, this);
       this.physics.arcade.overlap(this.knights[i], this.jugador.fireCone, this.collision, null, this);
       this.physics.arcade.collide(this.knights[i], this.jugador.fireCone, this.collision, null, this);
@@ -286,8 +281,9 @@ console.log(this.jugador.y);
     /*this.game.debug.body(this.jugador);
     this.game.debug.body(this.jugador.sword);
     this.game.debug.body(this.jugador.fireCone);
-    this.game.debug.body(this.knight);
-    this.game.debug.body(this.knight.maza);
+    //this.game.debug.body(this.knight);
+    //this.game.debug.body(this.knight.maza);
+    this.game.debug.body(this.boss);
     for (var i in this.rats)
     {
       this.game.debug.body(this.rats[i]);

@@ -16,7 +16,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.attacking = false;
     this.sword = sword;
     this.fireCone = fireCone;
-    this.invincible = true;
+    this.invincible = false;
     this.moving = true;
     this.blocking = false;
     this.rolling = false;
@@ -65,6 +65,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.swordAudio = this.game.add.audio('sword');
     this.fireAudio = this.game.add.audio('fire');
     this.stepAudio = this.game.add.audio('step');
+    this.dieAudio = this.game.add.audio('die');
     this.body.mass = 3;
 
     this.deathimage = this.game.add.sprite(400, 300,"youdied");
@@ -281,7 +282,6 @@ Player.prototype.col = function(enemy)
     if (enemy.attacking)
     {
     this.stamina -= 30;
-    enemy.knock(this, 0, 0);
     }
   }
 }
@@ -368,7 +368,6 @@ Player.prototype.update = function()
       this.body.moves = false;
       this.dieAudio.play('',0,1,false,false);
       this.game.time.events.add(Phaser.Timer.SECOND * 5, function(){ this.game.state.start(this.game.state.current)},this);
-      //this.game.state.start(this.game.state.current);
     }
   }
 

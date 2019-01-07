@@ -108,7 +108,6 @@ var PlayScene = {
     this.bonfire2.create();
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
-    this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.rock.create();
     this.estus = this.game.add.sprite(100, 100, 'estus');
     this.estus.scale.setTo(0.3,0.3);
