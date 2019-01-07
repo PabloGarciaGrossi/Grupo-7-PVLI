@@ -4,6 +4,8 @@ var PlayScene = require('./play_scene.js');
 var NivelBosque = require('./NivelBosque.js');
 var play_sceneCueva = require('./play_sceneCueva.js');
 var MainMenu = require('./MainMenu.js');
+var MenuLevels = require('./MenuLevels.js');
+var MenuControles = require('./MenuControles.js');
 
 
 var BootScene = {
@@ -28,6 +30,7 @@ var PreloaderScene = {
 
     //imagenes
     this.game.load.image('logo', 'images/Fondo.png');
+    this.game.load.image('vacio', 'images/vacio.png');
     this.game.load.image('titlesouls', 'images/TextoOldSouls.png');
     this.game.load.spritesheet('esqueleto', 'images/skeletons2.png',32, 50, 24);
     this.game.load.spritesheet('archer', 'images/Arquero.png',44,52,16);
@@ -41,6 +44,8 @@ var PreloaderScene = {
     this.game.load.image('tilesetCueva', 'images/tilesetCueva.png');
     this.game.load.image('tileset', 'images/tileset.png');
     this.game.load.image('menu', 'images/Menu.png');
+    this.game.load.image('menulevels', 'images/MenuLevels.png');
+    this.game.load.image('menucontroles', 'images/MenuControles.png');
     this.game.load.image('rock', 'images/Pedrolo.png');
     this.game.load.image('estus', 'images/Estus.png');
     this.game.load.image('cross', 'images/cross.png');
@@ -58,6 +63,9 @@ var PreloaderScene = {
     this.game.load.image('maza', 'images/maza.png');
     this.game.load.image('e', 'images/e.png');
     this.game.load.spritesheet('bonfire', 'images/Hoguera.png',36,40,4);
+    this.game.load.image('jose', 'images/Joselillo.png');
+    this.game.load.image('solaire', 'images/Solaire.png');
+    this.game.load.image('thanos', 'images/Thanos.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
@@ -80,7 +88,7 @@ var PreloaderScene = {
   },
 
   create: function () {
-    this.game.state.start('cueva');
+    this.game.state.start('mainmenu');
   }
 };
 
@@ -108,6 +116,10 @@ window.onload = function () {
   game.state.add('bosque', NivelBosque);
   game.state.add('cueva', play_sceneCueva);
   game.state.add('mainmenu', MainMenu);
+  game.state.add('levels', MenuLevels);
+  game.state.add('controles', MenuControles);
+
+  game.musicaplaying = true;
 
   game.state.start('boot');
 };

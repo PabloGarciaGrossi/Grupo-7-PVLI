@@ -95,7 +95,7 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 600, 350, "player", "Me cago en todos tus muertos,\nhijo de las mil putas");
+    this.enepece = new NPC(this.game, 600, 350, "solaire", "Tanto alabar al sol, que al final\nse me han quedado los brazos asi");
     this.enepece.create();
     this.chest = new Chest(this.game, 1980, 1895, "chest", "speed");
     this.chest.create();

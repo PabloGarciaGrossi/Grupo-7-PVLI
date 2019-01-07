@@ -16,7 +16,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.attacking = false;
     this.sword = sword;
     this.fireCone = fireCone;
-    this.invincible = true;
+    this.invincible = false;
     this.moving = true;
     this.blocking = false;
     this.rolling = false;
