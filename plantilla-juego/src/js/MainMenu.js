@@ -16,7 +16,7 @@ var MainMenu = {
         this.createButton(game, game.world.centerX, game.world.centerY - 10, 300, 50,
             function(){
                 this.state.start('cueva');
-                game.musica.pause();
+                game.musica.stop();
         });
         this.createButton(game, game.world.centerX, game.world.centerY + 80, 300, 50,
             function(){

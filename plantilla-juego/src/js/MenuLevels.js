@@ -7,21 +7,20 @@ var MenuLevels = {
         var background;
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'menulevels');
         background.anchor.setTo(0.5,0.5);
-        
         this.createButton(game, game.world.centerX - 250, game.world.centerY - 100, 200, 200,
             function(){
                 this.state.start('cueva');
-                game.musica.pause();
+                game.musica.stop();
         });
         this.createButton(game, game.world.centerX, game.world.centerY - 100, 200, 200,
             function(){
                 this.state.start('bosque');
-                game.musica.pause();
+                game.musica.stop();
         });
         this.createButton(game, game.world.centerX + 250, game.world.centerY - 100, 200, 200,
             function(){
                 this.state.start('play');
-                game.musica.pause();
+                game.musica.stop();
         });
         this.createButton(game, 120, game.world.centerY + 240, 150, 50,
             function(){

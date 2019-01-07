@@ -136,8 +136,6 @@ var PlayScene = {
   },
 
   update: function() {
-console.log(this.jugador.x);
-console.log(this.jugador.y);
 
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 576 && this.jugador.x < 670 && this.jugador.y < 476 && this.jugador.y > 354){

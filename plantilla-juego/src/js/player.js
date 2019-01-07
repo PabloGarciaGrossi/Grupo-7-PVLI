@@ -65,6 +65,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.swordAudio = this.game.add.audio('sword');
     this.fireAudio = this.game.add.audio('fire');
     this.stepAudio = this.game.add.audio('step');
+    this.dieAudio = this.game.add.audio('die');
     this.body.mass = 3;
 
     this.deathimage = this.game.add.sprite(400, 300,"youdied");

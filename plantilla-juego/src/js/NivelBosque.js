@@ -137,11 +137,6 @@ var PlayScene = {
   },
 
   update: function() {
-
-    
-console.log(this.jugador.x);
-console.log(this.jugador.y);
-
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 1360 && this.jugador.x < 1400 && this.jugador.y < 350){
          this.music.pause();

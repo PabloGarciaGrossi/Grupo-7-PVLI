@@ -7,7 +7,7 @@ var MenuControles = {
         var background;
         background = game.add.sprite(game.world.centerX, game.world.centerY, 'menucontroles');
         background.anchor.setTo(0.5,0.5);
-        
+        game.musica = game.add.sound('musicmenu');
         this.createButton(game, 120, game.world.centerY + 240, 150, 50,
             function(){
                 this.state.start('mainmenu');
