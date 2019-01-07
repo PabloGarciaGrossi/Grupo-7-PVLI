@@ -1,5 +1,6 @@
 'use strict';
 var Enemy = require('./Enemy.js');
+var HealthBar = require('./HealthBar.js');
 
 function Boss (game, speed, x, y, spritename,audio,audioAttack,salud,dmg,bolahielo,rayo,bolafuego,aura)
 {
@@ -63,6 +64,10 @@ Boss.prototype.create = function()
     this.pasoAudio = this.game.add.audio('pasos');
 
     this.cooldownInicial();
+    this.config = {x: 50, y: 500, width: 600, height: 20};
+    this.myHealthBar = new HealthBar(this.game, this.config);
+    this.myHealthBar.setPosition(400, 550);
+    this.myHealthBar.setFixedToCamera(true);
 }
 
 Boss.prototype.cooldownInicial = function()
@@ -138,7 +143,6 @@ Boss.prototype.thunderThrowing = function()
 
 Boss.prototype.update = function(player,playerx,playery)
 {
-    this.myHealthBar.setPosition(this.x, this.y-30);
     this.myHealthBar.setPercent(this.salud);
 
     if (this.salud > 0)
@@ -176,7 +180,7 @@ Boss.prototype.update = function(player,playerx,playery)
         }
         else if (this.lanzahielo)
         {
-            this.dmg = 30;
+            this.dmg = 22;
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
             this.bolahielo.fireAtXY(playerx, playery);
@@ -184,7 +188,7 @@ Boss.prototype.update = function(player,playerx,playery)
         }
         else if (this.lanzarayo)
         {
-            this.dmg = 35;
+            this.dmg = 25;
             this.body.velocity.x = 0;
             this.body.velocity.y = 0;
             this.rayo.fireAtXY(playerx, playery);
@@ -218,7 +222,7 @@ Boss.prototype.col = function(sword)
     {
         if (sword.dmg -this.resistencia <= 0)
         {
-            this.knock(sword,0.1,200);
+            this.knock(sword,0.2,200);
         }
         else
         {
@@ -241,5 +245,9 @@ Boss.prototype.rayoHit = function (player)
         }
     }
     );
+}
+Boss.prototype.knock = function(enemy, dmg, knockpower){
+    this.salud -= dmg;
+    this.hurt.play();
 } 
 module.exports = Boss;

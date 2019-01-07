@@ -96,6 +96,7 @@ var PreloaderScene = {
     this.game.load.audio('pasos', 'music/pasoboss.wav');
     this.game.load.audio('rayo', 'music/alien.wav');
     this.game.load.audio('bola', 'music/bolahielo.wav');
+    this.game.load.audio('boss', 'music/boss.mp3');
 
   },
 

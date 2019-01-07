@@ -10,6 +10,7 @@ var BossScene =
 {
     create: function () 
     {
+    this.music = this.game.add.audio('boss');
     this.map = this.game.add.tilemap('boss');
     this.map.addTilesetImage('tilesInterior', 'tilesetCastillo');
     this.layer = this.map.createLayer('grounds');
@@ -70,6 +71,7 @@ var BossScene =
     },
     update: function() 
     {
+    this.music.play('',0,0.4,false,false);
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
     this.physics.arcade.collide(this.jugador,this.layer);
