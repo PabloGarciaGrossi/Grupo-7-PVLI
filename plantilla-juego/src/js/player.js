@@ -106,11 +106,11 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     }
   Player.prototype.roll = function()
   {
-    if (this.stamina >= 35)
+    if (this.stamina >= 20)
     {
       if (this.body.velocity.x != 0 || this.body.velocity.y != 0)
       {
-        this.stamina = this.stamina - 50;
+        this.stamina = this.stamina - 25;
         switch(this.direction)
         {
           case 0:

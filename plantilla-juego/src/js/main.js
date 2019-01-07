@@ -73,6 +73,7 @@ var PreloaderScene = {
     this.game.load.image('hielo', 'images/bolahielo.png');
     this.game.load.image('fuego', 'images/bola.png');
     this.game.load.image('rayo', 'images/rayo.png');
+    this.game.load.image('victory', 'images/victory.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
@@ -97,11 +98,12 @@ var PreloaderScene = {
     this.game.load.audio('rayo', 'music/alien.wav');
     this.game.load.audio('bola', 'music/bolahielo.wav');
     this.game.load.audio('boss', 'music/boss.mp3');
+    this.game.load.audio('victory', 'music/victory.mp3');
 
   },
 
   create: function () {
-    this.game.state.start('boss');
+    this.game.state.start('mainmenu');
 
   }
 };

@@ -10,6 +10,7 @@ var BossScene =
 {
     create: function () 
     {
+    this.defeated = false;
     this.music = this.game.add.audio('boss');
     this.map = this.game.add.tilemap('boss');
     this.map.addTilesetImage('tilesInterior', 'tilesetCastillo');
@@ -35,14 +36,15 @@ var BossScene =
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
 
+
+    this.fireAura = new fireCircle(this.game, 0, 0, 0, "fuego", 40);
+    this.fireAura.create();
+    this.boss = new Boss(this.game, 30, 480,552,"boss",'','',0,40,"hielo","rayo","fuego",this.fireAura);
+    this.boss.create();
     if (this.game.mejoraSpeed) {
         this.jugador = new Player(this.game,400,480, 800,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
       } else this.jugador = new Player(this.game,200,480, 900,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.jugador.create();
-    this.fireAura = new fireCircle(this.game, 0, 0, 0, "fuego", 40);
-    this.fireAura.create();
-    this.boss = new Boss(this.game, 30, 480,552,"boss",'','',7.5,40,"hielo","rayo","fuego",this.fireAura);
-    this.boss.create();
 
     this.estus = this.game.add.sprite(100, 100, 'estus');
     this.estus.scale.setTo(0.3,0.3);
@@ -67,10 +69,33 @@ var BossScene =
     this.cross.fixedToCamera = true;
     this.num.fixedToCamera = true;
     this.camera.follow(this.jugador);
+    this.victory = this.game.add.sprite(0, 100, 'victory');
+    this.victory.scale.setTo(1.5,1.5);
+    this.victory.alpha = 0;
+    this.victory.fixedToCamera = true;
 
     },
     update: function() 
     {
+    if(this.boss.salud <= 0 && !this.defeated)
+    {
+        this.music.stop();
+        this.music = this.game.add.audio('victory');
+        this.music.play();
+        this.defeated = true;
+    }
+    if (this.defeated)
+    {
+        if (this.victory.alpha < 1)
+        {
+            this.victory.alpha += 0.0024;
+        }
+        else
+        {
+            this.music.stop();
+            this.game.state.start('mainmenu');
+        }
+    }
     this.music.play('',0,0.4,false,false);
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);

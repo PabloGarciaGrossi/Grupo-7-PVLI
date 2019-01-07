@@ -2,27 +2,27 @@
 
 var MainMenu = {
 
-    create:function (game) {
+    create:function () {
 
         var background;
-        background = game.add.sprite(game.world.centerX, game.world.centerY, 'menu');
+        background = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'menu');
         background.anchor.setTo(0.5,0.5);
-        game.musica = game.add.sound('musicmenu');
-        if(game.musicaplaying) {
-            game.musica.play();
-            game.musicaplaying = false;
+        this.game.musica = this.game.add.sound('musicmenu');
+        if(this.game.musicaplaying) {
+            this.game.musica.play();
+            this.game.musicaplaying = false;
         }
         
-        this.createButton(game, game.world.centerX, game.world.centerY - 10, 300, 50,
+        this.createButton(this.game, this.game.world.centerX, this.game.world.centerY - 10, 300, 50,
             function(){
                 this.state.start('cueva');
-                game.musica.stop();
+                this.game.musica.stop();
         });
-        this.createButton(game, game.world.centerX, game.world.centerY + 80, 300, 50,
+        this.createButton(this.game, this.game.world.centerX, this.game.world.centerY + 80, 300, 50,
             function(){
                 this.state.start('levels');
         });
-        this.createButton(game, game.world.centerX, game.world.centerY + 170, 300, 50,
+        this.createButton(this.game, this.game.world.centerX, this.game.world.centerY + 170, 300, 50,
             function(){
                 this.state.start('controles');
         });
