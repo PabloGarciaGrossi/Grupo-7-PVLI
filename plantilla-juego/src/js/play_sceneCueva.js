@@ -98,11 +98,13 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 1300, 2900, "player", "holi");
+    this.enepece = new NPC(this.game, 142, 2441, "player", "Venga brother a casa\nque es tarde");
     this.enepece.create();
-    this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
+    this.chest = new Chest(this.game, 1785, 230, "chest", "armor");
     this.chest.create();
-    this.jugador = new Player(this.game,200,124,2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    if (this.game.mejoraSpeed) {
+      this.jugador = new Player(this.game,400,1408.24, 2916,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,500,1300, 2000,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.estus = this.game.add.sprite(100, 100, 'estus');
@@ -134,11 +136,14 @@ var PlayScene = {
   },
 
   update: function() {
+console.log(this.jugador.x);
+console.log(this.jugador.y);
+
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 576 && this.jugador.x < 670 && this.jugador.y < 476 && this.jugador.y > 354){
       this.music.pause();
      this.game.state.start('bosque');
- }
+    }
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
     this.physics.arcade.collide(this.jugador,this.layer);
@@ -230,8 +235,8 @@ var PlayScene = {
     this.chest.update(this.jugador.x, this.jugador.y);
     this.enepece.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
-    this.jugador.interactCofre(this.chest);
-    this.jugador.interactCofre(this.enepece);
+    this.jugador.interact(this.chest);
+    this.jugador.interact(this.enepece);
     this.jugador.sword.update();
     this.jugador.fireCone.update();
     for (var i in this.skeletons)

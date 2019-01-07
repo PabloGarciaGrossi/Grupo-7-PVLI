@@ -95,15 +95,17 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 585, 324, "player", "Me cago en todos tus muertos");
+    this.enepece = new NPC(this.game, 600, 350, "player", "Me cago en todos tus muertos,\nhijo de las mil putas");
     this.enepece.create();
     this.chest = new Chest(this.game, 1980, 1895, "chest", "speed");
     this.chest.create();
     this.bonfire = new Bonfire (this.game, 49, 1095, "bonfire");
     this.bonfire.create();
+    if (this.game.mejoraSpeed) {
+      this.jugador = new Player(this.game,400,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,200,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.bonfire2 = new Bonfire (this.game, 1250, 3072, "bonfire");
     this.bonfire2.create();
-    this.jugador = new Player(this.game,200,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
@@ -233,9 +235,10 @@ var PlayScene = {
     this.bonfire.update(this.jugador.x, this.jugador.y);
     this.bonfire2.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
-    this.jugador.interactCofre(this.chest);
-    this.jugador.interactCofre(this.enepece);
-    this.jugador.interactCofre(this.bonfire);
+    this.jugador.interact(this.chest);
+    this.jugador.interact(this.enepece);
+    this.jugador.interact(this.bonfire);
+    this.jugador.interact(this.bonfire2);
     this.jugador.sword.update();
     this.jugador.fireCone.update();
     for (var i in this.skeletons)

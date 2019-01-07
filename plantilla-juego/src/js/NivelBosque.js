@@ -95,13 +95,15 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
-    this.enepece = new NPC(this.game, 1300, 2900, "player", "holi");
+    this.enepece = new NPC(this.game, 855, 209, "player", "I only abuse of\nyour mother negro");
     this.enepece.create();
-    this.chest = new Chest(this.game, 1600, 2900, "chest", "speed");
+    this.chest = new Chest(this.game, 410, 1157, "chest", "estus");
     this.chest.create();
+    if (this.game.mejoraSpeed) {
+      this.jugador = new Player(this.game,400,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.bonfire = new Bonfire (this.game, 898, 1346, "bonfire");
     this.bonfire.create();
-    this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
@@ -135,6 +137,11 @@ var PlayScene = {
   },
 
   update: function() {
+
+    
+console.log(this.jugador.x);
+console.log(this.jugador.y);
+
     this.music.play('',0,1,false,false);
     if (this.jugador.x > 1360 && this.jugador.x < 1400 && this.jugador.y < 350){
          this.music.pause();
@@ -235,8 +242,9 @@ var PlayScene = {
     this.bonfire.update(this.jugador.x, this.jugador.y);
     this.enepece.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
-    this.jugador.interactCofre(this.chest);
-    this.jugador.interactCofre(this.enepece);
+    this.jugador.interact(this.chest);
+    this.jugador.interact(this.enepece);
+    this.jugador.interact(this.bonfire);
     this.jugador.sword.update();
     this.jugador.fireCone.update();
     for (var i in this.skeletons)
