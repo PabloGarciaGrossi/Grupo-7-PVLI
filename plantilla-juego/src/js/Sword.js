@@ -33,7 +33,7 @@ Sword.prototype.startAttack = function(dir)
     switch(dir){
         case 0:
             this.animations.play('slashdown',30);
-            this.y = 0;
+            this.y = 15;
             this.x = 0;
             this.body.setSize(50,10,0,55);
             break;

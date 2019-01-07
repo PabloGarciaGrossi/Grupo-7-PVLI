@@ -59,6 +59,10 @@ var PreloaderScene = {
     this.game.load.image('e', 'images/e.png');
     this.game.load.spritesheet('bonfire', 'images/Hoguera.png',36,40,4);
     this.game.load.image('youdied', 'images/youdied.png');
+    this.game.load.spritesheet('boss', 'images/Boss.png',66,78,16);
+    this.game.load.image('hielo', 'images/bolahielo.png');
+    this.game.load.image('fuego', 'images/bola.png');
+    this.game.load.image('rayo', 'images/rayo.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');

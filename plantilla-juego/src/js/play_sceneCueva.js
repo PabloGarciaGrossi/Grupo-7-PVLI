@@ -12,6 +12,7 @@ var FireCone = require ('./FireCone.js');
 var Knight = require('./Knight.js');
 var mazaCaballero = require('./MazaCaballero.js');
 var Bonfire = require('./Bonfire.js');
+var Boss = require('./Boss.js');
 
 var PlayScene = {
 
@@ -90,6 +91,8 @@ var PlayScene = {
     {
       this.knights[i].create();
     }
+    //this.boss = new Boss(this.game, 30, 424,2468,"boss",'','',3,40,"hielo","rayo","fuego");
+    //this.boss.create();
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
