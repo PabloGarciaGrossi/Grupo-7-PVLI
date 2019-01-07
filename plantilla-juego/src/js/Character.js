@@ -23,6 +23,13 @@ function Character(game, speed, x, y, spritename,audio)
       this.body.velocity.x = speed;
       this.body.velocity.y = 0;
     }
+  Character.prototype.distanceToXY = function (x, y) {
+
+      var dx =  this.x - x;
+      var dy =  this.y - y;
+  
+      return Math.sqrt(dx * dx + dy * dy);
+  }
   Character.prototype.knock = function(enemy, dmg, knockpower){
     this.salud -= dmg;
     this.hurt.play();

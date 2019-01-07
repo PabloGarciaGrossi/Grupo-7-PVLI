@@ -12,6 +12,7 @@ var FireCone = require ('./FireCone.js');
 var Knight = require('./Knight.js');
 var mazaCaballero = require('./MazaCaballero.js');
 var Bonfire = require('./Bonfire.js');
+var Boss = require('./Boss.js');
 
 var PlayScene = {
 
@@ -63,7 +64,7 @@ var PlayScene = {
         }
         else if (this.map.objects[ol][o].gid == 337)
         {
-          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack",0,25);
+          var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack",-2,25);
           this.rats[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 5264)
@@ -90,6 +91,8 @@ var PlayScene = {
     {
       this.knights[i].create();
     }
+    //this.boss = new Boss(this.game, 30, 424,2468,"boss",'','',3,40,"hielo","rayo","fuego");
+    //this.boss.create();
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();

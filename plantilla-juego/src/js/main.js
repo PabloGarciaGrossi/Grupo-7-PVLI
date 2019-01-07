@@ -66,6 +66,11 @@ var PreloaderScene = {
     this.game.load.image('jose', 'images/Joselillo.png');
     this.game.load.image('solaire', 'images/Solaire.png');
     this.game.load.image('thanos', 'images/Thanos.png');
+    this.game.load.image('youdied', 'images/youdied.png');
+    this.game.load.spritesheet('boss', 'images/Boss.png',66,78,16);
+    this.game.load.image('hielo', 'images/bolahielo.png');
+    this.game.load.image('fuego', 'images/bola.png');
+    this.game.load.image('rayo', 'images/rayo.png');
 
     //musica
     this.game.load.audio('musicmenu', 'music/mainmenu.mp3');
@@ -84,6 +89,7 @@ var PreloaderScene = {
     this.game.load.audio('castle', 'music/PraiseJoselillo.mp3');
     this.game.load.audio('fire', 'music/fire.mp3');
     this.game.load.audio('step', 'music/step.ogg');
+    this.game.load.audio('die', 'music/You Died.mp3');
 
   },
 
