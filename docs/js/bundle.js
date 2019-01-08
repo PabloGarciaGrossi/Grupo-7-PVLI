@@ -1482,13 +1482,13 @@ var PlayScene = {
     this.fireCone.create();
     this.enepece = new NPC(this.game, 855, 209, "thanos", "Yo exterminaria a los esqueletos,\npero solo a la mitad");
     this.enepece.create();
+    this.bonfire = new Bonfire(this.game, 822, 1768, "bonfire.png");
+    this.bonfire.create();
     this.chest = new Chest(this.game, 410, 1157, "chest", "estus");
     this.chest.create();
     if (this.game.mejoraSpeed) {
       this.jugador = new Player(this.game,300,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     } else this.jugador = new Player(this.game,200,869,2174,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
-    this.bonfire = new Bonfire (this.game, 910, 1346, "bonfire");
-    this.bonfire.create();
     this.rock = new RockRoll(this.game, 80, 1768, 228, "stone", 2, 400);
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
