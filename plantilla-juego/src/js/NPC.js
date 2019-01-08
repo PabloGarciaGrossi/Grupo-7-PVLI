@@ -20,6 +20,9 @@ NPC.prototype.col = function() {
     this.texto.show();
     this.texto.bringToTop();
     this.texto.texto.bringToTop();
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, function() {this.text = "Ja ja ja ja";}, this);
+    this.texto = new TextBox(this.game, this.text);
+    this.texto.create();
 }
 
 module.exports = NPC;

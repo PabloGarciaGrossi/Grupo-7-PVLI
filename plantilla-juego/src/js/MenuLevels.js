@@ -27,6 +27,8 @@ var MenuLevels = {
                 this.state.start('mainmenu');
         });
         
+        this.camera.follow(background);
+        
     },
 
     createButton : function(game, x, y, w, h, callback){

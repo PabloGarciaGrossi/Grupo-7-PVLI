@@ -17,7 +17,7 @@ function Chest(game, x, y, spritename, mejora)
     this.animations.add('opened', [1], 1, true);
     
     if(this.item == "estus"){
-      this.texto = new TextBox(this.game, "Mejora de estus, ahora tienes\n seis frascos de estus");
+      this.texto = new TextBox(this.game, "Mejora de estus, ahora tienes\ncinco frascos de estus");
       this.texto.create();
       this.texto.bringToTop();
       this.texto.texto.bringToTop();
@@ -52,13 +52,13 @@ Chest.prototype.col = function(player) {
        this.texto.show();
        break;
       case "speed":
-       player.speed += 200;
+       player.speed += 100;
        console.log("mejora de velocidad");
        this.game.mejoraSpeed = true;
        this.texto.show();
        break;
       case "armor":
-       player.resistencia -= 5;
+       player.resistencia += 10;
        console.log("mejora de armor");
        this.game.mejoraArmor = true;
        this.texto.show();

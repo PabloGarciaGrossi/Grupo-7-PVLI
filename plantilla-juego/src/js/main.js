@@ -103,7 +103,7 @@ var PreloaderScene = {
   },
 
   create: function () {
-    this.game.state.start('cueva');
+    this.game.state.start('mainmenu');
 
   }
 };
