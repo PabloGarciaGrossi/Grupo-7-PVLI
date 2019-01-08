@@ -1,5 +1,7 @@
 'use strict';
 
+//Pablo García Grossi
+//Gonzalo Cidoncha Pérez
 var PlayScene = require('./play_scene.js');
 var NivelBosque = require('./NivelBosque.js');
 var play_sceneCueva = require('./play_sceneCueva.js');
