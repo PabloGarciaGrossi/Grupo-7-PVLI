@@ -1,4 +1,6 @@
 'use strict';
+
+//Establece las propiedades básicas de cualquier personaje del juego
 function Character(game, speed, x, y, spritename,audio)
   {
     Phaser.Sprite.call(this, game, x, y, spritename)
@@ -13,6 +15,8 @@ function Character(game, speed, x, y, spritename,audio)
 
   Character.prototype = Object.create(Phaser.Sprite.prototype);
   Character.prototype.constructor = Character;
+
+  //Funciones que mueven al jugador en los ejes x e y de acuerdo a su velocidad
   Character.prototype.moveY = function(speed)
     {
       this.body.velocity.y = speed;
@@ -23,6 +27,8 @@ function Character(game, speed, x, y, spritename,audio)
       this.body.velocity.x = speed;
       this.body.velocity.y = 0;
     }
+
+  //Calcula la distancia del personaje al punto indicado
   Character.prototype.distanceToXY = function (x, y) {
 
       var dx =  this.x - x;
@@ -30,6 +36,8 @@ function Character(game, speed, x, y, spritename,audio)
   
       return Math.sqrt(dx * dx + dy * dy);
   }
+
+  //empuja al jugador y lo inmoviliza en la direccióon desde la que recibe el ataque. También le hace daño.
   Character.prototype.knock = function(enemy, dmg, knockpower){
     this.salud -= dmg;
     this.hurt.play();

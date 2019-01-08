@@ -1,6 +1,10 @@
 'use strict';
 var Character = require('./Character.js');
 
+
+//Constructora del player. En ella se añaden los botones de control del jugador, así como también
+//recibe por parámetro sus armas. También inicializa todos sus booleanos de control y comprueba
+//si tiene mejoras de un anterior nivel
 function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon, audio)
   {
     Character.call(this,game,speed,x,y,spritename, audio);
@@ -33,6 +37,8 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
   Player.prototype = Object.create(Character.prototype);
   Player.prototype.constructor = Player;
 
+  //Creación de todas las animaciones del jugador, así como también sus sonidos y 
+  //añade como hijas suyas sus dos armas. También crea la imágen de derrota
   Player.prototype.create = function()
   {
     this.game.add.existing(this);
@@ -76,6 +82,8 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.game.add.existing(this.deathimage);
     this.deathimage.fixedToCamera = true;
   }
+
+  //Sitúa al jugador mirando en la dirección adecuada cuando está parado
   Player.prototype.setIdle = function()
   {
     switch(this.direction)
@@ -94,16 +102,10 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
       break;
     }
   }
-  Player.prototype.moveY = function(speed)
-    {
-      this.body.velocity.y = speed;
-      this.body.velocity.x = 0;
-    }
-  Player.prototype.moveX = function(speed)
-    {
-      this.body.velocity.x = speed;
-      this.body.velocity.y = 0;
-    }
+
+  //Impulsa al jugador en la dirección en la que se encuentra mirando si este no se encuentra parado.
+  //Mientras se impulsa es intocable para los enemigos e impide el resto de sus acciones activando el this.rolling
+  //Al cabo de 0.2 segundos cesa este movimiento
   Player.prototype.roll = function()
   {
     if (this.stamina >= 20)
@@ -146,6 +148,9 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
       }
     }
   }
+
+  //Establece la posición de bloqueo del jugador, la cual le impide moverse.
+  //Esta posición cesa al cabo de 0.2 segundos si no se continúa realizando.
   Player.prototype.block = function()
   {
     if (this.stamina > 30)
@@ -157,6 +162,8 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.game.time.events.add(Phaser.Timer.SECOND * 0.2, function(){this. blocking = false;} , this);
     }
   }
+
+  //Restablece todos los booleanos y frena al jugador tras rodar
   Player.prototype.stopRoll = function()
   {
     this.body.velocity.y = 0;
@@ -165,6 +172,11 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.invincible = false;
     this.rolling = false;
   }
+
+  //Si el jugador tiene curas suficientes, establece la velocidad del jugador en 0
+  //y cura al jugador hasta un máximo de 100 de salud, activa la animación durante un segundo
+  //e impide al jugador realizar otro tipo de acción desactivando el this.moving, que se reactiva
+  //al cabo de 1 segundo
   Player.prototype.drink = function()
   {
     if (this.estus > 0)
@@ -182,9 +194,11 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.game.time.events.add(Phaser.Timer.SECOND * 1, function(){this.animations.play('idle'); this.moving = true;} , this);
     }
   }
+
+  //Comprueba que el jugador no se encuentre atacando para prevenir una nueva animación de ataque
+  //Si es así, activa la animación de ataque del jugador y la espaad dependiendo de la dirección
+  //del jugador y activa el booleano de ataque
   Player.prototype.attack = function(){
-    //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
-    //(May not be necessary in your game.)
     if (this.stamina >= 35)
     {
       if (!this.attacking){
@@ -223,9 +237,8 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     }
 }
 
+//Mismo funcionamiento que el ataque normal pero activa el cono de fuego
 Player.prototype.attackFire = function(){
-  //We use a boolean var to check if the player is currently attacking to prevent a new attack mid animation.
-  //(May not be necessary in your game.)
   if (this.stamina >= 75)
   {
     if (!this.attacking){
@@ -264,6 +277,8 @@ Player.prototype.attackFire = function(){
   }
 }
 
+//Gestor de colisiones del jugador, si no se encuentra bloqueando, recibe el ataque y es empujado hacia atrás
+//Si está bloqueando, interrumpe al enemigo y reduce la resistencia del jugador
 Player.prototype.col = function(enemy)
 {
   if (!this.blocking)
@@ -287,6 +302,7 @@ Player.prototype.col = function(enemy)
   }
 }
 
+//Controla todas las acciones del jugador
 Player.prototype.update = function()
   {
   if (this.stamina < 0)
@@ -361,6 +377,7 @@ Player.prototype.update = function()
     this.body.velocity.y= 0;
   }
 
+  //Si el jugador se muere, activa la imágen de muerte y el sonido
     if (this.salud <= 0){
       this.animations.play('dead');
       this.hurt.pause();
@@ -372,6 +389,7 @@ Player.prototype.update = function()
     }
   }
 
+  //comprueba si colisiona con el objeto, si es así, llama a la función del objeto
   Player.prototype.interact = function(objeto){
     if (objeto!=undefined && this.interactButton.isDown){
       if (Phaser.Rectangle.intersects(this.getBounds(), objeto.getBounds())){

@@ -24,6 +24,8 @@ RangedEnemy.prototype.create = function ()
     this.animations.add('runup', [4,5],1,true);
     this.animations.add('dead',[8],1,true);
 
+
+    //Inicialización de las balas de los arqueros
     this.shoot = this.game.add.weapon(1, this.spriteshoot);
     this.shoot.bulletSpeed = 300;
     this.shoot.fireRate = 3500;
@@ -33,6 +35,8 @@ RangedEnemy.prototype.create = function ()
 
 }
 
+//Comprueba que el jugador se encuentra a distancia y le dispara en caso
+//de que este se encuentre cerca. Si se queda sin vida se desactiva el body.
 RangedEnemy.prototype.update = function(player, playerx, playery)
 {
     this.myHealthBar.setPosition(this.x, this.y-30);
@@ -58,6 +62,7 @@ RangedEnemy.prototype.update = function(player, playerx, playery)
     }
 }
 
+//Comprueba para cada una de las balas si colisionan con el jugador.
 RangedEnemy.prototype.bulletHit = function (player) 
 {
     var esto = this;

@@ -10,7 +10,10 @@ var BossScene =
 {
     create: function () 
     {
+    //bool que comprueba si el boss ha sido derrotado
     this.defeated = false;
+
+    //Inicialización de todos los elementos del mapa
     this.music = this.game.add.audio('boss');
     this.map = this.game.add.tilemap('boss');
     this.map.addTilesetImage('tilesInterior', 'tilesetCastillo');
@@ -30,22 +33,26 @@ var BossScene =
     this.layer3.resizeWorld();
     this.layer4.resizeWorld();
 
+     //Elementos que utiliza el jugador
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
 
-
+    //Creación del Boss
     this.fireAura = new fireCircle(this.game, 0, 0, 0, "fuego", 40);
     this.fireAura.create();
     this.boss = new Boss(this.game, 30, 480,552,"boss",'','',7.5,40,"hielo","rayo","fuego",this.fireAura);
     this.boss.create();
+
+    //Creación del jugador
     if (this.game.mejoraSpeed) {
         this.jugador = new Player(this.game,300,480, 800,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
       } else this.jugador = new Player(this.game,200,480, 900,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.jugador.create();
 
+    //Iinicialización del HUD
     this.estus = this.game.add.sprite(100, 100, 'estus');
     this.estus.scale.setTo(0.3,0.3);
     this.cross = this.game.add.sprite(140,120,'cross');
@@ -78,6 +85,9 @@ var BossScene =
     update: function() 
     {
     this.music.play('',0,0.1,false,false);
+
+    //Comprueba que el boss ha sido derrotado. En caso de que sea así,
+    //carga la imágen de victoria en pantalla y te devuelve al menú principal
     if(this.boss.salud <= 0 && !this.defeated)
     {
         this.music.stop();
@@ -97,8 +107,12 @@ var BossScene =
             this.game.state.start('mainmenu');
         }
     }
+
+    //Actualización de las barras de vida y estamina
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
+
+    //Colisión de los Characters del mapa con el propio mapa
     this.physics.arcade.collide(this.jugador,this.layer);
     this.physics.arcade.collide(this.jugador,this.layer2);
     this.physics.arcade.collide(this.jugador,this.layer3);
@@ -108,20 +122,25 @@ var BossScene =
     this.physics.arcade.collide(this.boss,this.layer2);
     this.physics.arcade.collide(this.boss,this.layer3);
 
+    //Comprueba la colisión del boss con las armas del jugador
     this.physics.arcade.collide(this.boss, this.jugador.sword, this.collision, null, this);
     this.physics.arcade.overlap(this.boss, this.jugador.sword, this.collision, null, this);
     this.physics.arcade.overlap(this.boss, this.jugador.fireCone, this.collision, null, this);
     this.physics.arcade.collide(this.boss, this.jugador.fireCone, this.collision, null, this);
 
+    //Comprueba la colisión del jugador con el boss
     this.physics.arcade.collide(this.jugador, this.boss, this.collision, null, this);
     this.physics.arcade.collide(this.jugador, this.boss.aura, this.collision, null, this);
 
+    //Actualización del jugador y del boss
     this.jugador.update();
     this.boss.update(this.jugador, this.jugador.x, this.jugador.y);
 
+    //Actualización de las armas del jugador
     this.jugador.sword.update();
     this.jugador.fireCone.update();
 
+    //Actualización del HUD de Estus
     switch(this.jugador.estus)
     {
       case 0:
@@ -146,16 +165,9 @@ var BossScene =
 
     },
 
+    //Función que llama a la función de colision del Character en concreto que la llama
     collision : function (jugador, enemy) {
         jugador.col(enemy);
-  },
-  render: function() {
-
-    /*this.game.debug.body(this.jugador);
-    this.game.debug.body(this.jugador.sword);
-    this.game.debug.body(this.jugador.fireCone);
-    this.game.debug.body(this.boss);
-    this.game.debug.body(this.boss.aura);*/
-}
+  }
 };
 module.exports = BossScene;

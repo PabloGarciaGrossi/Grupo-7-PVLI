@@ -2,6 +2,7 @@
 var Enemy = require('./Enemy.js');
 var HealthBar = require('./HealthBar.js');
 
+
 function Boss (game, speed, x, y, spritename,audio,audioAttack,salud,dmg,bolahielo,rayo,bolafuego,aura)
 {
     Enemy.call(this,game,speed,x,y,spritename,audio,audioAttack,salud,dmg);
@@ -36,6 +37,7 @@ Boss.prototype.create = function()
 
     this.anchor.setTo(0.5, 0.5);
 
+    //Inicialización de las bolas de hielo que actúan como balas
     this.bolahielo = this.game.add.weapon(5, this.hielosprite);
     this.bolahielo.bulletSpeed = 700;
     this.bolahielo.fireRate = 300;
@@ -43,6 +45,7 @@ Boss.prototype.create = function()
     this.bolahielo.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.bolahielo.trackSprite(this, 0, 0, false);
 
+    //Inicialización de los rayos que actúan como balas
     this.rayo = this.game.add.weapon(5, this.rayosprite);
     this.rayo.bulletSpeed = 950;
     this.rayo.fireRate = 600;
@@ -52,6 +55,7 @@ Boss.prototype.create = function()
     this.rayo.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.rayo.trackSprite(this, 0, 0, false);
 
+    //Inicialización del aura de fuego, que actúa como un círculo que gira alrededor del boss
     this.aura.create();
     this.addChild(this.aura);
     
@@ -70,12 +74,16 @@ Boss.prototype.create = function()
     this.myHealthBar.setFixedToCamera(true);
 }
 
+//Cooldown que evita que el boss ataque nada más comenzar la escena
 Boss.prototype.cooldownInicial = function()
 {
     this.game.time.events.add(Phaser.Timer.SECOND * 3, function() {
         this.cooldown = !this.cooldown;
     }, this);
 }
+
+//Primero realiza una carga y posteriormente activa durante 9.5 segundos el this.aura que en el update se actualizará
+//Después pondrá el controlador de ataques durante 2 segundos para evitar que el boss encadene ataques
 Boss.prototype.cargaFuego = function()
 {
     this.animations.play('fuego');
@@ -98,17 +106,19 @@ Boss.prototype.cargaFuego = function()
         this.cooldown = true;
         this.aura.body.enable = false;
     }, this);
-    this.game.time.events.add(Phaser.Timer.SECOND * 10.5, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND * 11.5, function() {
         this.cooldown = false;
     }, this);
     
 }
 
+//actualización del aura
 Boss.prototype.fireCircle = function()
 {
     this.aura.update(this.direction);
 }
 
+//Carga el ataque de hielo y activa el controlador de este ataque para ejecutarlo en el update
 Boss.prototype.iceThrowing = function()
 {
     this.animations.play('hielo');
@@ -125,6 +135,7 @@ Boss.prototype.iceThrowing = function()
     }, this);
 }
 
+//Carga el ataque de rayo y activa el controlador de este ataque para ejecutarlo en el update
 Boss.prototype.thunderThrowing = function()
 {
     this.animations.play('rayo');
@@ -141,6 +152,9 @@ Boss.prototype.thunderThrowing = function()
     }, this);
 }
 
+//comprueba que el jugador se encuentre a una distancia determinada y selecciona un ataque aleatorio
+//llamando a la función que lo carga y en esta activándolo para evitarq ue cargue otro ataque
+//cuando el controlador de un ataque se encuentra activo, actualiza el ataque
 Boss.prototype.update = function(player,playerx,playery)
 {
     this.myHealthBar.setPercent(this.salud);
@@ -214,6 +228,8 @@ Boss.prototype.hieloHit = function (player)
     }
     );
 } 
+
+//Colisión especial que permite al boss tener mayor resistencia frente al fuego del jugador
 Boss.prototype.col = function(sword)
 {
     if (sword.attacking)
@@ -244,6 +260,8 @@ Boss.prototype.rayoHit = function (player)
     }
     );
 }
+
+//Empuje especial que evita que el boss interrumpa sus ataques mientras los está utilizando
 Boss.prototype.knock = function(enemy, dmg, knockpower){
     this.salud -= dmg;
     this.hurt.play();

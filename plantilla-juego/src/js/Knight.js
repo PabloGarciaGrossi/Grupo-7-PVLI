@@ -4,6 +4,7 @@ var Enemy = require('./Enemy.js');
 function Knight (game, speed, x, y, spritename, maza, audio,audioAttack,salud,dmg)
 {
     Enemy.call(this,game,speed,x,y,spritename,audio,audioAttack,salud,dmg);
+    //Maza con la que golpea el caballero
     this.maza = maza;
 }
 Knight.prototype = Object.create(Enemy.prototype);
@@ -22,9 +23,14 @@ Knight.prototype.create = function()
     this.animations.add('runup', [4,5],2,true);
     this.animations.add('dead',[8],1,true);
     this.anchor.setTo(0.5, 0.5);
+
+    //Inicializa la maza que recibe por parámetro
     this.maza.create();
     this.addChild(this.maza);
 }
+
+//Si detecta al enemigo a una distancia determinada, comienza a avanzar hacia el jugador
+//Y actualiza la maza, haciéndola girar
 Knight.prototype.update = function(playerx, playery)
 {
     this.myHealthBar.setPosition(this.x, this.y-30);
@@ -47,6 +53,7 @@ Knight.prototype.update = function(playerx, playery)
             this.setIdle();
         }
     }
+    //Desactiva tanto al caballero como a la maza
     else{
         this.animations.play('dead');
         this.body.enable = false;

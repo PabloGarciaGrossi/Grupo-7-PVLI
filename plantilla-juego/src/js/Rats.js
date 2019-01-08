@@ -34,6 +34,10 @@ Rats.prototype.create = function ()
     this.shoot.bulletKillType = Phaser.Weapon.KILL_LIFESPAN;
     this.shoot.trackSprite(this, 0, 0, false);
 }
+
+//Dispara una bala hacia el jugador que avanza pocos metros
+//Detiene a la rata y activa su animación de ataque que al cabo de 1.5 segundos se desactiva
+//Posteriormente setea el booleano de ataque de nuevo para permitir a la rata volver a realizar un ataque
 Rats.prototype.attack = function(player)
 {
     this.spitting = true;
@@ -60,6 +64,8 @@ Rats.prototype.attack = function(player)
     this.game.time.events.add(Phaser.Timer.SECOND * 1.5, function() {this.moving = true;}, this);
     this.game.time.events.add(Phaser.Timer.SECOND * 3.5, function() {this.spitting = false;}, this);
 }
+
+//Avanza hacia el jugador si lo detecta y le ataca
 Rats.prototype.update = function(player, playerx, playery)
 {
     this.myHealthBar.setPosition(this.x, this.y-30);

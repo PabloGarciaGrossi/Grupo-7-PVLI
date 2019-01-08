@@ -7,7 +7,6 @@ function RockRoll(game, speed, x, y, spritename, dir, dmg)
     this.dmg = dmg;
     this.active = false;
     this.direction = dir;   //0 derecha, 1 izquierda, 2 abajo, 3 arriba
-    this.game = game;
     this.attacking = false;
 }
 
@@ -23,6 +22,8 @@ RockRoll.prototype.create = function()
     this.animations.add('rollForward',[0,1,2,3],true);
 }
 
+
+//Comprueba que el jugador se encuentra cerca, cuando es así, se activa y avanza hacia la dirección especificada
 RockRoll.prototype.update = function(playerX, playerY){
 
     var dist = this.distanceToXY(playerX, playerY);

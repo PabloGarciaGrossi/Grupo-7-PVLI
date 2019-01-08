@@ -17,6 +17,8 @@ function Enemy(game, speed, x, y, spritename, audio, audioAttack,salud,dmg)
 Enemy.prototype = Object.create(Character.prototype);
 Enemy.prototype.constructor = Enemy;
 
+
+//Carga las animaciones básicas de todos los enemigos y las específicas del esqueleto
 Enemy.prototype.create = function()
 {
     this.game.add.existing(this);
@@ -41,12 +43,16 @@ Enemy.prototype.create = function()
     this.reviving = false;
     this.tackling = false;
 }
+
+//Sitúa al enemigo en su pose básica
 Enemy.prototype.setIdle = function()
 {
     this.body.velocity.x = 0;
     this.body.velocity.y = 0;
     this.animations.play('idle');
 }
+
+//Mueve al enemigo a las coordenadas indicadas de acuerdo a su velocidad
 Enemy.prototype.MoveTo = function(x, y){
 
     var angle = Math.atan2(y - this.y, x - this.x);
@@ -57,6 +63,9 @@ Enemy.prototype.MoveTo = function(x, y){
     return angle;
 
 }
+
+//Propiedad única del esqueleto, padre del resto de enemigos
+//Carga un ataque quedándose quieto y apunta a la dirección en la que está mirando
 Enemy.prototype.charge = function()
 {
     this.body.velocity.y = 0;
@@ -79,6 +88,9 @@ Enemy.prototype.charge = function()
     }
     this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {Enemy.prototype.tackle()}, this);
 }
+
+//Función única del esqueleto, realiza un dash en la direcciónq ue está mirando e impide cualquier
+//otro tipo de movimiento
 Enemy.prototype.tackle = function()
 {
     this.attackAudio.play();
@@ -113,6 +125,7 @@ Enemy.prototype.tackle = function()
     this.game.time.events.add(Phaser.Timer.SECOND * 2.3, function() {this.tackling = false;}, this);
 }
 
+//Según la dirección a la que se encuentre el jugador, selecciona una de las animaciones del enemigo
 Enemy.prototype.detectAnimation = function(x,y){
     var cx = this.x -x;
     var cy = this.y -y;
@@ -136,6 +149,9 @@ Enemy.prototype.detectAnimation = function(x,y){
         this.direction = 0;
     }
 }
+
+//Update propio del esqueleto, actualiza su barra de vida y si detecta al jugador se mueve hacia él
+//Si está muy cerca realizará un placaje.
 Enemy.prototype.update = function(playerx, playery)
 {
     this.myHealthBar.setPosition(this.x, this.y-30);
@@ -164,6 +180,7 @@ Enemy.prototype.update = function(playerx, playery)
             this.setIdle();
         }
     }
+    //propiedad del esqueleto, revive al cabo de 50 segundos tras morir
     else if (!this.reviving)
     {
         this.body.enable = false;
@@ -172,6 +189,9 @@ Enemy.prototype.update = function(playerx, playery)
         this.game.time.events.add(Phaser.Timer.SECOND * 50, function() {this.body.enable = true;this.salud = 100;}, this);
     }
 }
+
+//Función común a todos los enemigos, si detectan una de las armas del jugador atacando
+//son empujados y reciben daño, addemás son inmovilizados.
 Enemy.prototype.col = function(sword)
 {
     if (sword.attacking)

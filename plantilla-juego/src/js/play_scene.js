@@ -16,11 +16,11 @@ var Bonfire = require('./Bonfire.js');
 var PlayScene = {
 
   create: function () {
+    //Inicialización de todos los elementos del mapa
     this.music = this.game.add.audio('castle');
     this.game.stage.backgroundColor = '#787878';
     this.map = this.game.add.tilemap('primero');
     this.map.addTilesetImage('tilesInterior', 'tilesetCastillo');
-    //this.map.setCollisionBetween(0,23);
     this.layer = this.map.createLayer('grounds');
     this.layer2 = this.map.createLayer('walls');
     this.layer3 = this.map.createLayer('windows');
@@ -29,7 +29,6 @@ var PlayScene = {
     this.layer2.renderSettings.enableScrollDelta = true;
     this.layer3.renderSettings.enableScrollDelta = true;
     this.layer4.renderSettings.enableScrollDelta = true;
-    // this.enemieslayer = this.map.createLayer('enemies');
     this.map.setCollisionBetween(1, 10000, true, 'walls');
     this.map.setCollisionBetween(1, 10000, true, 'windows');
     this.map.setCollisionBetween(1, 10000, true, 'objects');
@@ -37,11 +36,9 @@ var PlayScene = {
     this.layer2.resizeWorld();
     this.layer3.resizeWorld();
     this.layer4.resizeWorld();
-    //this.layer2.debug = true;
-    this.distance = 40;
     
-    this.enemies = this.game.add.group();
-    this.enemies.enableBody = true;
+
+    //Inicialización de los enemigos: Se leen del JSON del mapa y se guardan en sus respectivos arrays
     this.skeletons = [];
     this.archers = [];
     this.rats = [];
@@ -53,7 +50,6 @@ var PlayScene = {
         if (this.map.objects[ol][o].gid == 5505)
         {
         var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto","skeletonAudio","tackle",0.8,35);
-        this.enemies.add(enemy);
         this.skeletons[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 5824)
@@ -74,6 +70,8 @@ var PlayScene = {
         }
       }
     }
+
+    //Creación de los enemigos
     for (var i in this.skeletons)
     {
       this.skeletons[i].create();
@@ -90,6 +88,8 @@ var PlayScene = {
     {
       this.knights[i].create();
     }
+
+    //Elementos que utiliza el jugador
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.sword = new Sword(this.game, -50, 0, 0, 'sword');
     this.sword.create();
@@ -101,14 +101,19 @@ var PlayScene = {
     this.chest.create();
     this.bonfire = new Bonfire (this.game, 49, 1095, "bonfire");
     this.bonfire.create();
+    this.bonfire2 = new Bonfire (this.game, 1250, 3072, "bonfire");
+    this.bonfire2.create();
+    //Creación del jugador
     if (this.game.mejoraSpeed) {
       this.jugador = new Player(this.game,300,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     } else this.jugador = new Player(this.game,200,1312.24, 3072,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
-    this.bonfire2 = new Bonfire (this.game, 1250, 3072, "bonfire");
-    this.bonfire2.create();
-    this.rock = new RockRoll(this.game, 200, 1768, 228, "stone", 2, 400);
     this.jugador.create();
+
+    //Creación de la roca
+    this.rock = new RockRoll(this.game, 200, 1768, 228, "stone", 2, 400);
     this.rock.create();
+
+     //Iinicialización del HUD
     this.estus = this.game.add.sprite(100, 100, 'estus');
     this.estus.scale.setTo(0.3,0.3);
     this.cross = this.game.add.sprite(140,120,'cross');
@@ -137,12 +142,18 @@ var PlayScene = {
 
   update: function() {
     this.music.play('',0,1,false,false);
+
+    //Comprueba que el jugador está en la zona de pasar de nivel, si es así, cambia de escena.
     if (this.jugador.x > 1729 && this.jugador.x < 1814 && this.jugador.y < 119){
       this.music.pause();
       this.game.state.start('boss');
  }
+
+    //Actualización de las barras de vida y estamina
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
+
+    //Colisión de los Characters del mapa con el propio mapa
     this.physics.arcade.collide(this.jugador,this.layer);
     this.physics.arcade.collide(this.jugador,this.layer2);
     this.physics.arcade.collide(this.jugador,this.layer3);
@@ -179,6 +190,8 @@ var PlayScene = {
       this.physics.arcade.collide(this.knights[i], this.layer3);
       this.physics.arcade.collide(this.knights[i], this.layer4);
     }
+
+//Comprueba la colisión del jugador con los enemigos si no es invencible.
     if (this.jugador.invincible === false)
     {
       for (var i in this.skeletons)
@@ -200,6 +213,8 @@ var PlayScene = {
       }
       this.physics.arcade.collide(this.jugador, this.rock, this.collision, null, this);
     }
+
+    //Comprueba la colisión de los enemigos con las armas del jugador
     for (var i in this.skeletons)
     {
       this.physics.arcade.overlap(this.skeletons[i], this.jugador.sword, this.collision, null, this);
@@ -233,6 +248,8 @@ var PlayScene = {
       this.physics.arcade.collide(this.knights[i], this.jugador.fireCone, this.collision, null, this);
       this.physics.arcade.collide(this.knights[i], this.jugador.shoot, this.collision, null, this);
     }
+
+    //Actualización de elementos únicos del mapa
     this.chest.update(this.jugador.x, this.jugador.y);
     this.enepece.update(this.jugador.x, this.jugador.y);
     this.bonfire.update(this.jugador.x, this.jugador.y);
@@ -244,6 +261,8 @@ var PlayScene = {
     this.jugador.interact(this.bonfire2);
     this.jugador.sword.update();
     this.jugador.fireCone.update();
+
+      //Actualización de los enemigos
     for (var i in this.skeletons)
     {
       this.skeletons[i].update(this.jugador.x, this.jugador.y);
@@ -261,6 +280,8 @@ var PlayScene = {
       this.knights[i].update(this.jugador.x, this.jugador.y);
     }
     this.rock.update(this.jugador.x, this.jugador.y);
+
+    //Actualización del HUD de Estus
     switch(this.jugador.estus)
     {
       case 0:
@@ -283,25 +304,9 @@ var PlayScene = {
       break;
     }
   },
-
+//Función que llama a la función de colision del Character en concreto que la llama
   collision : function (jugador, enemy) {
         jugador.col(enemy);
-  },
- render: function() {
-
-    /*this.game.debug.body(this.jugador);
-    this.game.debug.body(this.bonfire);
-    this.game.debug.body(this.jugador.sword);
-    this.game.debug.body(this.jugador.fireCone);
-    for (var i in this.rats)
-    {
-      this.game.debug.body(this.rats[i]);
-    }
-    for (var i in this.skeletons)
-    {
-      this.game.debug.body(this.skeletons[i]);
-    }*/
-
-}
+  }
 };
 module.exports = PlayScene;
