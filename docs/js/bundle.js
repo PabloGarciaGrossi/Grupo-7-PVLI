@@ -1482,7 +1482,7 @@ var PlayScene = {
     this.fireCone.create();
     this.enepece = new NPC(this.game, 855, 209, "thanos", "Yo exterminaria a los esqueletos,\npero solo a la mitad");
     this.enepece.create();
-    this.bonfire = new Bonfire(this.game, 822, 1768, 'bonfire');
+    this.bonfire = new Bonfire (this.game, 910, 1346, "bonfire");
     this.bonfire.create();
     this.chest = new Chest(this.game, 410, 1157, "chest", "estus");
     this.chest.create();
@@ -2505,6 +2505,8 @@ var PlayScene = {
     this.sword.create();
     this.fireCone = new FireCone(this.game, -50, 0, 0, 'firecone');
     this.fireCone.create();
+    this.bonfire = new Bonfire(this.game, 822, 1768, 'bonfire');
+    this.bonfire.create();
     this.chest = new Chest(this.game, 1785, 230, "chest", "armor");
     this.chest.create();
     if (this.game.mejoraSpeed) {
@@ -2636,9 +2638,11 @@ var PlayScene = {
     }
     this.chest.update(this.jugador.x, this.jugador.y);
     this.enepece.update(this.jugador.x, this.jugador.y);
+    this.bonfire.update(this.jugador.x, this.jugador.y);
     this.jugador.update();
     this.jugador.interact(this.chest);
     this.jugador.interact(this.enepece);
+    this.jugador.interact(this.bonfire);
     this.jugador.sword.update();
     this.jugador.fireCone.update();
     for (var i in this.skeletons)
