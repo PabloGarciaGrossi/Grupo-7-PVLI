@@ -23,10 +23,10 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
     this.knockback = false;
     this.stamina = 100;
     if (this.game.mejoraEstus) {
-      this.estus = 6;
-    } else this.estus = 5;
+      this.estus = 5;
+    } else this.estus = 4;
     if (this.game.mejoraArmor) {
-      this.resistencia = 5;
+      this.resistencia = 20;
     } else this.resistencia = 10;
   }
 

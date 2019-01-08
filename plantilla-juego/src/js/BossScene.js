@@ -148,14 +148,6 @@ var BossScene =
 
     collision : function (jugador, enemy) {
         jugador.col(enemy);
-  },
-  render: function() {
-
-    this.game.debug.body(this.jugador);
-    this.game.debug.body(this.jugador.sword);
-    this.game.debug.body(this.jugador.fireCone);
-    this.game.debug.body(this.boss);
-    this.game.debug.body(this.boss.aura);
-}
+  }
 };
 module.exports = BossScene;

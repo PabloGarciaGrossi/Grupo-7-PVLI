@@ -101,8 +101,8 @@ var PlayScene = {
     this.chest = new Chest(this.game, 1785, 230, "chest", "armor");
     this.chest.create();
     if (this.game.mejoraSpeed) {
-      this.jugador = new Player(this.game,200,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
-    } else this.jugador = new Player(this.game,300,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+      this.jugador = new Player(this.game,400,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+    } else this.jugador = new Player(this.game,200,124, 2468,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.jugador.create();
     this.attackButton = this.game.input.keyboard.addKey(Phaser.KeyCode.Z);
     this.estus = this.game.add.sprite(100, 100, 'estus');

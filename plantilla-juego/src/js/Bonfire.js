@@ -15,7 +15,9 @@ Bonfire.prototype = Object.create(Interactuable.prototype);
 Bonfire.prototype.constructor = Bonfire;
 
 Bonfire.prototype.col = function(player) {
-    player.estus = 5;
+    if(this.game.mejoraEstus){
+        player.estus = 5;
+    } else player.estus = 4;
     player.salud = 100;
     player.stamina = 100;
 }

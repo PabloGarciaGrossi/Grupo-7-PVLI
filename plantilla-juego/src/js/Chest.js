@@ -19,14 +19,20 @@ function Chest(game, x, y, spritename, mejora)
     if(this.item == "estus"){
       this.texto = new TextBox(this.game, "Mejora de estus, ahora tienes\n seis frascos de estus");
       this.texto.create();
+      this.texto.bringToTop();
+      this.texto.texto.bringToTop();
     }
     else if(this.item == "armor"){
       this.texto = new TextBox(this.game, "Mejora de armadura, los enemigos\nte quitan menos vida");
       this.texto.create();
+      this.texto.bringToTop();
+      this.texto.texto.bringToTop();
     }
     else if(this.item == "speed"){
       this.texto = new TextBox(this.game, "Mejora de velocidad, ahora puedes\ncorrer mas rapido");
       this.texto.create();
+      this.texto.bringToTop();
+      this.texto.texto.bringToTop();
     }
    
   }
