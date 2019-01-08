@@ -42,7 +42,7 @@ var BossScene =
     this.boss = new Boss(this.game, 30, 480,552,"boss",'','',0,40,"hielo","rayo","fuego",this.fireAura);
     this.boss.create();
     if (this.game.mejoraSpeed) {
-        this.jugador = new Player(this.game,400,480, 800,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
+        this.jugador = new Player(this.game,300,480, 800,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
       } else this.jugador = new Player(this.game,200,480, 900,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");
     this.jugador.create();
 
@@ -77,6 +77,7 @@ var BossScene =
     },
     update: function() 
     {
+    this.music.play('',0,0.4,false,false);
     if(this.boss.salud <= 0 && !this.defeated)
     {
         this.music.stop();
@@ -96,7 +97,6 @@ var BossScene =
             this.game.state.start('mainmenu');
         }
     }
-    this.music.play('',0,0.4,false,false);
     this.stamina.setPercent(this.jugador.stamina);
     this.health.setPercent(this.jugador.salud);
     this.physics.arcade.collide(this.jugador,this.layer);
@@ -148,6 +148,14 @@ var BossScene =
 
     collision : function (jugador, enemy) {
         jugador.col(enemy);
-  }
+  },
+  render: function() {
+
+    /*this.game.debug.body(this.jugador);
+    this.game.debug.body(this.jugador.sword);
+    this.game.debug.body(this.jugador.fireCone);
+    this.game.debug.body(this.boss);
+    this.game.debug.body(this.boss.aura);*/
+}
 };
 module.exports = BossScene;

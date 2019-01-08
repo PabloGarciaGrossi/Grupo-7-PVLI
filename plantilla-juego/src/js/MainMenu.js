@@ -3,7 +3,6 @@
 var MainMenu = {
 
     create:function () {
-
         var background;
         background = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'menu');
         background.anchor.setTo(0.5,0.5);
@@ -26,6 +25,7 @@ var MainMenu = {
             function(){
                 this.state.start('controles');
         });
+        this.camera.follow(background);
         
     },
 
