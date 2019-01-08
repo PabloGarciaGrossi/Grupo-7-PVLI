@@ -18,6 +18,8 @@ NPC.prototype.constructor = NPC;
 
 NPC.prototype.col = function() {
     this.texto.show();
+    this.texto.bringToTop();
+    this.texto.texto.bringToTop();
 }
 
 module.exports = NPC;
