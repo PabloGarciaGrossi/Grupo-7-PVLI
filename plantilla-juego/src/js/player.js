@@ -36,7 +36,7 @@ function Player(game,speed,x,y,spritename,cursors, sword, fireCone, spriteweapon
   Player.prototype.create = function()
   {
     this.game.add.existing(this);
-    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.game.physics.enable(this);
     this.body.gravity.y = 0;
     this.body.collideWorldBounds = true;
     this.animations.add('idledown', [17],1,true);

@@ -39,7 +39,7 @@ var BossScene =
 
     this.fireAura = new fireCircle(this.game, 0, 0, 0, "fuego", 40);
     this.fireAura.create();
-    this.boss = new Boss(this.game, 30, 480,552,"boss",'','',0,40,"hielo","rayo","fuego",this.fireAura);
+    this.boss = new Boss(this.game, 30, 480,552,"boss",'','',7.5,40,"hielo","rayo","fuego",this.fireAura);
     this.boss.create();
     if (this.game.mejoraSpeed) {
         this.jugador = new Player(this.game,300,480, 800,"player",this.cursors, this.sword,this.fireCone, "fireball","hurt");

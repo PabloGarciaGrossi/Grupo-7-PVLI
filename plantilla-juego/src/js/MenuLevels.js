@@ -9,18 +9,18 @@ var MenuLevels = {
         background.anchor.setTo(0.5,0.5);
         this.createButton(game, game.world.centerX - 250, game.world.centerY - 100, 200, 200,
             function(){
-                this.state.start('cueva');
                 game.musica.stop();
+                this.state.start('cueva');
         });
         this.createButton(game, game.world.centerX, game.world.centerY - 100, 200, 200,
             function(){
-                this.state.start('bosque');
                 game.musica.stop();
+                this.state.start('bosque');    
         });
         this.createButton(game, game.world.centerX + 250, game.world.centerY - 100, 200, 200,
             function(){
-                this.state.start('play');
                 game.musica.stop();
+                this.state.start('play');
         });
         this.createButton(game, 120, game.world.centerY + 240, 150, 50,
             function(){

@@ -114,7 +114,7 @@ Boss.prototype.iceThrowing = function()
     this.animations.play('hielo');
     this.moving = false;
     this.lanzahielo = true;
-    this.game.time.events.add(Phaser.Timer.SECOND * 6, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND * 6.5, function() {
         this.moving = true;
         this.lanzahielo = false;
         this.attack += 1;
@@ -130,7 +130,7 @@ Boss.prototype.thunderThrowing = function()
     this.animations.play('rayo');
     this.moving = false;
     this.lanzarayo = true;
-    this.game.time.events.add(Phaser.Timer.SECOND * 8, function() {
+    this.game.time.events.add(Phaser.Timer.SECOND * 6.5, function() {
         this.moving = true;
         this.lanzarayo = false;
         this.attack += 1;
@@ -155,10 +155,7 @@ Boss.prototype.update = function(player,playerx,playery)
             this.pasoAudio.play('',0,1,false,false);
             if (!this.lanzafuego && !this.lanzahielo && !this.lanzarayo && !this.cooldown)
             {
-            if (this.attack > 3)
-            {
-                this.attack = 1;
-            }
+            this.attack = this.game.rnd.integerInRange(1, 3)
             switch(this.attack)
                 {
                     case 1:
@@ -174,7 +171,7 @@ Boss.prototype.update = function(player,playerx,playery)
             }
             else if (this.lanzafuego)
             {
-                this.dmg = 40;
+                this.dmg = 55;
                 this.fireCircle();
             }
         }
@@ -201,6 +198,7 @@ Boss.prototype.update = function(player,playerx,playery)
     {
         this.animations.play('dead');
         this.body.enable = false;
+        this.aura.body.enable = false;
     }
 }
 

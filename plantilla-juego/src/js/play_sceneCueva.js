@@ -41,8 +41,7 @@ var PlayScene = {
     //this.layer2.debug = true;
     this.distance = 40;
     
-    this.enemies = this.game.add.group();
-    this.enemies.enableBody = true;
+    this.ratsgroup = this.game.add.group();
     this.skeletons = [];
     this.archers = [];
     this.rats = [];
@@ -54,7 +53,6 @@ var PlayScene = {
         if (this.map.objects[ol][o].gid == 361)
         {
         var enemy = new Enemy(this.game, 75,this.map.objects[ol][o].x,this.map.objects[ol][o].y,"esqueleto","skeletonAudio","tackle",0.6,30);
-        this.enemies.add(enemy);
         this.skeletons[o] = enemy;
         }
         else if (this.map.objects[ol][o].gid == 377)
@@ -66,6 +64,7 @@ var PlayScene = {
         {
           var enemy = new Rats(this.game, this.map.objects[ol][o].x,this.map.objects[ol][o].y, 90, "rat", "poison","rat","ratAttack",-2,25);
           this.rats[o] = enemy;
+          this.ratsgroup.add(enemy);
         }
         else if (this.map.objects[ol][o].gid == 5264)
         {
