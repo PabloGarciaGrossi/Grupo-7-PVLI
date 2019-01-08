@@ -1861,9 +1861,10 @@ module.exports = Rats;
 'use strict';
 var Character = require('./Character.js');
 
-function RockRoll(game, speed, x, y, spritename, dir)
+function RockRoll(game, speed, x, y, spritename, dir, dmg)
 {
     Character.call(this, game, speed,x,y,spritename);
+    this.dmg = dmg;
     this.active = false;
     this.direction = dir;   //0 derecha, 1 izquierda, 2 abajo, 3 arriba
     this.game = game;
